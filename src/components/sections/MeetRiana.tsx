@@ -8,7 +8,7 @@ export function MeetRiana() {
   return (
     <section id="about" className="relative py-16 lg:py-24 bg-white overflow-hidden">
       <div className="absolute inset-0 pattern-dots opacity-40 -z-10" />
-      <div className="absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
+      <div className="absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-orange-200/40 blur-3xl -z-10" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
@@ -25,26 +25,21 @@ export function MeetRiana() {
               <div className="absolute -inset-3 rounded-[2.5rem] bg-brand-gradient opacity-20 blur-2xl" />
               <div className="absolute -inset-1 rounded-[2.25rem] bg-brand-gradient" />
 
-              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-gradient-to-br from-pink-500 via-fuchsia-600 to-violet-700">
-                {/* Pattern overlay */}
-                <div className="absolute inset-0 opacity-30" style={{
-                  backgroundImage: "radial-gradient(circle at 30% 20%, rgba(255,255,255,0.3) 0%, transparent 50%)",
-                }} />
-
-                {/* Stylized silhouette */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <svg viewBox="0 0 200 240" className="h-4/5 w-4/5" fill="none">
-                    <circle cx="100" cy="60" r="32" fill="rgba(255,255,255,0.25)" />
-                    <path
-                      d="M 60 110 Q 100 95 140 110 L 150 180 Q 140 200 100 200 Q 60 200 50 180 Z"
-                      fill="rgba(255,255,255,0.2)"
-                    />
-                    <path d="M 50 180 L 30 230" stroke="rgba(255,255,255,0.2)" strokeWidth="14" strokeLinecap="round" />
-                    <path d="M 150 180 L 170 230" stroke="rgba(255,255,255,0.2)" strokeWidth="14" strokeLinecap="round" />
-                    <path d="M 80 110 L 50 140" stroke="rgba(255,255,255,0.2)" strokeWidth="14" strokeLinecap="round" />
-                    <path d="M 120 110 L 160 130" stroke="rgba(255,255,255,0.25)" strokeWidth="14" strokeLinecap="round" />
-                  </svg>
-                </div>
+              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-charcoal">
+                {/* Real photo of Riana */}
+                <img
+                  src="/brand/extra-2.jpg"
+                  alt="Riana — Zumba Education Specialist"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                {/* Warm coral overlay for brand cohesion */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, rgba(20,22,27,0.1) 0%, rgba(20,22,27,0.2) 50%, rgba(20,22,27,0.8) 100%)",
+                  }}
+                />
 
                 {/* Floating badge */}
                 <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] font-bold tracking-widest uppercase">
@@ -53,17 +48,17 @@ export function MeetRiana() {
                 </div>
 
                 {/* Bottom name plate */}
-                <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                  <div className="text-white font-extrabold text-xl" style={{ fontFamily: "var(--font-display)" }}>
+                <div className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-black/70 via-black/30 to-transparent">
+                  <div className="text-white font-extrabold text-2xl" style={{ fontFamily: "var(--font-display)" }}>
                     Riana
                   </div>
-                  <div className="text-white/80 text-xs">Zumba Education Specialist (ZES)</div>
+                  <div className="text-white/85 text-xs">Zumba Education Specialist (ZES)</div>
                 </div>
               </div>
 
               {/* Floating chips */}
               <div className="absolute -top-3 -right-3 px-3 py-2 rounded-2xl bg-white shadow-lg flex items-center gap-2">
-                <Instagram className="h-4 w-4 text-pink-600" />
+                <Instagram className="h-4 w-4 text-orange-600" />
                 <div className="leading-tight">
                   <div className="text-xs font-extrabold">850K</div>
                   <div className="text-[9px] text-zinc-500">Followers</div>
@@ -87,9 +82,9 @@ export function MeetRiana() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-7"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-50 border border-pink-200 mb-4">
-              <Heart className="h-3.5 w-3.5 text-pink-600 fill-pink-600" />
-              <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Meet The Master</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-50 border border-orange-200 mb-4">
+              <Heart className="h-3.5 w-3.5 text-orange-600 fill-orange-600" />
+              <span className="text-xs font-bold text-orange-800 tracking-wide uppercase">Meet The Master</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-4" style={{ fontFamily: "var(--font-display)" }}>
               Kenali <span className="text-gradient-magenta">Riana</span>, Sang Master di Balik Gerakan Ini
@@ -119,7 +114,7 @@ export function MeetRiana() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="p-4 rounded-2xl bg-gradient-to-br from-pink-50 to-orange-50 border border-pink-100 text-center"
+                  className="p-4 rounded-2xl bg-gradient-to-br from-orange-50 to-orange-50 border border-orange-100 text-center"
                 >
                   <div className="text-2xl lg:text-3xl font-black text-gradient-magenta" style={{ fontFamily: "var(--font-display)" }}>
                     {stat.value}

@@ -44,7 +44,7 @@ export function Countdown() {
       <div className="absolute inset-0 opacity-20" style={{
         backgroundImage: "radial-gradient(circle at 20% 30%, rgba(236,10,139,0.4) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(255,106,44,0.3) 0%, transparent 40%)",
       }} />
-      <div className="absolute top-10 left-10 h-32 w-32 rounded-full bg-pink-500/20 blur-3xl animate-float-slow" />
+      <div className="absolute top-10 left-10 h-32 w-32 rounded-full bg-orange-500/20 blur-3xl animate-float-slow" />
       <div className="absolute bottom-10 right-10 h-40 w-40 rounded-full bg-orange-500/20 blur-3xl animate-float-slow" style={{ animationDelay: "1s" }} />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
@@ -57,8 +57,8 @@ export function Countdown() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-4">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75 animate-ping" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-300" />
+              <span className="absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75 animate-ping" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-300" />
             </span>
             <span className="text-xs font-bold text-white tracking-widest uppercase">Live Countdown</span>
           </div>
@@ -117,10 +117,10 @@ function CountdownCard({
 }) {
   const gradient =
     accent === "warm"
-      ? "from-orange-500/20 via-amber-500/10 to-transparent"
-      : "from-fuchsia-500/20 via-pink-500/10 to-transparent";
-  const ringColor = accent === "warm" ? "ring-orange-400/40" : "ring-fuchsia-400/40";
-  const iconBg = accent === "warm" ? "bg-gradient-to-br from-orange-400 to-amber-500" : "bg-gradient-to-br from-fuchsia-500 to-pink-600";
+      ? "from-orange-500/20 via-orange-500/10 to-transparent"
+      : "from-orange-500/20 via-orange-500/10 to-transparent";
+  const ringColor = accent === "warm" ? "ring-orange-400/40" : "ring-orange-400/40";
+  const iconBg = accent === "warm" ? "bg-gradient-to-br from-orange-400 to-orange-500" : "bg-gradient-to-br from-orange-500 to-orange-600";
 
   const units = [
     { label: "Hari", value: timeLeft.days },

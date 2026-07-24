@@ -55,13 +55,13 @@ export const REGIONS: Region[] = [
 ];
 
 export const REGION_COLORS: Record<Region, string> = {
-  "Jawa Barat":    "#ec0a8b",
-  "Jawa Tengah":   "#d6249e",
-  "Jawa Timur":    "#ff6a2c",
-  "Bali & Nusra":  "#ffcb05",
-  "Sumatera":      "#6b1f7a",
-  "Sulawesi":      "#b51d8a",
-  "Kalimantan":    "#ff8a3d",
+  "Jawa Barat":    "#F77258", // coral
+  "Jawa Tengah":   "#E38B96", // dusty rose
+  "Jawa Timur":    "#F86743", // flame
+  "Bali & Nusra":  "#E7C7BE", // blush
+  "Sumatera":      "#9A6458", // terracotta
+  "Sulawesi":      "#C26873", // rose deep
+  "Kalimantan":    "#563E3D", // terra deep
 };
 
 export const MURI_TARGET = 10000;
@@ -176,7 +176,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Pengalaman terbaik dalam karier saya mengajar Zumba selama 8 tahun. Energinya gila, komunitasnya solid, dan Riana benar-benar inspiratif. Anak-anak murid saya yang ikut langsung ketagihan.",
     rating: 5,
-    avatarColor: "#ec0a8b",
+    avatarColor: "#F77258",
   },
   {
     name: "Ratna Sari",
@@ -185,7 +185,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Saya awalnya minder karena baru pertama kali ikut Zumba. Tapi semua orang sangat welcome, instruktur sabar, dan musiknya bikin semangat. Sekarang saya rutin latihan tiap minggu.",
     rating: 5,
-    avatarColor: "#ff6a2c",
+    avatarColor: "#F86743",
   },
   {
     name: "Michael Tandean",
@@ -194,7 +194,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Berkat Riana On The Move, saya turun 5 kg dalam 3 bulan setelah rutin latihan Zumba Step. Yang paling saya suka: community-nya bukan cuma soal olahraga, tapi soal support system.",
     rating: 5,
-    avatarColor: "#6b1f7a",
+    avatarColor: "#9A6458",
   },
   {
     name: "Sinta Maharani",
@@ -203,7 +203,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Event-nya super well-organized. Dari check-in, sesi Zumba, sampai doorprize semua smooth. Fotografernya juga profesional, foto-fotonya bagus banget buat update sosmed!",
     rating: 5,
-    avatarColor: "#d6249e",
+    avatarColor: "#E38B96",
   },
   {
     name: "Budi Prakoso",
@@ -212,7 +212,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Zumba Step ini beda dengan Zumba biasa — lebih challenging, lebih banyak lower body, dan cardio-nya lebih intense. Cocok buat yang mauvariin rutinitas gym. Recommended banget!",
     rating: 5,
-    avatarColor: "#ffcb05",
+    avatarColor: "#F77258",
   },
   {
     name: "Lia Kusumawardani",
@@ -221,7 +221,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Sebagai dokter, saya rekomendasiin Zumba Step ke pasien saya yang butuh aktivitas kardio low-impact tapi efektif. Riana On The Move jadi trigger banyak pasien saya mulai hidup aktif.",
     rating: 5,
-    avatarColor: "#b51d8a",
+    avatarColor: "#C26873",
   },
 ];
 
@@ -241,17 +241,17 @@ export const PARTNER_TYPES = [
 export const PARTNER_TIERS = [
   {
     name: "Platinum",
-    color: "from-violet-600 to-fuchsia-600",
+    color: "from-stone-600 to-orange-600",
     benefit: "Title sponsor seluruh 20 kota, branding stage utama, 50 slot VIP per kota, sesi meet-and-greet dengan Riana, integrasi brand di seluruh konten digital, headline press release.",
   },
   {
     name: "Gold",
-    color: "from-amber-400 to-orange-500",
+    color: "from-orange-400 to-orange-500",
     benefit: "Co-sponsor regional (5 kota), booth eksklusif di venue, 25 slot VIP per kota, logo di backdrop utama, konten co-branded di sosmed Riana.",
   },
   {
     name: "Silver",
-    color: "from-zinc-300 to-zinc-500",
+    color: "from-stone-600 to-stone-800",
     benefit: "Sponsor kota tunggal, booth standar di venue, 10 slot VIP, logo di banner event kota, mention di sosmed lokal.",
   },
 ];

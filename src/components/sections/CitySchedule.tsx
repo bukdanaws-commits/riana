@@ -38,7 +38,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
   }, [filter]);
 
   return (
-    <section id="jadwal" className="relative py-16 lg:py-24 bg-gradient-to-b from-white to-pink-50/50 overflow-hidden">
+    <section id="jadwal" className="relative py-16 lg:py-24 bg-gradient-to-b from-white to-orange-50/50 overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -48,9 +48,9 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-pink-200 mb-4">
-            <Calendar className="h-3.5 w-3.5 text-pink-600" />
-            <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Tour Schedule 2026</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 border border-orange-200 mb-4">
+            <Calendar className="h-3.5 w-3.5 text-orange-600" />
+            <span className="text-xs font-bold text-orange-800 tracking-wide uppercase">Tour Schedule 2026</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-3" style={{ fontFamily: "var(--font-display)" }}>
             20 Kota, <span className="text-gradient-brand">1 Perjalanan</span>
@@ -66,7 +66,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
           <FilterPill
             active={filter === "all"}
             onClick={() => setFilter("all")}
-            color="#6b1f7a"
+            color="#9A6458"
             label="Semua Kota"
             count={CITIES.length}
           />
@@ -191,7 +191,7 @@ function CityCard({
       transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.4) }}
       onMouseEnter={() => onHover(city.id)}
       onMouseLeave={() => onHover(null)}
-      className="group relative p-5 rounded-2xl bg-white border-2 border-zinc-100 hover:border-pink-300 hover:shadow-glow-pink transition-all cursor-pointer overflow-hidden"
+      className="group relative p-5 rounded-2xl bg-white border-2 border-zinc-100 hover:border-orange-300 hover:shadow-glow-pink transition-all cursor-pointer overflow-hidden"
       onClick={onClick}
     >
       {/* Color accent bar */}
@@ -207,7 +207,7 @@ function CityCard({
               {city.dayLabel}, {city.dateLabel}
             </span>
             {isFinale && (
-              <Badge className="bg-amber-400 text-amber-950 text-[9px] hover:bg-amber-400 px-1.5 py-0">
+              <Badge className="bg-orange-400 text-amber-950 text-[9px] hover:bg-orange-400 px-1.5 py-0">
                 <Sparkles className="h-2.5 w-2.5 mr-0.5" />
                 FINALE
               </Badge>
@@ -280,7 +280,7 @@ function StatusBadge({ status }: { status: CityEvent["status"] }) {
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-orange-700 text-[10px] font-bold">
       <Clock className="h-3 w-3" />
       Segera
     </span>
@@ -300,7 +300,7 @@ function IndonesiaMap({
   filter: Filter;
 }) {
   return (
-    <div className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-violet-50 via-pink-50 to-orange-50 border-2 border-pink-100 overflow-hidden p-4">
+    <div className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-stone-50 via-orange-50 to-orange-50 border-2 border-orange-100 overflow-hidden p-4">
       <div className="absolute inset-0 pattern-dots opacity-50" />
 
       {/* Map header */}

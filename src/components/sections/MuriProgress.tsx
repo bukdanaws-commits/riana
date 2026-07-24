@@ -60,9 +60,9 @@ export function MuriProgress() {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/20 backdrop-blur-md border border-amber-300/30 mb-4">
-            <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-            <span className="text-xs font-bold text-amber-200 tracking-wide uppercase">Live Progress</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-400/20 backdrop-blur-md border border-orange-300/30 mb-4">
+            <Sparkles className="h-3.5 w-3.5 text-orange-300" />
+            <span className="text-xs font-bold text-orange-200 tracking-wide uppercase">Live Progress</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Menuju Rekor <span className="text-gradient-brand">MURI</span>
@@ -82,14 +82,14 @@ export function MuriProgress() {
           className="relative rounded-3xl bg-white/5 backdrop-blur-xl border border-white/10 p-6 lg:p-10 overflow-hidden"
         >
           {/* Decorative blob */}
-          <div className="absolute -top-20 -right-20 h-48 w-48 rounded-full bg-pink-500/30 blur-3xl" />
+          <div className="absolute -top-20 -right-20 h-48 w-48 rounded-full bg-orange-500/30 blur-3xl" />
           <div className="absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-orange-500/20 blur-3xl" />
 
           <div className="relative">
             {/* Numbers row */}
             <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 mb-8">
               <div className="text-center sm:text-left">
-                <div className="flex items-center gap-2 text-amber-300 text-xs font-bold uppercase tracking-widest mb-1">
+                <div className="flex items-center gap-2 text-orange-300 text-xs font-bold uppercase tracking-widest mb-1">
                   <Users className="h-4 w-4" />
                   Peserta Terdaftar
                 </div>
@@ -101,7 +101,7 @@ export function MuriProgress() {
               <div className="text-4xl lg:text-5xl text-white/30 font-black">/</div>
 
               <div className="text-center sm:text-right">
-                <div className="flex items-center gap-2 text-pink-300 text-xs font-bold uppercase tracking-widest mb-1 justify-center sm:justify-end">
+                <div className="flex items-center gap-2 text-orange-300 text-xs font-bold uppercase tracking-widest mb-1 justify-center sm:justify-end">
                   <Trophy className="h-4 w-4" />
                   Target MURI
                 </div>

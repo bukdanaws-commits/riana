@@ -40,7 +40,7 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/85 backdrop-blur-xl shadow-md border-b border-pink-100"
+          ? "bg-white/85 backdrop-blur-xl shadow-md border-b border-orange-100"
           : "bg-transparent"
       }`}
     >
@@ -58,7 +58,7 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
               >
                 RIANA
               </div>
-              <div className="text-[10px] lg:text-xs text-pink-600 font-bold tracking-[0.2em] -mt-1">
+              <div className="text-[10px] lg:text-xs text-orange-600 font-bold tracking-[0.2em] -mt-1">
                 ON THE MOVE
               </div>
             </div>
@@ -70,7 +70,7 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-4 py-2 text-sm font-semibold text-zinc-700 hover:text-pink-600 hover:bg-pink-50 rounded-full transition-colors"
+                className="px-4 py-2 text-sm font-semibold text-zinc-700 hover:text-orange-600 hover:bg-orange-50 rounded-full transition-colors"
               >
                 {link.label}
               </Link>
@@ -83,7 +83,7 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
               variant="ghost"
               size="sm"
               asChild
-              className="font-semibold text-zinc-700 hover:text-pink-600"
+              className="font-semibold text-zinc-700 hover:text-orange-600"
             >
               <Link href="#partner">Menjadi Partner</Link>
             </Button>
@@ -112,7 +112,7 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
                     </div>
                     <div>
                       <div className="text-base font-extrabold">RIANA</div>
-                      <div className="text-[10px] text-pink-600 font-bold tracking-[0.2em] -mt-1">
+                      <div className="text-[10px] text-orange-600 font-bold tracking-[0.2em] -mt-1">
                         ON THE MOVE
                       </div>
                     </div>
@@ -125,7 +125,7 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
                     key={link.href}
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="px-4 py-3 text-base font-semibold text-zinc-700 hover:text-pink-600 hover:bg-pink-50 rounded-xl transition-colors"
+                    className="px-4 py-3 text-base font-semibold text-zinc-700 hover:text-orange-600 hover:bg-orange-50 rounded-xl transition-colors"
                   >
                     {link.label}
                   </Link>

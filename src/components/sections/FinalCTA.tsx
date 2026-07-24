@@ -14,12 +14,12 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
       {/* Animated background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-brand-energetic opacity-30 animate-gradient-shift" />
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-pink-600/40 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-orange-600/40 to-transparent" />
       </div>
 
       {/* Floating decorations */}
-      <div className="absolute top-10 left-10 h-24 w-24 rounded-full bg-amber-400/20 blur-2xl animate-float-slow" />
-      <div className="absolute bottom-10 right-10 h-32 w-32 rounded-full bg-pink-500/30 blur-3xl animate-float-slow" style={{ animationDelay: "1s" }} />
+      <div className="absolute top-10 left-10 h-24 w-24 rounded-full bg-orange-400/20 blur-2xl animate-float-slow" />
+      <div className="absolute bottom-10 right-10 h-32 w-32 rounded-full bg-orange-500/30 blur-3xl animate-float-slow" style={{ animationDelay: "1s" }} />
       <div className="absolute top-1/2 right-1/4 h-20 w-20 rounded-full bg-orange-400/20 blur-2xl animate-float-slow" style={{ animationDelay: "2s" }} />
 
       <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative">
@@ -31,7 +31,7 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
           className="text-center"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-6">
-            <Sparkles className="h-4 w-4 text-amber-300" />
+            <Sparkles className="h-4 w-4 text-orange-300" />
             <span className="text-xs font-bold text-white tracking-widest uppercase">Join The Movement</span>
           </div>
 
@@ -49,12 +49,12 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
           {/* Mini stats row */}
           <div className="flex flex-wrap items-center justify-center gap-6 mb-8">
             <div className="flex items-center gap-2 text-white">
-              <Trophy className="h-5 w-5 text-amber-300" />
+              <Trophy className="h-5 w-5 text-orange-300" />
               <span className="font-bold">Rekor MURI</span>
             </div>
             <div className="h-4 w-px bg-white/20" />
             <div className="flex items-center gap-2 text-white">
-              <Users className="h-5 w-5 text-pink-300" />
+              <Users className="h-5 w-5 text-orange-300" />
               <span className="font-bold">10.000+ Peserta</span>
             </div>
             <div className="h-4 w-px bg-white/20" />
@@ -69,7 +69,7 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
             <Button
               size="lg"
               onClick={onRegisterClick}
-              className="bg-white text-pink-600 hover:bg-white/90 font-bold text-base h-14 px-8 shadow-2xl rounded-full group"
+              className="bg-white text-orange-600 hover:bg-white/90 font-bold text-base h-14 px-8 shadow-2xl rounded-full group"
             >
               Daftar Sekarang — Gratis
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
