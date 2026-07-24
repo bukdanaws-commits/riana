@@ -1,0 +1,426 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Calendar,
+  MapPin,
+  Users,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  XCircle,
+  Sparkles,
+} from "lucide-react";
+import {
+  CITIES,
+  REGIONS,
+  REGION_COLORS,
+  type Region,
+  type CityEvent,
+} from "@/data/event";
+
+interface CityScheduleProps {
+  onRegisterClick: (cityId?: string) => void;
+}
+
+type Filter = "all" | Region;
+
+export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
+  const [filter, setFilter] = useState<Filter>("all");
+  const [hoveredCity, setHoveredCity] = useState<string | null>(null);
+
+  const filtered = useMemo(() => {
+    if (filter === "all") return CITIES;
+    return CITIES.filter((c) => c.region === filter);
+  }, [filter]);
+
+  return (
+    <section id="jadwal" className="relative py-16 lg:py-24 bg-gradient-to-b from-white to-pink-50/50 overflow-hidden">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-10"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-pink-200 mb-4">
+            <Calendar className="h-3.5 w-3.5 text-pink-600" />
+            <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Tour Schedule 2026</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-3" style={{ fontFamily: "var(--font-display)" }}>
+            20 Kota, <span className="text-gradient-brand">1 Perjalanan</span>
+          </h2>
+          <p className="text-base text-zinc-600 max-w-2xl mx-auto">
+            Pilih kota Anda dan jadilah bagian dari sejarah. Klik pin di peta atau kartu kota
+            untuk mendaftar.
+          </p>
+        </motion.div>
+
+        {/* Filter pills */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+          <FilterPill
+            active={filter === "all"}
+            onClick={() => setFilter("all")}
+            color="#6b1f7a"
+            label="Semua Kota"
+            count={CITIES.length}
+          />
+          {REGIONS.map((r) => (
+            <FilterPill
+              key={r}
+              active={filter === r}
+              onClick={() => setFilter(r)}
+              color={REGION_COLORS[r]}
+              label={r}
+              count={CITIES.filter((c) => c.region === r).length}
+            />
+          ))}
+        </div>
+
+        {/* Map + Grid layout */}
+        <div className="grid lg:grid-cols-12 gap-8">
+          {/* Map (left on desktop, hidden on mobile) */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-5 hidden lg:block"
+          >
+            <div className="sticky top-24">
+              <IndonesiaMap
+                hoveredCity={hoveredCity}
+                onCityHover={setHoveredCity}
+                onCityClick={(id) => onRegisterClick(id)}
+                filter={filter}
+              />
+            </div>
+          </motion.div>
+
+          {/* City cards grid */}
+          <div className="lg:col-span-7">
+            <AnimatePresence mode="popLayout">
+              <motion.div
+                key={filter}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="grid sm:grid-cols-2 gap-4"
+              >
+                {filtered.map((city, i) => (
+                  <CityCard
+                    key={city.id}
+                    city={city}
+                    index={i}
+                    onHover={setHoveredCity}
+                    onClick={() => onRegisterClick(city.id)}
+                  />
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FilterPill({
+  active,
+  onClick,
+  color,
+  label,
+  count,
+}: {
+  active: boolean;
+  onClick: () => void;
+  color: string;
+  label: string;
+  count: number;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`group inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 font-semibold text-sm transition-all ${
+        active
+          ? "text-white border-transparent shadow-md"
+          : "text-zinc-700 bg-white border-zinc-200 hover:border-zinc-300"
+      }`}
+      style={active ? { background: color } : undefined}
+    >
+      <span
+        className="h-2 w-2 rounded-full"
+        style={{ background: active ? "rgba(255,255,255,0.9)" : color }}
+      />
+      {label}
+      <span
+        className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
+          active ? "bg-white/20" : "bg-zinc-100"
+        }`}
+      >
+        {count}
+      </span>
+    </button>
+  );
+}
+
+function CityCard({
+  city,
+  index,
+  onHover,
+  onClick,
+}: {
+  city: CityEvent;
+  index: number;
+  onHover: (id: string | null) => void;
+  onClick: () => void;
+}) {
+  const isFinale = city.id === "jakarta";
+  const seatsPct = Math.round((city.registered / city.capacity) * 100);
+  const color = REGION_COLORS[city.region];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.4) }}
+      onMouseEnter={() => onHover(city.id)}
+      onMouseLeave={() => onHover(null)}
+      className="group relative p-5 rounded-2xl bg-white border-2 border-zinc-100 hover:border-pink-300 hover:shadow-glow-pink transition-all cursor-pointer overflow-hidden"
+      onClick={onClick}
+    >
+      {/* Color accent bar */}
+      <div
+        className="absolute top-0 left-0 right-0 h-1"
+        style={{ background: color }}
+      />
+
+      <div className="flex items-start justify-between mb-3">
+        <div>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+              {city.dayLabel}, {city.dateLabel}
+            </span>
+            {isFinale && (
+              <Badge className="bg-amber-400 text-amber-950 text-[9px] hover:bg-amber-400 px-1.5 py-0">
+                <Sparkles className="h-2.5 w-2.5 mr-0.5" />
+                FINALE
+              </Badge>
+            )}
+          </div>
+          <h3 className="text-xl font-extrabold text-zinc-900" style={{ fontFamily: "var(--font-display)" }}>
+            {city.city}
+          </h3>
+          <div className="text-xs text-zinc-500 mt-1 flex items-center gap-1">
+            <MapPin className="h-3 w-3" />
+            <span className="truncate max-w-[14rem]">{city.venue}</span>
+          </div>
+        </div>
+        <div
+          className="flex-shrink-0 h-10 w-10 rounded-xl flex items-center justify-center text-white"
+          style={{ background: color }}
+        >
+          <span className="text-sm font-black">{city.dateLabel.split(" ")[0]}</span>
+        </div>
+      </div>
+
+      {/* Status */}
+      <div className="flex items-center justify-between mt-3">
+        <StatusBadge status={city.status} />
+        <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+          <Users className="h-3.5 w-3.5" />
+          <span>
+            <span className="font-bold text-zinc-700">{city.registered}</span>/{city.capacity}
+          </span>
+        </div>
+      </div>
+
+      {city.registered > 0 && (
+        <div className="mt-2">
+          <div className="h-1 w-full rounded-full bg-zinc-100 overflow-hidden">
+            <div
+              className="h-full transition-all duration-500"
+              style={{ width: `${seatsPct}%`, background: color }}
+            />
+          </div>
+        </div>
+      )}
+
+      <Button
+        size="sm"
+        className="w-full mt-4 bg-zinc-900 group-hover:bg-brand-gradient text-white font-bold rounded-xl transition-all"
+      >
+        Daftar di {city.city}
+        <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+      </Button>
+    </motion.div>
+  );
+}
+
+function StatusBadge({ status }: { status: CityEvent["status"] }) {
+  if (status === "open") {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold">
+        <CheckCircle2 className="h-3 w-3" />
+        Terbuka
+      </span>
+    );
+  }
+  if (status === "soldout") {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-[10px] font-bold">
+        <XCircle className="h-3 w-3" />
+        Sold Out
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold">
+      <Clock className="h-3 w-3" />
+      Segera
+    </span>
+  );
+}
+
+// Simplified stylized Indonesia map
+function IndonesiaMap({
+  hoveredCity,
+  onCityHover,
+  onCityClick,
+  filter,
+}: {
+  hoveredCity: string | null;
+  onCityHover: (id: string | null) => void;
+  onCityClick: (id: string) => void;
+  filter: Filter;
+}) {
+  return (
+    <div className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-violet-50 via-pink-50 to-orange-50 border-2 border-pink-100 overflow-hidden p-4">
+      <div className="absolute inset-0 pattern-dots opacity-50" />
+
+      {/* Map header */}
+      <div className="relative flex items-center justify-between mb-2">
+        <div>
+          <div className="text-xs text-zinc-500 font-bold uppercase tracking-wider">Interactive Map</div>
+          <div className="text-sm font-extrabold text-zinc-900">20 Kota di Indonesia</div>
+        </div>
+        <div className="text-[10px] text-zinc-400">Hover • Click to register</div>
+      </div>
+
+      {/* SVG-based simplified Indonesia silhouette */}
+      <div className="relative h-[calc(100%-3rem)]">
+        <svg
+          viewBox="0 0 100 75"
+          className="absolute inset-0 h-full w-full"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          {/* Sumatera */}
+          <path
+            d="M 25 38 L 35 30 L 42 42 L 48 55 L 45 65 L 38 62 L 32 52 L 28 45 Z"
+            fill="rgba(236,10,139,0.08)"
+            stroke="rgba(236,10,139,0.25)"
+            strokeWidth="0.3"
+          />
+          {/* Jawa */}
+          <path
+            d="M 44 58 L 62 58 L 64 62 L 60 64 L 48 64 L 44 62 Z"
+            fill="rgba(236,10,139,0.08)"
+            stroke="rgba(236,10,139,0.25)"
+            strokeWidth="0.3"
+          />
+          {/* Bali & Nusa Tenggara */}
+          <path
+            d="M 64 60 L 75 60 L 78 64 L 70 66 L 64 64 Z"
+            fill="rgba(236,10,139,0.08)"
+            stroke="rgba(236,10,139,0.25)"
+            strokeWidth="0.3"
+          />
+          {/* Kalimantan */}
+          <path
+            d="M 60 38 L 75 38 L 78 50 L 75 60 L 68 62 L 64 55 L 60 45 Z"
+            fill="rgba(236,10,139,0.08)"
+            stroke="rgba(236,10,139,0.25)"
+            strokeWidth="0.3"
+          />
+          {/* Sulawesi */}
+          <path
+            d="M 74 44 L 80 40 L 82 50 L 78 56 L 76 50 L 78 44 L 80 48 L 82 52 L 84 46 Z"
+            fill="rgba(236,10,139,0.08)"
+            stroke="rgba(236,10,139,0.25)"
+            strokeWidth="0.3"
+          />
+          {/* Papua (mini) */}
+          <path
+            d="M 85 50 L 95 50 L 95 58 L 88 58 L 85 56 Z"
+            fill="rgba(236,10,139,0.05)"
+            stroke="rgba(236,10,139,0.2)"
+            strokeWidth="0.3"
+          />
+        </svg>
+
+        {/* City pins */}
+        {CITIES.map((city) => {
+          const isHovered = hoveredCity === city.id;
+          const isFinale = city.id === "jakarta";
+          const isVisible = filter === "all" || city.region === filter;
+          const color = REGION_COLORS[city.region];
+          return (
+            <button
+              key={city.id}
+              onClick={() => onCityClick(city.id)}
+              onMouseEnter={() => onCityHover(city.id)}
+              onMouseLeave={() => onHover(null)}
+              className="absolute -translate-x-1/2 -translate-y-1/2 transition-all"
+              style={{
+                left: `${city.mapX}%`,
+                top: `${city.mapY}%`,
+                opacity: isVisible ? 1 : 0.15,
+                zIndex: isHovered ? 30 : 10,
+              }}
+              aria-label={`${city.city} - ${city.dateLabel}`}
+            >
+              <div className="relative">
+                {/* Pulse ring */}
+                {(isHovered || isFinale) && (
+                  <span
+                    className="absolute inset-0 rounded-full animate-ping"
+                    style={{ background: color, opacity: 0.4 }}
+                  />
+                )}
+                {/* Pin dot */}
+                <div
+                  className={`relative rounded-full border-2 border-white shadow-lg transition-all ${
+                    isHovered ? "h-5 w-5" : isFinale ? "h-4 w-4" : "h-3 w-3"
+                  }`}
+                  style={{ background: color }}
+                />
+                {/* Tooltip on hover */}
+                {isHovered && (
+                  <div className="absolute left-1/2 -translate-x-1/2 -top-12 whitespace-nowrap px-3 py-1.5 rounded-lg bg-zinc-900 text-white text-[10px] font-bold shadow-xl z-40 pointer-events-none">
+                    {city.city}
+                    <div className="text-[8px] text-white/70 font-normal">{city.dateLabel} 2026</div>
+                  </div>
+                )}
+              </div>
+            </button>
+          );
+        })}
+
+        {/* Legend */}
+        <div className="absolute bottom-2 left-2 right-2 flex flex-wrap gap-1.5">
+          {REGIONS.map((r) => (
+            <div key={r} className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/70 backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 rounded-full" style={{ background: REGION_COLORS[r] }} />
+              <span className="text-[8px] font-semibold text-zinc-600">{r}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
