@@ -60,7 +60,7 @@ export function MuriProgress() {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-400/20 backdrop-blur-md border border-pink-300/30 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-400/20 backdrop-blur-md border border-magenta/30/30 mb-4">
             <Sparkles className="h-3.5 w-3.5 text-pink-300" />
             <span className="text-xs font-bold text-pink-200 tracking-wide uppercase">Live Progress</span>
           </div>

@@ -20,7 +20,7 @@ export function BrushDivider({
     },
     "gold": {
       top: "#D4AF37",
-      bottom: "#F4D061",
+      bottom: "#E8C547",
     },
     "white-purple": {
       top: "#FFFFFF",

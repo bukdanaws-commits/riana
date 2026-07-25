@@ -20,7 +20,7 @@ export function FAQ() {
     activeCategory === "all" ? FAQS : FAQS.filter((f) => f.category === activeCategory);
 
   return (
-    <section id="faq" className="relative py-16 lg:py-24 bg-zinc-50 overflow-hidden">
+    <section id="faq" className="relative py-16 lg:py-24 bg-purple-dark overflow-hidden">
       <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
 
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
@@ -31,14 +31,14 @@ export function FAQ() {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-pink-200 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-magenta/25 mb-4">
             <HelpCircle className="h-3.5 w-3.5 text-pink-600" />
             <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Frequently Asked</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-3" style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Pertanyaan <span className="text-gradient-brand">Umum</span>
           </h2>
-          <p className="text-base text-zinc-600">
+          <p className="text-base text-cream/70">
             Jawaban untuk pertanyaan yang paling sering ditanyakan calon peserta.
           </p>
         </motion.div>
@@ -75,7 +75,7 @@ export function FAQ() {
               <AccordionItem
                 key={`${activeCategory}-${i}`}
                 value={`item-${i}`}
-                className="rounded-2xl bg-white border-2 border-zinc-100 px-4 sm:px-5 shadow-sm overflow-hidden data-[state=open]:border-pink-300 data-[state=open]:shadow-glow-pink transition-all"
+                className="rounded-2xl bg-purple-dark border-2 border-magenta/15 px-4 sm:px-5 shadow-sm overflow-hidden data-[state=open]:border-magenta/30 data-[state=open]:shadow-glow-pink transition-all"
               >
                 <AccordionTrigger className="text-left hover:no-underline py-5 group">
                   <div className="flex items-start gap-3 pr-2">
@@ -86,13 +86,13 @@ export function FAQ() {
                       <div className="text-[10px] uppercase tracking-widest font-bold text-pink-600 mb-0.5">
                         {faq.category}
                       </div>
-                      <div className="font-bold text-zinc-900 text-sm sm:text-base leading-snug">
+                      <div className="font-bold text-cream text-sm sm:text-base leading-snug">
                         {faq.question}
                       </div>
                     </div>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="text-sm text-zinc-600 leading-relaxed pb-5 pl-10 pr-2">
+                <AccordionContent className="text-sm text-cream/70 leading-relaxed pb-5 pl-10 pr-2">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -106,9 +106,9 @@ export function FAQ() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-8 p-5 rounded-2xl bg-gradient-to-r from-pink-50 to-pink-50 border border-pink-100 text-center"
+          className="mt-8 p-5 rounded-2xl bg-gradient-to-r from-pink-50 to-pink-50 border border-magenta/20 text-center"
         >
-          <p className="text-sm text-zinc-700">
+          <p className="text-sm text-cream/80">
             Masih ada pertanyaan? Tim kami siap membantu via WhatsApp{" "}
             <a
               href="https://wa.me/6281320999969"
@@ -142,12 +142,12 @@ function CategoryPill({
       className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-all border-2 ${
         active
           ? "bg-brand-gradient text-white border-transparent shadow-glow-pink"
-          : "bg-white text-zinc-700 border-zinc-200 hover:border-pink-300"
+          : "bg-white text-cream/80 border-magenta/20 hover:border-magenta/30"
       }`}
     >
       {label}
       <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-        active ? "bg-white/20" : "bg-zinc-100"
+        active ? "bg-white/20" : "bg-purpleblack"
       }`}>
         {count}
       </span>

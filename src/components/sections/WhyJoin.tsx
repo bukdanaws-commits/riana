@@ -15,7 +15,7 @@ const ICONS: Record<string, React.ElementType> = {
 
 export function WhyJoin() {
   return (
-    <section id="keuntungan" className="relative py-16 lg:py-24 bg-zinc-50 overflow-hidden">
+    <section id="keuntungan" className="relative py-16 lg:py-24 bg-purple-dark overflow-hidden">
       <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
       <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
 
@@ -27,14 +27,14 @@ export function WhyJoin() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12 max-w-3xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 border border-pink-200 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 border border-magenta/25 mb-4">
             <Star className="h-3.5 w-3.5 text-pink-600 fill-pink-500" />
             <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Why You Should Join</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-3" style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-3" style={{ fontFamily: "var(--font-display)" }}>
             6 Alasan Jadi Bagian dari <span className="text-gradient-brand">Sejarah</span>
           </h2>
-          <p className="text-base text-zinc-600">
+          <p className="text-base text-cream/70">
             Bukan sekadar ikut kelas Zumba. Ini pengalaman sekali seumur hidup yang akan mengubah cara
             Anda melihat hidup aktif — dan mengabadikan nama Anda dalam sejarah Indonesia.
           </p>
@@ -50,7 +50,7 @@ export function WhyJoin() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: i * 0.07 }}
-                className="group relative p-6 lg:p-7 rounded-3xl bg-white border-2 border-zinc-100 hover:border-transparent hover:shadow-2xl transition-all overflow-hidden"
+                className="group relative p-6 lg:p-7 rounded-3xl bg-purple-dark border-2 border-magenta/15 hover:border-transparent hover:shadow-2xl transition-all overflow-hidden"
               >
                 {/* Hover gradient backdrop */}
                 <div className="absolute inset-0 bg-brand-gradient opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -65,10 +65,10 @@ export function WhyJoin() {
                       {String(i + 1).padStart(2, "0")}
                     </div>
                   </div>
-                  <h3 className="text-lg lg:text-xl font-extrabold text-zinc-900 group-hover:text-white transition-colors mb-2">
+                  <h3 className="text-lg lg:text-xl font-extrabold text-cream group-hover:text-white transition-colors mb-2">
                     {b.title}
                   </h3>
-                  <p className="text-sm text-zinc-600 group-hover:text-white/90 transition-colors leading-relaxed">
+                  <p className="text-sm text-cream/70 group-hover:text-white/90 transition-colors leading-relaxed">
                     {b.desc}
                   </p>
                 </div>

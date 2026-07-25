@@ -41,10 +41,10 @@ export function Partners() {
             <Handshake className="h-3.5 w-3.5 text-purple-600" />
             <span className="text-xs font-bold text-purple-800 tracking-wide uppercase">Partnership Opportunity</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-3" style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Mari <span className="text-gradient-magenta">Berkolaborasi</span>
           </h2>
-          <p className="text-base text-zinc-600">
+          <p className="text-base text-cream/70">
             Kami membuka kesempatan kolaborasi bagi brand, venue, komunitas, dan institusi yang ingin
             menggerakkan masyarakat Indonesia bersama Riana On The Move. Exposure nasional, audiens
             aktif, dan dampak sosial yang nyata.
@@ -62,15 +62,15 @@ export function Partners() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: i * 0.06 }}
-                className="group p-5 rounded-2xl bg-gradient-to-br from-zinc-50 to-pink-50/50 border border-zinc-200 hover:border-pink-300 hover:shadow-lg transition-all"
+                className="group p-5 rounded-2xl bg-gradient-to-br from-purple-dark to-pink-50/50 border border-magenta/20 hover:border-magenta/30 hover:shadow-lg transition-all"
               >
                 <div className="flex items-start gap-3">
                   <div className="flex-shrink-0 h-11 w-11 rounded-xl bg-brand-gradient flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
                     <Icon className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-extrabold text-zinc-900">{p.label}</h3>
-                    <p className="text-xs text-zinc-600 mt-1 leading-relaxed">{p.desc}</p>
+                    <h3 className="font-extrabold text-cream">{p.label}</h3>
+                    <p className="text-xs text-cream/70 mt-1 leading-relaxed">{p.desc}</p>
                   </div>
                 </div>
               </motion.div>
@@ -108,7 +108,7 @@ export function Partners() {
                   }`}
                 >
                   {i === 0 && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-pink-400 text-amber-950 text-[10px] font-bold tracking-wider uppercase">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-pink-400 text-stone-950 text-[10px] font-bold tracking-wider uppercase">
                       Most Popular
                     </div>
                   )}
@@ -123,7 +123,7 @@ export function Partners() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
               <Button
                 size="lg"
-                className="bg-white text-zinc-900 hover:bg-white/90 font-bold h-12 px-7 rounded-full"
+                className="bg-white text-cream hover:bg-white/90 font-bold h-12 px-7 rounded-full"
               >
                 <Sparkles className="mr-2 h-4 w-4 text-pink-600" />
                 Request Partnership Deck

@@ -40,7 +40,7 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/90 backdrop-blur-xl shadow-md border-b border-pink-100"
+          ? "bg-purpleblack/85 backdrop-blur-xl shadow-md border-b border-magenta/15"
           : "bg-transparent"
       }`}
     >
@@ -48,18 +48,18 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="#" className="flex items-center gap-2 group">
-            <div className="relative h-10 w-10 lg:h-11 lg:w-11 rounded-xl bg-magenta flex items-center justify-center shadow-glow-pink transition-transform group-hover:scale-110">
+            <div className="relative h-10 w-10 lg:h-11 lg:w-11 rounded-xl bg-magenta flex items-center justify-center shadow-glow-pink transition-transform group-hover:scale-110 border border-magenta-light/30">
               <Heart className="h-5 w-5 lg:h-6 lg:w-6 text-white fill-white" />
             </div>
             <div className="leading-tight">
               <div
-                className="text-xl lg:text-2xl font-black tracking-wider text-purpleblack"
+                className="text-xl lg:text-2xl font-black tracking-wider text-cream"
                 style={{ fontFamily: "var(--font-display)" }}
               >
                 RIANA ZUMBA
               </div>
               <div
-                className="text-[9px] lg:text-[10px] text-magenta font-bold tracking-[0.25em] -mt-1"
+                className="text-[9px] lg:text-[10px] text-gold-light font-bold tracking-[0.25em] -mt-1"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
                 ON THE MOVE
@@ -73,7 +73,7 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-3 py-2 text-sm font-bold text-purpleblack hover:text-magenta hover:bg-pink-50 rounded-full transition-colors"
+                className="px-3 py-2 text-sm font-bold text-cream/80 hover:text-gold-light hover:bg-magenta/10 rounded-full transition-colors"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
                 {link.label}
@@ -86,7 +86,7 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
             <Button
               size="sm"
               onClick={onRegisterClick}
-              className="bg-magenta hover:bg-magenta-deep text-white font-bold shadow-glow-pink rounded-full px-5"
+              className="bg-magenta hover:bg-magenta-deep text-white font-bold shadow-glow-pink rounded-full px-5 border border-magenta-light/30"
               style={{ fontFamily: "var(--font-heading)" }}
             >
               Daftar Sekarang
@@ -96,11 +96,11 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
           {/* Mobile menu */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="lg:hidden">
+              <Button variant="ghost" size="icon" className="lg:hidden text-cream">
                 {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[280px] sm:w-[320px]">
+            <SheetContent side="right" className="w-[280px] sm:w-[320px] bg-purpleblack border-l border-magenta/20">
               <SheetHeader>
                 <SheetTitle className="text-left">
                   <div className="flex items-center gap-2">
@@ -109,13 +109,13 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
                     </div>
                     <div>
                       <div
-                        className="text-xl font-black tracking-wider"
+                        className="text-xl font-black tracking-wider text-cream"
                         style={{ fontFamily: "var(--font-display)" }}
                       >
                         RIANA ZUMBA
                       </div>
                       <div
-                        className="text-[10px] text-magenta font-bold tracking-[0.25em] -mt-1"
+                        className="text-[10px] text-gold-light font-bold tracking-[0.25em] -mt-1"
                         style={{ fontFamily: "var(--font-heading)" }}
                       >
                         ON THE MOVE
@@ -130,13 +130,13 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
                     key={link.href}
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="px-4 py-3 text-base font-bold text-purpleblack hover:text-magenta hover:bg-pink-50 rounded-xl transition-colors"
+                    className="px-4 py-3 text-base font-bold text-cream/80 hover:text-gold-light hover:bg-magenta/10 rounded-xl transition-colors"
                     style={{ fontFamily: "var(--font-heading)" }}
                   >
                     {link.label}
                   </Link>
                 ))}
-                <div className="h-px bg-pink-100 my-3" />
+                <div className="h-px bg-magenta/20 my-3" />
                 <Button
                   className="w-full bg-magenta text-white font-bold shadow-glow-pink rounded-xl mt-2"
                   style={{ fontFamily: "var(--font-heading)" }}

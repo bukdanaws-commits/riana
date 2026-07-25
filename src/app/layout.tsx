@@ -69,9 +69,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" suppressHydrationWarning>
+    <html lang="id" suppressHydrationWarning className="dark">
       <body
-        className={`${bebas.variable} ${montserrat.variable} ${inter.variable} ${pacifico.variable} antialiased bg-background text-foreground`}
+        className={`${bebas.variable} ${montserrat.variable} ${inter.variable} ${pacifico.variable} antialiased bg-purpleblack text-cream`}
       >
         {children}
         <Toaster />

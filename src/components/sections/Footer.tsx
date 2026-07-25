@@ -76,7 +76,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative bg-zinc-950 text-white overflow-hidden">
+    <footer className="relative bg-purpleblack text-white overflow-hidden">
       {/* Top accent */}
       <div className="h-1 bg-brand-gradient" />
 

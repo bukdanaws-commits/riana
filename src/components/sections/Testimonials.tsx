@@ -34,14 +34,14 @@ export function Testimonials() {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-pink-200 mb-4 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-dark border border-magenta/25 mb-4 shadow-sm">
             <Star className="h-3.5 w-3.5 text-pink-500 fill-pink-500" />
             <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Kata Mereka</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-3" style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Cerita dari <span className="text-gradient-brand">Peserta</span>
           </h2>
-          <p className="text-base text-zinc-600 max-w-2xl mx-auto">
+          <p className="text-base text-cream/70 max-w-2xl mx-auto">
             Lebih dari 4.500 orang telah merasakan transformasi lewat Riana On The Move. Inilah
             sebagian cerita mereka.
           </p>
@@ -60,7 +60,7 @@ export function Testimonials() {
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 className="absolute inset-0"
               >
-                <div className="relative h-full p-6 lg:p-10 rounded-3xl bg-white shadow-xl border border-pink-100 overflow-hidden">
+                <div className="relative h-full p-6 lg:p-10 rounded-3xl bg-purple-dark shadow-xl border border-magenta/20 overflow-hidden">
                   <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full opacity-10 blur-2xl" style={{ background: current.avatarColor }} />
                   <Quote className="absolute top-6 right-6 h-16 w-16 text-pink-100" />
 
@@ -73,8 +73,8 @@ export function Testimonials() {
                       >
                         {current.name.charAt(0)}
                       </div>
-                      <div className="font-extrabold text-zinc-900 text-lg">{current.name}</div>
-                      <div className="text-sm text-zinc-500">{current.role}</div>
+                      <div className="font-extrabold text-cream text-lg">{current.name}</div>
+                      <div className="text-sm text-cream/60">{current.role}</div>
                       <div className="inline-flex items-center gap-1 mt-2 px-2.5 py-1 rounded-full bg-pink-50 text-pink-700 text-xs font-semibold">
                         <MapPin className="h-3 w-3" />
                         {current.city}
@@ -88,7 +88,7 @@ export function Testimonials() {
 
                     {/* Right: quote */}
                     <div className="lg:w-2/3 flex items-center">
-                      <p className="text-lg lg:text-xl text-zinc-700 leading-relaxed italic">
+                      <p className="text-lg lg:text-xl text-cream/80 leading-relaxed italic">
                         &ldquo;{current.quote}&rdquo;
                       </p>
                     </div>
@@ -104,7 +104,7 @@ export function Testimonials() {
               variant="outline"
               size="icon"
               onClick={prev}
-              className="h-11 w-11 rounded-full border-2 border-pink-200 hover:border-pink-400 hover:bg-pink-50"
+              className="h-11 w-11 rounded-full border-2 border-magenta/25 hover:border-pink-400 hover:bg-magenta/10"
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
@@ -129,7 +129,7 @@ export function Testimonials() {
               variant="outline"
               size="icon"
               onClick={next}
-              className="h-11 w-11 rounded-full border-2 border-pink-200 hover:border-pink-400 hover:bg-pink-50"
+              className="h-11 w-11 rounded-full border-2 border-magenta/25 hover:border-pink-400 hover:bg-magenta/10"
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
@@ -152,7 +152,7 @@ export function Testimonials() {
           ].map((s) => (
             <div key={s.label} className="text-center p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white">
               <div className={`text-3xl font-black ${s.color}`} style={{ fontFamily: "var(--font-display)" }}>{s.value}</div>
-              <div className="text-xs text-zinc-600 font-semibold mt-1">{s.label}</div>
+              <div className="text-xs text-cream/70 font-semibold mt-1">{s.label}</div>
             </div>
           ))}
         </motion.div>

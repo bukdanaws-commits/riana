@@ -20,10 +20,10 @@ export function AboutRoadshow() {
             <Flag className="h-3.5 w-3.5 text-purple-600" />
             <span className="text-xs font-bold text-purple-800 tracking-wide uppercase">The Big Picture</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-4" style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-4" style={{ fontFamily: "var(--font-display)" }}>
             Visi <span className="text-gradient-magenta">Roadshow 20 Kota</span>
           </h2>
-          <p className="text-base text-zinc-600 leading-relaxed">
+          <p className="text-base text-cream/70 leading-relaxed">
             Roadshow Riana On The Move bukan sekadar rangkaian kelas Zumba. Ini adalah gerakan nasional
             untuk mengajak masyarakat Indonesia bergerak bersama, membangun komunitas sehat yang
             berkelanjutan, dan mengukir rekor MURI sebagai bukti bahwa bersama kita bisa melakukan
@@ -78,14 +78,14 @@ function Pillar({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay }}
-      className="group relative p-7 rounded-3xl bg-white border-2 border-zinc-100 hover:border-pink-200 hover:shadow-xl transition-all overflow-hidden"
+      className="group relative p-7 rounded-3xl bg-purple-dark border-2 border-magenta/15 hover:border-magenta/25 hover:shadow-xl transition-all overflow-hidden"
     >
       <div className={`absolute -top-12 -right-12 h-32 w-32 rounded-full ${color} opacity-10 blur-2xl group-hover:opacity-20 transition-opacity`} />
       <div className={`relative h-14 w-14 rounded-2xl ${color} flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform`}>
         <Icon className="h-7 w-7 text-white" />
       </div>
-      <h3 className="relative text-xl font-extrabold text-zinc-900 mb-2">{title}</h3>
-      <p className="relative text-sm text-zinc-600 leading-relaxed">{desc}</p>
+      <h3 className="relative text-xl font-extrabold text-cream mb-2">{title}</h3>
+      <p className="relative text-sm text-cream/70 leading-relaxed">{desc}</p>
     </motion.div>
   );
 }

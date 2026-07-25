@@ -39,7 +39,7 @@ export function RegisterModal({
   // This guarantees fresh state without calling setState inside effects.
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg sm:max-w-xl p-0 overflow-hidden max-h-[90vh] overflow-y-auto custom-scroll">
+      <DialogContent className="max-w-lg sm:max-w-xl p-0 overflow-hidden max-h-[90vh] overflow-y-auto custom-scroll bg-purpleblack border border-magenta/30">
         <RegisterModalInner
           key={`${open}-${preselectedCity ?? "none"}`}
           preselectedCity={preselectedCity}
@@ -124,13 +124,13 @@ function RegisterModalInner({
                 <button
                   key={city.id}
                   onClick={() => handleSelect(city)}
-                  className="group w-full text-left flex items-center gap-4 p-4 rounded-2xl border-2 border-zinc-100 hover:border-pink-300 hover:bg-pink-50/40 transition-all"
+                  className="group w-full text-left flex items-center gap-4 p-4 rounded-2xl border border-magenta/20 hover:border-magenta hover:bg-magenta/10 transition-all"
                 >
                   <div
                     className={`flex-shrink-0 h-14 w-14 rounded-2xl flex flex-col items-center justify-center text-white font-bold ${
                       isFinale
                         ? "bg-brand-warm"
-                        : "bg-gradient-to-br from-pink-500 to-pink-600"
+                        : "bg-gradient-to-br from-magenta to-magenta-deep"
                     }`}
                   >
                     <span className="text-[10px] uppercase tracking-wider opacity-90">
@@ -140,31 +140,31 @@ function RegisterModalInner({
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-zinc-900">{city.city}</span>
+                      <span className="font-bold text-cream">{city.city}</span>
                       {isFinale && (
-                        <Badge className="bg-pink-400 text-amber-950 text-[10px] hover:bg-pink-400">
+                        <Badge className="bg-gold text-purpleblack text-[10px] hover:bg-gold">
                           GRAND FINALE
                         </Badge>
                       )}
                     </div>
-                    <div className="text-xs text-zinc-500 truncate mt-0.5">
+                    <div className="text-xs text-cream/60 truncate mt-0.5">
                       {city.venue}
                     </div>
                     {city.registered > 0 && (
                       <div className="mt-1.5">
-                        <div className="h-1 w-full rounded-full bg-zinc-100 overflow-hidden">
+                        <div className="h-1 w-full rounded-full bg-purpleblack overflow-hidden">
                           <div
                             className="h-full bg-brand-warm"
                             style={{ width: `${seatsPct}%` }}
                           />
                         </div>
-                        <div className="text-[10px] text-zinc-500 mt-0.5">
+                        <div className="text-[10px] text-cream/60 mt-0.5">
                           {city.registered}/{city.capacity} terdaftar
                         </div>
                       </div>
                     )}
                   </div>
-                  <ChevronRight className="h-5 w-5 text-zinc-300 group-hover:text-pink-500 transition-colors flex-shrink-0" />
+                  <ChevronRight className="h-5 w-5 text-cream/40 group-hover:text-magenta-light transition-colors flex-shrink-0" />
                 </button>
               );
             })}
@@ -174,23 +174,23 @@ function RegisterModalInner({
         {step === "form" && selectedCity && (
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Selected city summary */}
-            <div className="rounded-2xl border-2 border-pink-200 bg-pink-50/50 p-4">
+            <div className="rounded-2xl border border-magenta/30 bg-magenta/10 p-4">
               <div className="flex items-start gap-3">
                 <div className="h-12 w-12 rounded-xl bg-brand-gradient flex items-center justify-center text-white">
                   <MapPin className="h-6 w-6" />
                 </div>
                 <div className="flex-1">
-                  <div className="font-bold text-zinc-900">{selectedCity.city}</div>
-                  <div className="text-xs text-zinc-600 mt-0.5 flex items-center gap-2">
+                  <div className="font-bold text-cream">{selectedCity.city}</div>
+                  <div className="text-xs text-cream/70 mt-0.5 flex items-center gap-2">
                     <Calendar className="h-3 w-3" />
                     {selectedCity.dateLabel} 2026 • {selectedCity.dayLabel}
                   </div>
-                  <div className="text-xs text-zinc-600 mt-0.5">{selectedCity.venue}</div>
+                  <div className="text-xs text-cream/70 mt-0.5">{selectedCity.venue}</div>
                 </div>
                 <button
                   type="button"
                   onClick={() => setStep("select")}
-                  className="text-xs font-semibold text-pink-600 hover:underline"
+                  className="text-xs font-semibold text-magenta-light hover:underline"
                 >
                   Ubah
                 </button>
@@ -236,32 +236,32 @@ function RegisterModalInner({
                 <button
                   type="button"
                   onClick={() => setForm({ ...form, ticketType: "regular" })}
-                  className={`p-3 rounded-xl border-2 text-left transition-all ${
+                  className={`p-3 rounded-xl border text-left transition-all ${
                     form.ticketType === "regular"
-                      ? "border-pink-500 bg-pink-50"
-                      : "border-zinc-200 hover:border-zinc-300"
+                      ? "border-magenta bg-magenta/15"
+                      : "border-magenta/20 hover:border-magenta/40"
                   }`}
                 >
                   <div className="flex items-center gap-1.5">
-                    <Ticket className="h-4 w-4 text-pink-500" />
+                    <Ticket className="h-4 w-4 text-magenta-light" />
                     <span className="font-bold text-sm">Regular</span>
                   </div>
-                  <div className="text-xs text-zinc-500 mt-1">Gratis + e-Cert</div>
+                  <div className="text-xs text-cream/60 mt-1">Gratis + e-Cert</div>
                 </button>
                 <button
                   type="button"
                   onClick={() => setForm({ ...form, ticketType: "vip" })}
-                  className={`p-3 rounded-xl border-2 text-left transition-all ${
+                  className={`p-3 rounded-xl border text-left transition-all ${
                     form.ticketType === "vip"
-                      ? "border-pink-500 bg-pink-50"
-                      : "border-zinc-200 hover:border-zinc-300"
+                      ? "border-magenta bg-magenta/15"
+                      : "border-magenta/20 hover:border-magenta/40"
                   }`}
                 >
                   <div className="flex items-center gap-1.5">
-                    <Sparkles className="h-4 w-4 text-pink-500" />
+                    <Sparkles className="h-4 w-4 text-magenta-light" />
                     <span className="font-bold text-sm">VIP</span>
                   </div>
-                  <div className="text-xs text-zinc-500 mt-1">Merch + Front Row</div>
+                  <div className="text-xs text-cream/60 mt-1">Merch + Front Row</div>
                 </button>
               </div>
             </div>
@@ -294,22 +294,22 @@ function RegisterModalInner({
             <h3 className="text-xl font-extrabold mb-2" style={{ fontFamily: "var(--font-display)" }}>
               Anda Resmi Terdaftar!
             </h3>
-            <p className="text-sm text-zinc-600 mb-4 max-w-sm mx-auto">
+            <p className="text-sm text-cream/70 mb-4 max-w-sm mx-auto">
               Terima kasih <span className="font-bold">{form.name}</span>! E-ticket dan QR code
               akan dikirim ke <span className="font-bold">{form.email}</span> dan WhatsApp Anda
               dalam 1×24 jam.
             </p>
-            <div className="rounded-2xl bg-pink-50 border border-pink-200 p-4 text-left text-sm space-y-1.5 mb-4">
+            <div className="rounded-2xl bg-magenta/10 border border-magenta/25 p-4 text-left text-sm space-y-1.5 mb-4">
               <div className="flex justify-between">
-                <span className="text-zinc-500">Kota</span>
+                <span className="text-cream/60">Kota</span>
                 <span className="font-bold">{selectedCity.city}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-500">Tanggal</span>
+                <span className="text-cream/60">Tanggal</span>
                 <span className="font-bold">{selectedCity.dateLabel} 2026</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-500">Tiket</span>
+                <span className="text-cream/60">Tiket</span>
                 <span className="font-bold uppercase">{form.ticketType}</span>
               </div>
             </div>

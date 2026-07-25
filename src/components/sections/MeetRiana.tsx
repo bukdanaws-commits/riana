@@ -66,18 +66,18 @@ export function MeetRiana() {
               </div>
 
               {/* Floating chips */}
-              <div className="absolute -top-3 -right-3 px-3 py-2 rounded-2xl bg-white shadow-lg flex items-center gap-2">
+              <div className="absolute -top-3 -right-3 px-3 py-2 rounded-2xl bg-purple-dark shadow-lg flex items-center gap-2">
                 <Instagram className="h-4 w-4 text-pink-600" />
                 <div className="leading-tight">
                   <div className="text-xs font-extrabold">850K</div>
-                  <div className="text-[9px] text-zinc-500">Followers</div>
+                  <div className="text-[9px] text-cream/60">Followers</div>
                 </div>
               </div>
-              <div className="absolute -bottom-3 -left-3 px-3 py-2 rounded-2xl bg-white shadow-lg flex items-center gap-2">
+              <div className="absolute -bottom-3 -left-3 px-3 py-2 rounded-2xl bg-purple-dark shadow-lg flex items-center gap-2">
                 <Music2 className="h-4 w-4 text-pink-600" />
                 <div className="leading-tight">
                   <div className="text-xs font-extrabold">10+ Years</div>
-                  <div className="text-[9px] text-zinc-500">Experience</div>
+                  <div className="text-[9px] text-cream/60">Experience</div>
                 </div>
               </div>
             </div>
@@ -91,7 +91,7 @@ export function MeetRiana() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-7"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-pink-200 mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-magenta/25 mb-4">
               <Heart className="h-3.5 w-3.5 text-magenta fill-magenta" />
               <span
                 className="text-xs font-bold text-magenta-deep tracking-wide uppercase"
@@ -106,7 +106,7 @@ export function MeetRiana() {
             >
               KENALI <span className="text-gradient-brand">RIANA</span>, SANG MASTER DI BALIK GERAKAN INI
             </h2>
-            <div className="space-y-4 text-base text-zinc-600 leading-relaxed">
+            <div className="space-y-4 text-base text-cream/70 leading-relaxed">
               <p>
                 Riana adalah Zumba Education Specialist (ZES) bersertifikasi resmi dari Zumba Fitness LLC —
                 salah satu dari sedikit instruktur berlisensi ZES di Indonesia. Dengan lebih dari satu dekade
@@ -114,9 +114,9 @@ export function MeetRiana() {
                 pengikut di seluruh platform sosial media.
               </p>
               <p>
-                Lewat program <span className="font-bold text-zinc-900">AktiveNation</span>, Riana berkomitmen
+                Lewat program <span className="font-bold text-cream">AktiveNation</span>, Riana berkomitmen
                 menggerakkan masyarakat Indonesia menuju gaya hidup aktif dan sehat. Roadshow{" "}
-                <span className="font-bold text-zinc-900">Riana On The Move</span> adalah mahakarya terbesarnya:
+                <span className="font-bold text-cream">Riana On The Move</span> adalah mahakarya terbesarnya:
                 20 kota, 10.000+ peserta target, dan satu rekor MURI sebagai bukti bahwa Indonesia bisa hidup
                 lebih sehat bersama-sama.
               </p>
@@ -131,12 +131,12 @@ export function MeetRiana() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="p-4 rounded-2xl bg-gradient-to-br from-pink-50 to-pink-50 border border-pink-100 text-center"
+                  className="p-4 rounded-2xl bg-gradient-to-br from-pink-50 to-pink-50 border border-magenta/20 text-center"
                 >
                   <div className="text-2xl lg:text-3xl font-black text-gradient-magenta" style={{ fontFamily: "var(--font-display)" }}>
                     {stat.value}
                   </div>
-                  <div className="text-[11px] text-zinc-600 font-semibold mt-1 leading-tight">{stat.label}</div>
+                  <div className="text-[11px] text-cream/70 font-semibold mt-1 leading-tight">{stat.label}</div>
                 </motion.div>
               ))}
             </div>

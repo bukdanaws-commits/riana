@@ -20,14 +20,14 @@ export function Gallery() {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-pink-200 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-magenta/25 mb-4">
             <Camera className="h-3.5 w-3.5 text-pink-600" />
             <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Moment Captured</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-3" style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Galeri & <span className="text-gradient-brand">Video Highlight</span>
           </h2>
-          <p className="text-base text-zinc-600 max-w-2xl mx-auto">
+          <p className="text-base text-cream/70 max-w-2xl mx-auto">
             Saksikan energi, keceriaan, dan semangat dari perjalanan roadshow sebelumnya. Ini baru
             permulaan — kota Anda bisa jadi yang berikutnya!
           </p>
@@ -35,13 +35,13 @@ export function Gallery() {
 
         {/* Tabs */}
         <div className="flex justify-center mb-8">
-          <div className="inline-flex p-1 rounded-full bg-zinc-100 border border-zinc-200">
+          <div className="inline-flex p-1 rounded-full bg-purpleblack border border-magenta/20">
             <button
               onClick={() => setTab("photo")}
               className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all ${
                 tab === "photo"
                   ? "bg-white text-pink-600 shadow-sm"
-                  : "text-zinc-600 hover:text-zinc-900"
+                  : "text-cream/70 hover:text-cream"
               }`}
             >
               <Camera className="h-4 w-4" />
@@ -52,7 +52,7 @@ export function Gallery() {
               className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all ${
                 tab === "video"
                   ? "bg-white text-pink-600 shadow-sm"
-                  : "text-zinc-600 hover:text-zinc-900"
+                  : "text-cream/70 hover:text-cream"
               }`}
             >
               <Film className="h-4 w-4" />
@@ -153,7 +153,7 @@ export function Gallery() {
               ].map((v, i) => (
                 <div
                   key={i}
-                  className="group flex items-center gap-3 p-3 rounded-2xl bg-zinc-50 hover:bg-pink-50 cursor-pointer transition-colors border border-zinc-100"
+                  className="group flex items-center gap-3 p-3 rounded-2xl bg-purple-dark hover:bg-magenta/10 cursor-pointer transition-colors border border-magenta/15"
                 >
                   <div className="relative h-16 w-24 rounded-xl overflow-hidden flex-shrink-0 bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center">
                     <Play className="h-6 w-6 text-white fill-white" />
@@ -162,10 +162,10 @@ export function Gallery() {
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-bold text-sm text-zinc-900 truncate group-hover:text-pink-600 transition-colors">
+                    <div className="font-bold text-sm text-cream truncate group-hover:text-pink-600 transition-colors">
                       {v.title}
                     </div>
-                    <div className="text-xs text-zinc-500 mt-0.5">Riana On The Move</div>
+                    <div className="text-xs text-cream/60 mt-0.5">Riana On The Move</div>
                   </div>
                 </div>
               ))}
