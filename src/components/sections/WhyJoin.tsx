@@ -16,8 +16,8 @@ const ICONS: Record<string, React.ElementType> = {
 export function WhyJoin() {
   return (
     <section id="keuntungan" className="relative py-16 lg:py-24 bg-zinc-50 overflow-hidden">
-      <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-orange-200/40 blur-3xl -z-10" />
-      <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-orange-200/40 blur-3xl -z-10" />
+      <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
+      <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -27,9 +27,9 @@ export function WhyJoin() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12 max-w-3xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 border border-orange-200 mb-4">
-            <Star className="h-3.5 w-3.5 text-orange-600 fill-orange-500" />
-            <span className="text-xs font-bold text-orange-800 tracking-wide uppercase">Why You Should Join</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 border border-pink-200 mb-4">
+            <Star className="h-3.5 w-3.5 text-pink-600 fill-pink-500" />
+            <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Why You Should Join</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-3" style={{ fontFamily: "var(--font-display)" }}>
             6 Alasan Jadi Bagian dari <span className="text-gradient-brand">Sejarah</span>

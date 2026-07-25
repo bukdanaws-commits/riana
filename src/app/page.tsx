@@ -17,6 +17,7 @@ import { Partners } from "@/components/sections/Partners";
 import { FAQ } from "@/components/sections/FAQ";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Footer } from "@/components/sections/Footer";
+import { BrushDivider } from "@/components/sections/BrushDivider";
 
 export default function Home() {
   const [registerOpen, setRegisterOpen] = useState(false);
@@ -29,7 +30,6 @@ export default function Home() {
 
   const closeRegister = () => {
     setRegisterOpen(false);
-    // small delay before clearing to avoid flicker
     setTimeout(() => setPreselectedCity(null), 200);
   };
 
@@ -38,17 +38,33 @@ export default function Home() {
       <Navbar onRegisterClick={() => openRegister()} />
 
       <Hero onRegisterClick={() => openRegister()} />
+
+      {/* Hero (warm pink/orange) → Countdown (deep purple-black) */}
+      <BrushDivider variant="magenta-orange" className="-mt-8 lg:-mt-12 relative z-10" />
+
       <Countdown />
+
+      {/* Countdown (dark) → MeetRiana (white) */}
+      <BrushDivider variant="purple-gold" className="-mt-8 lg:-mt-12 relative z-10" />
+
       <MeetRiana />
       <ZumbaStep />
       <AboutRoadshow />
       <CitySchedule onRegisterClick={openRegister} />
       <WhyJoin />
       <MuriProgress />
+
+      {/* MuriProgress (dark) → Gallery (white) */}
+      <BrushDivider variant="purple-gold" className="-mt-8 lg:-mt-12 relative z-10" />
+
       <Gallery />
       <Testimonials />
       <Partners />
       <FAQ />
+
+      {/* FAQ (light) → FinalCTA (dark) */}
+      <BrushDivider variant="magenta-orange" className="-mt-8 lg:-mt-12 relative z-10" />
+
       <FinalCTA onRegisterClick={() => openRegister()} />
 
       <Footer />

@@ -20,9 +20,9 @@ export function Gallery() {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 border border-orange-200 mb-4">
-            <Camera className="h-3.5 w-3.5 text-orange-600" />
-            <span className="text-xs font-bold text-orange-800 tracking-wide uppercase">Moment Captured</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-pink-200 mb-4">
+            <Camera className="h-3.5 w-3.5 text-pink-600" />
+            <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Moment Captured</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Galeri & <span className="text-gradient-brand">Video Highlight</span>
@@ -40,7 +40,7 @@ export function Gallery() {
               onClick={() => setTab("photo")}
               className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all ${
                 tab === "photo"
-                  ? "bg-white text-orange-600 shadow-sm"
+                  ? "bg-white text-pink-600 shadow-sm"
                   : "text-zinc-600 hover:text-zinc-900"
               }`}
             >
@@ -51,7 +51,7 @@ export function Gallery() {
               onClick={() => setTab("video")}
               className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all ${
                 tab === "video"
-                  ? "bg-white text-orange-600 shadow-sm"
+                  ? "bg-white text-pink-600 shadow-sm"
                   : "text-zinc-600 hover:text-zinc-900"
               }`}
             >
@@ -128,7 +128,7 @@ export function Gallery() {
             className="grid lg:grid-cols-3 gap-4"
           >
             {/* Main video */}
-            <div className="lg:col-span-2 relative aspect-video rounded-3xl overflow-hidden bg-gradient-to-br from-orange-600 via-orange-700 to-stone-800 cursor-pointer group">
+            <div className="lg:col-span-2 relative aspect-video rounded-3xl overflow-hidden bg-gradient-to-br from-pink-600 via-pink-700 to-purple-800 cursor-pointer group">
               <div className="absolute inset-0 opacity-30" style={{
                 backgroundImage: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, transparent 50%), radial-gradient(circle at 70% 70%, rgba(255,203,5,0.3) 0%, transparent 50%)",
               }} />
@@ -153,16 +153,16 @@ export function Gallery() {
               ].map((v, i) => (
                 <div
                   key={i}
-                  className="group flex items-center gap-3 p-3 rounded-2xl bg-zinc-50 hover:bg-orange-50 cursor-pointer transition-colors border border-zinc-100"
+                  className="group flex items-center gap-3 p-3 rounded-2xl bg-zinc-50 hover:bg-pink-50 cursor-pointer transition-colors border border-zinc-100"
                 >
-                  <div className="relative h-16 w-24 rounded-xl overflow-hidden flex-shrink-0 bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
+                  <div className="relative h-16 w-24 rounded-xl overflow-hidden flex-shrink-0 bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center">
                     <Play className="h-6 w-6 text-white fill-white" />
                     <div className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/70 text-white text-[9px] font-bold">
                       {v.dur}
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-bold text-sm text-zinc-900 truncate group-hover:text-orange-600 transition-colors">
+                    <div className="font-bold text-sm text-zinc-900 truncate group-hover:text-pink-600 transition-colors">
                       {v.title}
                     </div>
                     <div className="text-xs text-zinc-500 mt-0.5">Riana On The Move</div>

@@ -38,7 +38,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
   }, [filter]);
 
   return (
-    <section id="jadwal" className="relative py-16 lg:py-24 bg-gradient-to-b from-white to-orange-50/50 overflow-hidden">
+    <section id="jadwal" className="relative py-16 lg:py-24 bg-gradient-to-b from-white to-pink-50/50 overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -48,17 +48,34 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
           transition={{ duration: 0.5 }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 border border-orange-200 mb-4">
-            <Calendar className="h-3.5 w-3.5 text-orange-600" />
-            <span className="text-xs font-bold text-orange-800 tracking-wide uppercase">Tour Schedule 2026</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-pink-200 mb-4">
+            <Calendar className="h-3.5 w-3.5 text-magenta" />
+            <span
+              className="text-xs font-bold text-magenta-deep tracking-wide uppercase"
+              style={{ fontFamily: "var(--font-heading)" }}
+            >
+              Tour Schedule 2026
+            </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-3" style={{ fontFamily: "var(--font-display)" }}>
-            20 Kota, <span className="text-gradient-brand">1 Perjalanan</span>
+          <h2
+            className="text-5xl sm:text-6xl lg:text-7xl font-black text-purpleblack mb-3 leading-none"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            20 KOTA, <span className="text-gradient-brand">1 PERJALANAN</span>
           </h2>
-          <p className="text-base text-zinc-600 max-w-2xl mx-auto">
-            Pilih kota Anda dan jadilah bagian dari sejarah. Klik pin di peta atau kartu kota
-            untuk mendaftar.
+          <p
+            className="text-base text-plum max-w-2xl mx-auto"
+            style={{ fontFamily: "var(--font-geist-sans)" }}
+          >
+            Pilih kota Anda dan jadilah bagian dari sejarah. Klik pin di peta atau
+            kartu kota untuk mendaftar.
           </p>
+          <div
+            className="font-script text-xl sm:text-2xl text-magenta mt-3"
+            style={{ fontFamily: "var(--font-script)" }}
+          >
+            Satu Gerakan, Satu Tujuan: Sehat & Bersejarah!
+          </div>
         </motion.div>
 
         {/* Filter pills */}
@@ -66,7 +83,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
           <FilterPill
             active={filter === "all"}
             onClick={() => setFilter("all")}
-            color="#9A6458"
+            color="#150F1E"
             label="Semua Kota"
             count={CITIES.length}
           />
@@ -183,6 +200,8 @@ function CityCard({
   const isFinale = city.id === "jakarta";
   const seatsPct = Math.round((city.registered / city.capacity) * 100);
   const color = REGION_COLORS[city.region];
+  // City number 01-20
+  const cityNumber = String(index + 1).padStart(2, "0");
 
   return (
     <motion.div
@@ -191,57 +210,82 @@ function CityCard({
       transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.4) }}
       onMouseEnter={() => onHover(city.id)}
       onMouseLeave={() => onHover(null)}
-      className="group relative p-5 rounded-2xl bg-white border-2 border-zinc-100 hover:border-orange-300 hover:shadow-glow-pink transition-all cursor-pointer overflow-hidden"
+      className="group relative p-5 rounded-2xl bg-white border-2 border-pink-100 hover:border-magenta hover:shadow-glow-pink transition-all cursor-pointer overflow-hidden"
       onClick={onClick}
     >
       {/* Color accent bar */}
       <div
-        className="absolute top-0 left-0 right-0 h-1"
+        className="absolute top-0 left-0 right-0 h-1.5"
         style={{ background: color }}
       />
 
-      <div className="flex items-start justify-between mb-3">
+      {/* Big number badge in background */}
+      <div
+        className="absolute -top-2 -right-2 text-7xl font-black opacity-8 group-hover:opacity-20 transition-opacity leading-none"
+        style={{
+          fontFamily: "var(--font-display)",
+          color: color,
+        }}
+      >
+        {cityNumber}
+      </div>
+
+      <div className="flex items-start justify-between mb-3 relative">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+            <span
+              className="text-xs font-bold uppercase tracking-wider text-purpleblack"
+              style={{ fontFamily: "var(--font-heading)" }}
+            >
               {city.dayLabel}, {city.dateLabel}
             </span>
             {isFinale && (
-              <Badge className="bg-orange-400 text-amber-950 text-[9px] hover:bg-orange-400 px-1.5 py-0">
+              <Badge className="bg-gold text-purpleblack text-[9px] hover:bg-gold px-1.5 py-0 font-black">
                 <Sparkles className="h-2.5 w-2.5 mr-0.5" />
                 FINALE
               </Badge>
             )}
           </div>
-          <h3 className="text-xl font-extrabold text-zinc-900" style={{ fontFamily: "var(--font-display)" }}>
+          <h3
+            className="text-2xl font-black text-purpleblack leading-tight"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
             {city.city}
           </h3>
-          <div className="text-xs text-zinc-500 mt-1 flex items-center gap-1">
+          <div className="text-xs text-plum mt-1 flex items-center gap-1">
             <MapPin className="h-3 w-3" />
             <span className="truncate max-w-[14rem]">{city.venue}</span>
           </div>
         </div>
         <div
-          className="flex-shrink-0 h-10 w-10 rounded-xl flex items-center justify-center text-white"
+          className="flex-shrink-0 h-11 w-11 rounded-xl flex flex-col items-center justify-center text-white shadow-md"
           style={{ background: color }}
         >
-          <span className="text-sm font-black">{city.dateLabel.split(" ")[0]}</span>
+          <span
+            className="text-[8px] font-bold uppercase opacity-90"
+            style={{ fontFamily: "var(--font-heading)" }}
+          >
+            {city.dayLabel.slice(0, 3)}
+          </span>
+          <span className="text-base font-black leading-none" style={{ fontFamily: "var(--font-display)" }}>
+            {city.dateLabel.split(" ")[0]}
+          </span>
         </div>
       </div>
 
       {/* Status */}
-      <div className="flex items-center justify-between mt-3">
+      <div className="flex items-center justify-between mt-3 relative">
         <StatusBadge status={city.status} />
-        <div className="flex items-center gap-1.5 text-xs text-zinc-500">
+        <div className="flex items-center gap-1.5 text-xs text-plum">
           <Users className="h-3.5 w-3.5" />
           <span>
-            <span className="font-bold text-zinc-700">{city.registered}</span>/{city.capacity}
+            <span className="font-bold text-purpleblack">{city.registered}</span>/{city.capacity}
           </span>
         </div>
       </div>
 
       {city.registered > 0 && (
-        <div className="mt-2">
+        <div className="mt-2 relative">
           <div className="h-1 w-full rounded-full bg-zinc-100 overflow-hidden">
             <div
               className="h-full transition-all duration-500"
@@ -253,7 +297,8 @@ function CityCard({
 
       <Button
         size="sm"
-        className="w-full mt-4 bg-zinc-900 group-hover:bg-brand-gradient text-white font-bold rounded-xl transition-all"
+        className="w-full mt-4 bg-purpleblack group-hover:bg-magenta text-white font-bold rounded-xl transition-all relative"
+        style={{ fontFamily: "var(--font-heading)" }}
       >
         Daftar di {city.city}
         <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
@@ -280,7 +325,7 @@ function StatusBadge({ status }: { status: CityEvent["status"] }) {
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-orange-700 text-[10px] font-bold">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-pink-700 text-[10px] font-bold">
       <Clock className="h-3 w-3" />
       Segera
     </span>
@@ -300,7 +345,7 @@ function IndonesiaMap({
   filter: Filter;
 }) {
   return (
-    <div className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-stone-50 via-orange-50 to-orange-50 border-2 border-orange-100 overflow-hidden p-4">
+    <div className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-purple-50 via-pink-50 to-pink-50 border-2 border-pink-100 overflow-hidden p-4">
       <div className="absolute inset-0 pattern-dots opacity-50" />
 
       {/* Map header */}

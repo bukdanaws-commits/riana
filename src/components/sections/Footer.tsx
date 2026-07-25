@@ -81,20 +81,26 @@ export function Footer() {
       <div className="h-1 bg-brand-gradient" />
 
       {/* Decorative */}
-      <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-orange-500/10 blur-3xl" />
-      <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-orange-500/10 blur-3xl" />
+      <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-pink-500/10 blur-3xl" />
+      <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-pink-500/10 blur-3xl" />
 
       <div className="relative container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         {/* Newsletter */}
-        <div className="rounded-3xl bg-gradient-to-br from-orange-600/20 via-orange-700/10 to-orange-500/20 backdrop-blur-md border border-white/10 p-6 lg:p-8 mb-12">
+        <div className="rounded-3xl bg-gradient-to-br from-magenta/20 via-plum/10 to-gold/15 backdrop-blur-md border border-white/10 p-6 lg:p-8 mb-12">
           <div className="grid md:grid-cols-2 gap-6 items-center">
             <div>
-              <h3 className="text-2xl lg:text-3xl font-black mb-2" style={{ fontFamily: "var(--font-display)" }}>
-                Jangan Lewatkan Update Terbaru
+              <h3
+                className="text-3xl lg:text-4xl font-black mb-2 text-white leading-none"
+                style={{ fontFamily: "var(--font-display)" }}
+              >
+                JANGAN LEWATKAN UPDATE TERBARU
               </h3>
-              <p className="text-white/70 text-sm">
-                Berlangganan newsletter untuk info pembukaan pendaftaran, event kota Anda, dan
-                kesempatan eksklusif lainnya.
+              <p
+                className="text-white/75 text-sm"
+                style={{ fontFamily: "var(--font-geist-sans)" }}
+              >
+                Berlangganan newsletter untuk info pembukaan pendaftaran, event kota
+                Anda, dan kesempatan eksklusif lainnya.
               </p>
             </div>
             <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3">
@@ -108,7 +114,8 @@ export function Footer() {
               <Button
                 type="submit"
                 size="lg"
-                className="bg-white text-orange-600 hover:bg-white/90 font-bold h-12 px-6 rounded-full"
+                className="bg-magenta hover:bg-magenta-deep text-white font-bold h-12 px-6 rounded-full shadow-glow-pink"
+                style={{ fontFamily: "var(--font-heading)" }}
               >
                 <Send className="h-4 w-4 mr-1" />
                 Subscribe
@@ -122,35 +129,50 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-4">
             <Link href="#" className="flex items-center gap-2 group mb-4">
-              <div className="h-11 w-11 rounded-xl bg-brand-gradient flex items-center justify-center shadow-glow-pink">
+              <div className="h-11 w-11 rounded-xl bg-magenta flex items-center justify-center shadow-glow-pink">
                 <Heart className="h-6 w-6 text-white fill-white" />
               </div>
               <div>
-                <div className="text-xl font-extrabold" style={{ fontFamily: "var(--font-display)" }}>
-                  RIANA
+                <div
+                  className="text-2xl font-black tracking-wider text-white"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  RIANA ZUMBA
                 </div>
-                <div className="text-xs text-orange-400 font-bold tracking-[0.2em] -mt-1">
+                <div
+                  className="text-[10px] text-gold-light font-bold tracking-[0.25em] -mt-1"
+                  style={{ fontFamily: "var(--font-heading)" }}
+                >
                   ON THE MOVE
                 </div>
               </div>
             </Link>
-            <p className="text-sm text-white/60 leading-relaxed mb-4 max-w-sm">
-              Roadshow nasional menuju Pemecahan Rekor MURI Zumba Step Terbesar di Indonesia.
-              Move Together. Make History.
+            <p
+              className="text-sm text-white/65 leading-relaxed mb-3 max-w-sm"
+              style={{ fontFamily: "var(--font-geist-sans)" }}
+            >
+              Roadshow nasional menuju Pemecahan Rekor MURI Zumba Step Terbesar di
+              Indonesia.
             </p>
+            <div
+              className="font-script text-xl text-gold-light mb-4"
+              style={{ fontFamily: "var(--font-script)" }}
+            >
+              Move Together. Make History.
+            </div>
 
             {/* Contact */}
             <div className="space-y-2 text-sm">
-              <div className="flex items-center gap-2 text-white/70">
-                <Phone className="h-4 w-4 text-orange-400" />
+              <div className="flex items-center gap-2 text-white/75">
+                <Phone className="h-4 w-4 text-gold-light" />
                 <span>0813-2099-9969</span>
               </div>
-              <div className="flex items-center gap-2 text-white/70">
-                <Mail className="h-4 w-4 text-orange-400" />
+              <div className="flex items-center gap-2 text-white/75">
+                <Mail className="h-4 w-4 text-gold-light" />
                 <span>partnership@rianaonthemove.id</span>
               </div>
-              <div className="flex items-center gap-2 text-white/70">
-                <MapPin className="h-4 w-4 text-orange-400" />
+              <div className="flex items-center gap-2 text-white/75">
+                <MapPin className="h-4 w-4 text-gold-light" />
                 <span>Jakarta, Indonesia</span>
               </div>
             </div>
@@ -168,7 +190,7 @@ export function Footer() {
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="text-sm text-white/70 hover:text-orange-400 transition-colors"
+                        className="text-sm text-white/70 hover:text-pink-400 transition-colors"
                       >
                         {link.label}
                       </Link>
@@ -186,8 +208,8 @@ export function Footer() {
             </div>
             <div className="flex flex-wrap gap-2">
               {[
-                { icon: Instagram, label: "Instagram", color: "hover:bg-gradient-to-br hover:from-stone-600 hover:to-orange-500" },
-                { icon: TikTokIcon, label: "TikTok", color: "hover:bg-black hover:ring-2 hover:ring-orange-500" },
+                { icon: Instagram, label: "Instagram", color: "hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500" },
+                { icon: TikTokIcon, label: "TikTok", color: "hover:bg-black hover:ring-2 hover:ring-pink-500" },
                 { icon: Facebook, label: "Facebook", color: "hover:bg-blue-600" },
                 { icon: Youtube, label: "YouTube", color: "hover:bg-red-600" },
               ].map((s) => (

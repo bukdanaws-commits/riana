@@ -8,7 +8,7 @@ export function MeetRiana() {
   return (
     <section id="about" className="relative py-16 lg:py-24 bg-white overflow-hidden">
       <div className="absolute inset-0 pattern-dots opacity-40 -z-10" />
-      <div className="absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-orange-200/40 blur-3xl -z-10" />
+      <div className="absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
@@ -25,47 +25,56 @@ export function MeetRiana() {
               <div className="absolute -inset-3 rounded-[2.5rem] bg-brand-gradient opacity-20 blur-2xl" />
               <div className="absolute -inset-1 rounded-[2.25rem] bg-brand-gradient" />
 
-              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-charcoal">
-                {/* Real photo of Riana */}
+              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-purpleblack">
+                {/* Real photo of Riana from mockup */}
                 <img
-                  src="/brand/extra-2.jpg"
+                  src="/brand/riana-portrait.png"
                   alt="Riana — Zumba Education Specialist"
                   className="absolute inset-0 h-full w-full object-cover"
+                  style={{ objectPosition: "center top" }}
                 />
-                {/* Warm coral overlay for brand cohesion */}
+                {/* Magenta-orange overlay for brand cohesion */}
                 <div
                   className="absolute inset-0"
                   style={{
                     background:
-                      "linear-gradient(180deg, rgba(20,22,27,0.1) 0%, rgba(20,22,27,0.2) 50%, rgba(20,22,27,0.8) 100%)",
+                      "linear-gradient(180deg, rgba(21,15,30,0.15) 0%, rgba(21,15,30,0.25) 50%, rgba(21,15,30,0.9) 100%)",
                   }}
                 />
 
                 {/* Floating badge */}
-                <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-[10px] font-bold tracking-widest uppercase">
+                <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-magenta/30 backdrop-blur-md border border-magenta/50 text-white text-[10px] font-bold tracking-widest uppercase" style={{ fontFamily: "var(--font-heading)" }}>
                   <Sparkles className="inline h-3 w-3 mr-1" />
                   Founder & Master Trainer
                 </div>
 
                 {/* Bottom name plate */}
-                <div className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-black/70 via-black/30 to-transparent">
-                  <div className="text-white font-extrabold text-2xl" style={{ fontFamily: "var(--font-display)" }}>
-                    Riana
+                <div className="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-purpleblack via-purpleblack/40 to-transparent">
+                  <div
+                    className="text-white font-black text-3xl tracking-wider"
+                    style={{ fontFamily: "var(--font-display)" }}
+                  >
+                    RIANA
                   </div>
-                  <div className="text-white/85 text-xs">Zumba Education Specialist (ZES)</div>
+                  <div
+                    className="text-gold-light text-xs font-bold tracking-widest uppercase mt-0.5"
+                    style={{ fontFamily: "var(--font-heading)" }}
+                  >
+                    Zumba Education Specialist (ZES)
+                  </div>
                 </div>
               </div>
 
               {/* Floating chips */}
               <div className="absolute -top-3 -right-3 px-3 py-2 rounded-2xl bg-white shadow-lg flex items-center gap-2">
-                <Instagram className="h-4 w-4 text-orange-600" />
+                <Instagram className="h-4 w-4 text-pink-600" />
                 <div className="leading-tight">
                   <div className="text-xs font-extrabold">850K</div>
                   <div className="text-[9px] text-zinc-500">Followers</div>
                 </div>
               </div>
               <div className="absolute -bottom-3 -left-3 px-3 py-2 rounded-2xl bg-white shadow-lg flex items-center gap-2">
-                <Music2 className="h-4 w-4 text-orange-600" />
+                <Music2 className="h-4 w-4 text-pink-600" />
                 <div className="leading-tight">
                   <div className="text-xs font-extrabold">10+ Years</div>
                   <div className="text-[9px] text-zinc-500">Experience</div>
@@ -82,12 +91,20 @@ export function MeetRiana() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-7"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-50 border border-orange-200 mb-4">
-              <Heart className="h-3.5 w-3.5 text-orange-600 fill-orange-600" />
-              <span className="text-xs font-bold text-orange-800 tracking-wide uppercase">Meet The Master</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-pink-200 mb-4">
+              <Heart className="h-3.5 w-3.5 text-magenta fill-magenta" />
+              <span
+                className="text-xs font-bold text-magenta-deep tracking-wide uppercase"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                Meet The Master
+              </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-zinc-900 mb-4" style={{ fontFamily: "var(--font-display)" }}>
-              Kenali <span className="text-gradient-magenta">Riana</span>, Sang Master di Balik Gerakan Ini
+            <h2
+              className="text-4xl sm:text-5xl lg:text-6xl font-black text-purpleblack mb-4 leading-none"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
+              KENALI <span className="text-gradient-brand">RIANA</span>, SANG MASTER DI BALIK GERAKAN INI
             </h2>
             <div className="space-y-4 text-base text-zinc-600 leading-relaxed">
               <p>
@@ -114,7 +131,7 @@ export function MeetRiana() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="p-4 rounded-2xl bg-gradient-to-br from-orange-50 to-orange-50 border border-orange-100 text-center"
+                  className="p-4 rounded-2xl bg-gradient-to-br from-pink-50 to-pink-50 border border-pink-100 text-center"
                 >
                   <div className="text-2xl lg:text-3xl font-black text-gradient-magenta" style={{ fontFamily: "var(--font-display)" }}>
                     {stat.value}

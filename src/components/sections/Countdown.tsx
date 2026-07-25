@@ -40,12 +40,22 @@ export function Countdown() {
 
   return (
     <section className="relative py-16 lg:py-24 bg-brand-dark overflow-hidden">
-      {/* Decorative */}
-      <div className="absolute inset-0 opacity-20" style={{
-        backgroundImage: "radial-gradient(circle at 20% 30%, rgba(236,10,139,0.4) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(255,106,44,0.3) 0%, transparent 40%)",
+      {/* Crowd blur background */}
+      <div
+        className="absolute inset-0 opacity-15"
+        style={{
+          backgroundImage: "url(/brand/crowd-bg.jpg)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          filter: "blur(12px)",
+        }}
+      />
+      {/* Decorative magenta-orange blobs */}
+      <div className="absolute inset-0 opacity-30" style={{
+        backgroundImage: "radial-gradient(circle at 20% 30%, rgba(223,38,121,0.5) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(241,114,56,0.4) 0%, transparent 40%)",
       }} />
-      <div className="absolute top-10 left-10 h-32 w-32 rounded-full bg-orange-500/20 blur-3xl animate-float-slow" />
-      <div className="absolute bottom-10 right-10 h-40 w-40 rounded-full bg-orange-500/20 blur-3xl animate-float-slow" style={{ animationDelay: "1s" }} />
+      <div className="absolute top-10 left-10 h-32 w-32 rounded-full bg-magenta/30 blur-3xl animate-float-slow" />
+      <div className="absolute bottom-10 right-10 h-40 w-40 rounded-full bg-orange-brand/30 blur-3xl animate-float-slow" style={{ animationDelay: "1s" }} />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
         <motion.div
@@ -55,18 +65,27 @@ export function Countdown() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 mb-4">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75 animate-ping" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-300" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/15 backdrop-blur-md border border-gold/30 mb-4">
+            <Trophy className="h-4 w-4 text-gold-light" />
+            <span
+              className="text-xs font-bold text-gold-light tracking-widest uppercase"
+              style={{ fontFamily: "var(--font-heading)" }}
+            >
+              Live Countdown
             </span>
-            <span className="text-xs font-bold text-white tracking-widest uppercase">Live Countdown</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-3" style={{ fontFamily: "var(--font-display)" }}>
-            Menuju Sejarah <span className="text-gradient-brand">MURI 2026</span>
+          <h2
+            className="text-5xl sm:text-6xl lg:text-7xl font-black text-white mb-3 leading-none"
+            style={{ fontFamily: "var(--font-display)" }}
+          >
+            MENUJU PEMECAHAN REKOR <span className="text-gradient-gold">MURI</span>
           </h2>
-          <p className="text-white/70 max-w-2xl mx-auto">
-            Hitung mundur menuju kota berikutnya dan Grand Finale pemecahan rekor MURI Zumba Step Terbesar di Indonesia.
+          <p
+            className="text-white/75 max-w-2xl mx-auto"
+            style={{ fontFamily: "var(--font-geist-sans)" }}
+          >
+            Hitung mundur menuju kota berikutnya dan Grand Finale pemecahan rekor
+            MURI Zumba Step Terbesar di Indonesia.
           </p>
         </motion.div>
 
@@ -115,12 +134,14 @@ function CountdownCard({
   accent: "warm" | "magenta";
   icon: React.ElementType;
 }) {
-  const gradient =
-    accent === "warm"
-      ? "from-orange-500/20 via-orange-500/10 to-transparent"
-      : "from-orange-500/20 via-orange-500/10 to-transparent";
-  const ringColor = accent === "warm" ? "ring-orange-400/40" : "ring-orange-400/40";
-  const iconBg = accent === "warm" ? "bg-gradient-to-br from-orange-400 to-orange-500" : "bg-gradient-to-br from-orange-500 to-orange-600";
+  const isFinale = accent === "magenta";
+  const gradient = isFinale
+    ? "from-gold/20 via-gold/10 to-transparent"
+    : "from-magenta/20 via-magenta/10 to-transparent";
+  const ringColor = isFinale ? "ring-gold/40" : "ring-magenta/40";
+  const iconBg = isFinale
+    ? "bg-gradient-to-br from-gold-light to-gold"
+    : "bg-gradient-to-br from-magenta to-magenta-deep";
 
   const units = [
     { label: "Hari", value: timeLeft.days },
@@ -135,30 +156,41 @@ function CountdownCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.5 }}
-      className={`relative rounded-3xl p-6 lg:p-8 bg-gradient-to-br ${gradient} ring-1 ${ringColor} backdrop-blur-md`}
+      className={`relative rounded-3xl p-6 lg:p-8 bg-gradient-to-br ${gradient} ring-1 ${ringColor} backdrop-blur-md overflow-hidden`}
     >
-      <div className="flex items-start justify-between mb-6">
+      {isFinale && (
+        <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-gold/20 blur-2xl" />
+      )}
+      <div className="flex items-start justify-between mb-6 relative">
         <div className="flex items-center gap-3">
           <div className={`h-12 w-12 rounded-2xl ${iconBg} flex items-center justify-center shadow-lg`}>
-            <Icon className="h-6 w-6 text-white" />
+            <Icon className={`h-6 w-6 ${isFinale ? "text-purpleblack" : "text-white"}`} />
           </div>
           <div>
-            <div className="text-xs uppercase tracking-widest text-white/60 font-bold">{label}</div>
-            <div className="text-2xl font-extrabold text-white" style={{ fontFamily: "var(--font-display)" }}>
+            <div
+              className="text-xs uppercase tracking-widest text-white/70 font-bold"
+              style={{ fontFamily: "var(--font-heading)" }}
+            >
+              {label}
+            </div>
+            <div
+              className="text-3xl font-black text-white"
+              style={{ fontFamily: "var(--font-display)" }}
+            >
               {city}
             </div>
           </div>
         </div>
         <div className="text-right">
-          <div className="text-xs text-white/60 flex items-center gap-1 justify-end">
+          <div className="text-xs text-white/70 flex items-center gap-1 justify-end">
             <Calendar className="h-3 w-3" />
             {date}
           </div>
-          <div className="text-xs text-white/40 mt-1 max-w-[12rem] truncate">{venue}</div>
+          <div className="text-xs text-white/50 mt-1 max-w-[12rem] truncate">{venue}</div>
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-2 sm:gap-3">
+      <div className="grid grid-cols-4 gap-2 sm:gap-3 relative">
         {units.map((u) => (
           <div
             key={u.label}

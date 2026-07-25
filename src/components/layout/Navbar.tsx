@@ -13,9 +13,9 @@ import {
 } from "@/components/ui/sheet";
 
 const NAV_LINKS = [
+  { label: "Beranda", href: "#" },
   { label: "Tentang", href: "#about" },
   { label: "Jadwal", href: "#jadwal" },
-  { label: "Keuntungan", href: "#keuntungan" },
   { label: "Galeri", href: "#galeri" },
   { label: "Partner", href: "#partner" },
   { label: "FAQ", href: "#faq" },
@@ -40,7 +40,7 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/85 backdrop-blur-xl shadow-md border-b border-orange-100"
+          ? "bg-white/90 backdrop-blur-xl shadow-md border-b border-pink-100"
           : "bg-transparent"
       }`}
     >
@@ -48,29 +48,33 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="#" className="flex items-center gap-2 group">
-            <div className="relative h-9 w-9 lg:h-10 lg:w-10 rounded-xl bg-brand-gradient flex items-center justify-center shadow-glow-pink transition-transform group-hover:scale-110">
-              <Heart className="h-5 w-5 text-white fill-white" />
+            <div className="relative h-10 w-10 lg:h-11 lg:w-11 rounded-xl bg-magenta flex items-center justify-center shadow-glow-pink transition-transform group-hover:scale-110">
+              <Heart className="h-5 w-5 lg:h-6 lg:w-6 text-white fill-white" />
             </div>
             <div className="leading-tight">
               <div
-                className="text-base lg:text-lg font-extrabold tracking-tight"
+                className="text-xl lg:text-2xl font-black tracking-wider text-purpleblack"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                RIANA
+                RIANA ZUMBA
               </div>
-              <div className="text-[10px] lg:text-xs text-orange-600 font-bold tracking-[0.2em] -mt-1">
+              <div
+                className="text-[9px] lg:text-[10px] text-magenta font-bold tracking-[0.25em] -mt-1"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
                 ON THE MOVE
               </div>
             </div>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-0.5">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="px-4 py-2 text-sm font-semibold text-zinc-700 hover:text-orange-600 hover:bg-orange-50 rounded-full transition-colors"
+                className="px-3 py-2 text-sm font-bold text-purpleblack hover:text-magenta hover:bg-pink-50 rounded-full transition-colors"
+                style={{ fontFamily: "var(--font-heading)" }}
               >
                 {link.label}
               </Link>
@@ -80,17 +84,10 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
           {/* Desktop CTAs */}
           <div className="hidden lg:flex items-center gap-3">
             <Button
-              variant="ghost"
-              size="sm"
-              asChild
-              className="font-semibold text-zinc-700 hover:text-orange-600"
-            >
-              <Link href="#partner">Menjadi Partner</Link>
-            </Button>
-            <Button
               size="sm"
               onClick={onRegisterClick}
-              className="bg-brand-gradient hover:opacity-90 text-white font-bold shadow-glow-pink rounded-full px-5"
+              className="bg-magenta hover:bg-magenta-deep text-white font-bold shadow-glow-pink rounded-full px-5"
+              style={{ fontFamily: "var(--font-heading)" }}
             >
               Daftar Sekarang
             </Button>
@@ -107,12 +104,20 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
               <SheetHeader>
                 <SheetTitle className="text-left">
                   <div className="flex items-center gap-2">
-                    <div className="h-9 w-9 rounded-xl bg-brand-gradient flex items-center justify-center">
+                    <div className="h-10 w-10 rounded-xl bg-magenta flex items-center justify-center">
                       <Heart className="h-5 w-5 text-white fill-white" />
                     </div>
                     <div>
-                      <div className="text-base font-extrabold">RIANA</div>
-                      <div className="text-[10px] text-orange-600 font-bold tracking-[0.2em] -mt-1">
+                      <div
+                        className="text-xl font-black tracking-wider"
+                        style={{ fontFamily: "var(--font-display)" }}
+                      >
+                        RIANA ZUMBA
+                      </div>
+                      <div
+                        className="text-[10px] text-magenta font-bold tracking-[0.25em] -mt-1"
+                        style={{ fontFamily: "var(--font-heading)" }}
+                      >
                         ON THE MOVE
                       </div>
                     </div>
@@ -125,22 +130,16 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
                     key={link.href}
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="px-4 py-3 text-base font-semibold text-zinc-700 hover:text-orange-600 hover:bg-orange-50 rounded-xl transition-colors"
+                    className="px-4 py-3 text-base font-bold text-purpleblack hover:text-magenta hover:bg-pink-50 rounded-xl transition-colors"
+                    style={{ fontFamily: "var(--font-heading)" }}
                   >
                     {link.label}
                   </Link>
                 ))}
-                <div className="h-px bg-zinc-200 my-3" />
+                <div className="h-px bg-pink-100 my-3" />
                 <Button
-                  variant="outline"
-                  asChild
-                  className="w-full justify-start font-semibold"
-                  onClick={() => setOpen(false)}
-                >
-                  <Link href="#partner">Menjadi Partner</Link>
-                </Button>
-                <Button
-                  className="w-full bg-brand-gradient text-white font-bold shadow-glow-pink rounded-xl mt-2"
+                  className="w-full bg-magenta text-white font-bold shadow-glow-pink rounded-xl mt-2"
+                  style={{ fontFamily: "var(--font-heading)" }}
                   onClick={() => {
                     setOpen(false);
                     onRegisterClick();
