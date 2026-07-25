@@ -25,7 +25,7 @@ const ICONS: Record<string, React.ElementType> = {
 
 export function Partners() {
   return (
-    <section id="partner" className="relative py-4 lg:py-6 bg-white overflow-hidden">
+    <section id="partner" className="relative py-4 lg:py-6 bg-brand-tech overflow-hidden">
       <div className="absolute inset-0 pattern-grid opacity-40 -z-10" />
       <div className="absolute -top-32 right-0 h-96 w-96 rounded-full bg-purple-200/40 blur-3xl -z-10" />
 
@@ -103,12 +103,12 @@ export function Partners() {
               {PARTNER_TIERS.map((tier, i) => (
                 <div
                   key={tier.name}
-                  className={`relative p-5 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 hover:border-white/30 transition-all ${
+                  className={`relative p-5 rounded-2xl bg-purple-dark/40 backdrop-blur-md border border-magenta/15 hover:border-white/30 transition-all ${
                     i === 0 ? "ring-2 ring-pink-400/40" : ""
                   }`}
                 >
                   {i === 0 && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-pink-400 text-stone-950 text-[10px] font-bold tracking-wider uppercase">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gold text-purpleblack text-[10px] font-bold tracking-wider uppercase">
                       Most Popular
                     </div>
                   )}
@@ -125,7 +125,7 @@ export function Partners() {
                 size="lg"
                 className="bg-white text-cream hover:bg-white/90 font-bold h-12 px-7 rounded-full"
               >
-                <Sparkles className="mr-2 h-4 w-4 text-pink-600" />
+                <Sparkles className="mr-2 h-4 w-4 text-magenta-light" />
                 Request Partnership Deck
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

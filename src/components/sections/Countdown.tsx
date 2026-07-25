@@ -194,7 +194,7 @@ function CountdownCard({
         {units.map((u) => (
           <div
             key={u.label}
-            className="rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 p-3 sm:p-4 text-center"
+            className="rounded-2xl bg-purple-dark/40 backdrop-blur-md border border-magenta/15 p-3 sm:p-4 text-center"
           >
             <div className="text-2xl sm:text-4xl font-black text-white tabular-nums leading-none">
               {String(u.value).padStart(2, "0")}

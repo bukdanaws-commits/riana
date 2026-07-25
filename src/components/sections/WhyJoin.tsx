@@ -15,9 +15,9 @@ const ICONS: Record<string, React.ElementType> = {
 
 export function WhyJoin() {
   return (
-    <section id="keuntungan" className="relative py-4 lg:py-6 bg-purple-dark overflow-hidden">
-      <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
-      <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
+    <section id="keuntungan" className="relative py-4 lg:py-6 bg-brand-tech overflow-hidden">
+      <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-magenta/20/40 blur-3xl -z-10" />
+      <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-magenta/20/40 blur-3xl -z-10" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -27,9 +27,9 @@ export function WhyJoin() {
           transition={{ duration: 0.5 }}
           className="text-center mb-4 max-w-3xl mx-auto"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 border border-magenta/25 mb-4">
-            <Star className="h-3.5 w-3.5 text-pink-600 fill-pink-500" />
-            <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Why You Should Join</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold/15 border border-magenta/25 mb-4">
+            <Star className="h-3.5 w-3.5 text-magenta-light fill-magenta" />
+            <span className="text-xs font-bold text-magenta-light tracking-wide uppercase">Why You Should Join</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-3" style={{ fontFamily: "var(--font-display)" }}>
             6 Alasan Jadi Bagian dari <span className="text-gradient-brand">Sejarah</span>
@@ -61,7 +61,7 @@ export function WhyJoin() {
                     <div className="h-14 w-14 rounded-2xl bg-brand-gradient flex items-center justify-center shadow-glow-pink group-hover:scale-110 group-hover:rotate-6 transition-transform">
                       <Icon className="h-7 w-7 text-white" />
                     </div>
-                    <div className="text-5xl font-black text-zinc-100 group-hover:text-white/30 transition-colors leading-none" style={{ fontFamily: "var(--font-display)" }}>
+                    <div className="text-5xl font-black text-cream/30 group-hover:text-cream/30 transition-colors leading-none" style={{ fontFamily: "var(--font-display)" }}>
                       {String(i + 1).padStart(2, "0")}
                     </div>
                   </div>

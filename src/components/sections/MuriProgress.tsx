@@ -61,8 +61,8 @@ export function MuriProgress() {
           className="text-center mb-4"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-400/20 backdrop-blur-md border border-magenta/30/30 mb-4">
-            <Sparkles className="h-3.5 w-3.5 text-pink-300" />
-            <span className="text-xs font-bold text-pink-200 tracking-wide uppercase">Live Progress</span>
+            <Sparkles className="h-3.5 w-3.5 text-magenta-light/80" />
+            <span className="text-xs font-bold text-magenta-light/70 tracking-wide uppercase">Live Progress</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Menuju Rekor <span className="text-gradient-brand">MURI</span>
@@ -89,7 +89,7 @@ export function MuriProgress() {
             {/* Numbers row */}
             <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 mb-3">
               <div className="text-center sm:text-left">
-                <div className="flex items-center gap-2 text-pink-300 text-xs font-bold uppercase tracking-widest mb-1">
+                <div className="flex items-center gap-2 text-magenta-light/80 text-xs font-bold uppercase tracking-widest mb-1">
                   <Users className="h-4 w-4" />
                   Peserta Terdaftar
                 </div>
@@ -101,7 +101,7 @@ export function MuriProgress() {
               <div className="text-4xl lg:text-5xl text-white/30 font-black">/</div>
 
               <div className="text-center sm:text-right">
-                <div className="flex items-center gap-2 text-pink-300 text-xs font-bold uppercase tracking-widest mb-1 justify-center sm:justify-end">
+                <div className="flex items-center gap-2 text-magenta-light/80 text-xs font-bold uppercase tracking-widest mb-1 justify-center sm:justify-end">
                   <Trophy className="h-4 w-4" />
                   Target MURI
                 </div>

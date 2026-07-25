@@ -23,8 +23,8 @@ export function Hero({ onRegisterClick }: HeroProps) {
       {/* === FULL-WIDTH BACKGROUND IMAGE === */}
       <div className="absolute inset-0">
         <img
-          src="/brand/hero-crowd-2.png"
-          alt="Riana On The Move — 100 peserta Zumba bersama instruktur Riana"
+          src="/brand/user-hero-processed.jpg"
+          alt="Riana On The Move — 10.000 peserta Zumba bersama instruktur Riana"
           className="absolute inset-0 h-full w-full object-cover"
         />
         {/* Dark gradient overlay for content readability */}
@@ -32,12 +32,12 @@ export function Hero({ onRegisterClick }: HeroProps) {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(11,7,16,0.55) 0%, rgba(11,7,16,0.4) 35%, rgba(11,7,16,0.7) 70%, rgba(11,7,16,0.95) 100%), radial-gradient(ellipse at 70% 30%, rgba(223,38,121,0.25) 0%, transparent 60%)",
+              "linear-gradient(180deg, rgba(11,7,16,0.75) 0%, rgba(11,7,16,0.55) 35%, rgba(11,7,16,0.8) 70%, rgba(11,7,16,0.98) 100%), radial-gradient(ellipse at 70% 30%, rgba(223,38,121,0.3) 0%, transparent 60%)",
           }}
         />
         {/* Magenta-orange tint overlay */}
         <div
-          className="absolute inset-0 mix-blend-soft-light opacity-60"
+          className="absolute inset-0 mix-blend-soft-light opacity-40"
           style={{
             background:
               "linear-gradient(135deg, rgba(223,38,121,0.4) 0%, rgba(241,114,56,0.3) 50%, rgba(212,175,55,0.2) 100%)",

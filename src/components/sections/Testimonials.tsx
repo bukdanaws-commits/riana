@@ -23,8 +23,8 @@ export function Testimonials() {
 
   return (
     <section className="relative py-4 lg:py-6 bg-gradient-to-br from-pink-50 via-pink-50 to-amber-50 overflow-hidden">
-      <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
-      <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
+      <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-magenta/20/40 blur-3xl -z-10" />
+      <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-magenta/20/40 blur-3xl -z-10" />
 
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -35,8 +35,8 @@ export function Testimonials() {
           className="text-center mb-4"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-dark border border-magenta/25 mb-4 shadow-sm">
-            <Star className="h-3.5 w-3.5 text-pink-500 fill-pink-500" />
-            <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Kata Mereka</span>
+            <Star className="h-3.5 w-3.5 text-magenta-light fill-magenta" />
+            <span className="text-xs font-bold text-magenta-light tracking-wide uppercase">Kata Mereka</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Cerita dari <span className="text-gradient-brand">Peserta</span>
@@ -62,7 +62,7 @@ export function Testimonials() {
               >
                 <div className="relative h-full p-6 lg:p-10 rounded-3xl bg-purple-dark shadow-xl border border-magenta/20 overflow-hidden">
                   <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full opacity-10 blur-2xl" style={{ background: current.avatarColor }} />
-                  <Quote className="absolute top-6 right-6 h-16 w-16 text-pink-100" />
+                  <Quote className="absolute top-6 right-6 h-16 w-16 text-magenta-light/60" />
 
                   <div className="relative flex flex-col lg:flex-row gap-3 lg:gap-4 h-full">
                     {/* Left: avatar + info */}
@@ -75,13 +75,13 @@ export function Testimonials() {
                       </div>
                       <div className="font-extrabold text-cream text-lg">{current.name}</div>
                       <div className="text-sm text-cream/60">{current.role}</div>
-                      <div className="inline-flex items-center gap-1 mt-2 px-2.5 py-1 rounded-full bg-pink-50 text-pink-700 text-xs font-semibold">
+                      <div className="inline-flex items-center gap-1 mt-2 px-2.5 py-1 rounded-full bg-magenta/10 text-magenta-light text-xs font-semibold">
                         <MapPin className="h-3 w-3" />
                         {current.city}
                       </div>
                       <div className="flex items-center gap-0.5 mt-3">
                         {Array.from({ length: current.rating }).map((_, i) => (
-                          <Star key={i} className="h-4 w-4 text-pink-400 fill-pink-400" />
+                          <Star key={i} className="h-4 w-4 text-magenta-light fill-pink-400" />
                         ))}
                       </div>
                     </div>
@@ -118,7 +118,7 @@ export function Testimonials() {
                     setIndex(i);
                   }}
                   className={`h-2 rounded-full transition-all ${
-                    i === index ? "w-8 bg-pink-600" : "w-2 bg-pink-200 hover:bg-pink-300"
+                    i === index ? "w-8 bg-pink-600" : "w-2 bg-magenta/20 hover:bg-pink-300"
                   }`}
                   aria-label={`Testimonial ${i + 1}`}
                 />
@@ -145,12 +145,12 @@ export function Testimonials() {
           className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-3"
         >
           {[
-            { value: "4.9/5", label: "Rating Rata-rata", color: "text-pink-500" },
-            { value: "4.500+", label: "Peserta Puas", color: "text-pink-600" },
-            { value: "92%", label: "Kembali Ikut", color: "text-pink-600" },
+            { value: "4.9/5", label: "Rating Rata-rata", color: "text-magenta-light" },
+            { value: "4.500+", label: "Peserta Puas", color: "text-magenta-light" },
+            { value: "92%", label: "Kembali Ikut", color: "text-magenta-light" },
             { value: "10", label: "Kota Sebelumnya", color: "text-purple-600" },
           ].map((s) => (
-            <div key={s.label} className="text-center p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-white">
+            <div key={s.label} className="text-center p-4 rounded-2xl bg-purple-dark/60 backdrop-blur-sm border border-magenta/15 border border-white">
               <div className={`text-3xl font-black ${s.color}`} style={{ fontFamily: "var(--font-display)" }}>{s.value}</div>
               <div className="text-xs text-cream/70 font-semibold mt-1">{s.label}</div>
             </div>

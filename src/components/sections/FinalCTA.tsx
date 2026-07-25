@@ -82,14 +82,14 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
                 Rekor MURI
               </span>
             </div>
-            <div className="h-4 w-px bg-white/20" />
+            <div className="h-4 w-px bg-purpleblack/40" />
             <div className="flex items-center gap-2 text-white">
               <Users className="h-5 w-5 text-gold-light" />
               <span className="font-bold" style={{ fontFamily: "var(--font-heading)" }}>
                 10.000+ Peserta
               </span>
             </div>
-            <div className="h-4 w-px bg-white/20" />
+            <div className="h-4 w-px bg-purpleblack/40" />
             <div className="flex items-center gap-2 text-white">
               <Sparkles className="h-5 w-5 text-gold-light" />
               <span className="font-bold" style={{ fontFamily: "var(--font-heading)" }}>
@@ -103,7 +103,7 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
             <Button
               size="lg"
               onClick={onRegisterClick}
-              className="bg-white text-pink-600 hover:bg-white/90 font-bold text-base h-14 px-8 shadow-2xl rounded-full group"
+              className="bg-white text-magenta-light hover:bg-white/90 font-bold text-base h-14 px-8 shadow-2xl rounded-full group"
             >
               Daftar Sekarang — Gratis
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -112,7 +112,7 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
               size="lg"
               asChild
               variant="outline"
-              className="bg-white/5 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/10 hover:text-white font-bold text-base h-14 px-8 rounded-full"
+              className="glass-card border-tech text-cream hover:bg-white/10 hover:text-white font-bold text-base h-14 px-8 rounded-full"
             >
               <a href="#jadwal">Lihat Jadwal Lengkap</a>
             </Button>

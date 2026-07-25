@@ -52,7 +52,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
           transition={{ duration: 0.5 }}
           className="text-center mb-4"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-magenta/25 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-magenta/15 border border-magenta/25 mb-4">
             <Calendar className="h-3.5 w-3.5 text-magenta" />
             <span
               className="text-xs font-bold text-magenta-deep tracking-wide uppercase"
@@ -181,7 +181,7 @@ function FilterPill({
       {label}
       <span
         className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-          active ? "bg-white/20" : "bg-purpleblack"
+          active ? "bg-purpleblack/40" : "bg-purpleblack"
         }`}
       >
         {count}
@@ -314,7 +314,7 @@ function CityCard({
 function StatusBadge({ status }: { status: CityEvent["status"] }) {
   if (status === "open") {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-bold">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-[10px] font-bold">
         <CheckCircle2 className="h-3 w-3" />
         Terbuka
       </span>
@@ -322,14 +322,14 @@ function StatusBadge({ status }: { status: CityEvent["status"] }) {
   }
   if (status === "soldout") {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-[10px] font-bold">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/20 text-red-400 text-[10px] font-bold">
         <XCircle className="h-3 w-3" />
         Sold Out
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-100 text-pink-700 text-[10px] font-bold">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gold/15 text-magenta-light text-[10px] font-bold">
       <Clock className="h-3 w-3" />
       Segera
     </span>
@@ -463,7 +463,7 @@ function IndonesiaMap({
         {/* Legend */}
         <div className="absolute bottom-2 left-2 right-2 flex flex-wrap gap-1.5">
           {REGIONS.map((r) => (
-            <div key={r} className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-white/70 backdrop-blur-sm">
+            <div key={r} className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-purpleblack/70 backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: REGION_COLORS[r] }} />
               <span className="text-[8px] font-semibold text-cream/70">{r}</span>
             </div>

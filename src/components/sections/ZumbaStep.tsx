@@ -39,9 +39,9 @@ export function ZumbaStep() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-5 lg:sticky lg:top-24"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-magenta/25 mb-4">
-              <Footprints className="h-3.5 w-3.5 text-pink-600" />
-              <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Step by Step</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-magenta/15 border border-magenta/25 mb-4">
+              <Footprints className="h-3.5 w-3.5 text-magenta-light" />
+              <span className="text-xs font-bold text-magenta-light tracking-wide uppercase">Step by Step</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-4" style={{ fontFamily: "var(--font-display)" }}>
               Apa Itu <span className="text-gradient-brand">Zumba Step</span>?
@@ -90,7 +90,7 @@ export function ZumbaStep() {
                 <div className="absolute -top-3 -right-3 h-12 w-12 rounded-2xl bg-brand-gradient flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   <point.icon className="h-6 w-6 text-white" />
                 </div>
-                <div className="text-5xl font-black text-pink-100 leading-none mb-3" style={{ fontFamily: "var(--font-display)" }}>
+                <div className="text-5xl font-black text-magenta-light/60 leading-none mb-3" style={{ fontFamily: "var(--font-display)" }}>
                   {String(i + 1).padStart(2, "0")}
                 </div>
                 <h3 className="text-lg font-extrabold text-cream mb-2">{point.title}</h3>

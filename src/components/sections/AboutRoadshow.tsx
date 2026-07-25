@@ -5,7 +5,7 @@ import { Target, Compass, Flag } from "lucide-react";
 
 export function AboutRoadshow() {
   return (
-    <section className="relative py-4 lg:py-6 bg-white overflow-hidden">
+    <section className="relative py-4 lg:py-6 bg-brand-tech overflow-hidden">
       <div className="absolute inset-0 pattern-grid opacity-50 -z-10" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -36,7 +36,7 @@ export function AboutRoadshow() {
             icon={Target}
             title="Misi Utama"
             desc="Mengumpulkan 10.000+ peserta unik di 20 kota untuk memecahkan rekor MURI sebagai Zumba Step terbesar di Indonesia. Setiap peserta yang hadir akan tercatat namanya dalam Museum Rekor Indonesia."
-            color="bg-gradient-to-br from-pink-500 to-pink-600"
+            color="bg-gradient-to-br from-magenta to-magenta-deep"
             delay={0}
           />
           <Pillar

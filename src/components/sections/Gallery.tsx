@@ -11,7 +11,7 @@ export function Gallery() {
   const [tab, setTab] = useState<"photo" | "video">("photo");
 
   return (
-    <section id="galeri" className="relative py-4 lg:py-6 bg-white overflow-hidden">
+    <section id="galeri" className="relative py-4 lg:py-6 bg-brand-tech overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -20,9 +20,9 @@ export function Gallery() {
           transition={{ duration: 0.5 }}
           className="text-center mb-4"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-magenta/25 mb-4">
-            <Camera className="h-3.5 w-3.5 text-pink-600" />
-            <span className="text-xs font-bold text-pink-800 tracking-wide uppercase">Moment Captured</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-magenta/15 border border-magenta/25 mb-4">
+            <Camera className="h-3.5 w-3.5 text-magenta-light" />
+            <span className="text-xs font-bold text-magenta-light tracking-wide uppercase">Moment Captured</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Galeri & <span className="text-gradient-brand">Video Highlight</span>
@@ -40,7 +40,7 @@ export function Gallery() {
               onClick={() => setTab("photo")}
               className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all ${
                 tab === "photo"
-                  ? "bg-white text-pink-600 shadow-sm"
+                  ? "bg-white text-magenta-light shadow-sm"
                   : "text-cream/70 hover:text-cream"
               }`}
             >
@@ -51,7 +51,7 @@ export function Gallery() {
               onClick={() => setTab("video")}
               className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all ${
                 tab === "video"
-                  ? "bg-white text-pink-600 shadow-sm"
+                  ? "bg-white text-magenta-light shadow-sm"
                   : "text-cream/70 hover:text-cream"
               }`}
             >
@@ -114,7 +114,7 @@ export function Gallery() {
                   </div>
 
                   {/* Hover icon */}
-                  <div className="absolute top-3 right-3 h-9 w-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute top-3 right-3 h-9 w-9 rounded-full bg-purpleblack/40 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                     <Maximize2 className="h-4 w-4 text-white" />
                   </div>
                 </motion.button>
@@ -133,7 +133,7 @@ export function Gallery() {
                 backgroundImage: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, transparent 50%), radial-gradient(circle at 70% 70%, rgba(255,203,5,0.3) 0%, transparent 50%)",
               }} />
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                <div className="h-20 w-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <div className="h-20 w-20 rounded-full bg-purpleblack/40 backdrop-blur-md flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <Play className="h-10 w-10 text-white fill-white ml-1" />
                 </div>
                 <div className="text-xl font-extrabold mb-1">Official Highlight 2025</div>
@@ -155,14 +155,14 @@ export function Gallery() {
                   key={i}
                   className="group flex items-center gap-3 p-3 rounded-2xl bg-purple-dark hover:bg-magenta/10 cursor-pointer transition-colors border border-magenta/15"
                 >
-                  <div className="relative h-16 w-24 rounded-xl overflow-hidden flex-shrink-0 bg-gradient-to-br from-pink-500 to-pink-600 flex items-center justify-center">
+                  <div className="relative h-16 w-24 rounded-xl overflow-hidden flex-shrink-0 bg-gradient-to-br from-magenta to-magenta-deep flex items-center justify-center">
                     <Play className="h-6 w-6 text-white fill-white" />
                     <div className="absolute bottom-1 right-1 px-1 py-0.5 rounded bg-black/70 text-white text-[9px] font-bold">
                       {v.dur}
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-bold text-sm text-cream truncate group-hover:text-pink-600 transition-colors">
+                    <div className="font-bold text-sm text-cream truncate group-hover:text-magenta-light transition-colors">
                       {v.title}
                     </div>
                     <div className="text-xs text-cream/60 mt-0.5">Riana On The Move</div>
@@ -180,7 +180,7 @@ export function Gallery() {
           onClick={() => setLightbox(null)}
           className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
         >
-          <button className="absolute top-4 right-4 h-10 w-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white">
+          <button className="absolute top-4 right-4 h-10 w-10 rounded-full bg-white/10 hover:bg-purpleblack/40 flex items-center justify-center text-white">
             <X className="h-5 w-5" />
           </button>
           <div
