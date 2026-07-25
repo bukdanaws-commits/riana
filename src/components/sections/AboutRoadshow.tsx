@@ -5,7 +5,7 @@ import { Target, Compass, Flag } from "lucide-react";
 
 export function AboutRoadshow() {
   return (
-    <section className="relative py-16 lg:py-24 bg-white overflow-hidden">
+    <section className="relative py-4 lg:py-6 bg-white overflow-hidden">
       <div className="absolute inset-0 pattern-grid opacity-50 -z-10" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -14,7 +14,7 @@ export function AboutRoadshow() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12 max-w-3xl mx-auto"
+          className="text-center mb-4 max-w-3xl mx-auto"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-100 border border-purple-200 mb-4">
             <Flag className="h-3.5 w-3.5 text-purple-600" />
@@ -31,7 +31,7 @@ export function AboutRoadshow() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-3">
           <Pillar
             icon={Target}
             title="Misi Utama"

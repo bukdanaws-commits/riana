@@ -39,7 +39,7 @@ export function Countdown() {
   }, [nextCity.date, finale.date]);
 
   return (
-    <section className="relative py-16 lg:py-24 bg-brand-dark overflow-hidden">
+    <section className="relative py-4 lg:py-6 bg-brand-dark overflow-hidden">
       {/* Crowd blur background */}
       <div
         className="absolute inset-0 opacity-15"
@@ -63,7 +63,7 @@ export function Countdown() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="text-center mb-4"
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/15 backdrop-blur-md border border-gold/30 mb-4">
             <Trophy className="h-4 w-4 text-gold-light" />
@@ -89,7 +89,7 @@ export function Countdown() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid md:grid-cols-2 gap-3 lg:gap-4">
           {/* Next city */}
           <CountdownCard
             label="Kota Berikutnya"
@@ -161,7 +161,7 @@ function CountdownCard({
       {isFinale && (
         <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-gold/20 blur-2xl" />
       )}
-      <div className="flex items-start justify-between mb-6 relative">
+      <div className="flex items-start justify-between mb-3 relative">
         <div className="flex items-center gap-3">
           <div className={`h-12 w-12 rounded-2xl ${iconBg} flex items-center justify-center shadow-lg`}>
             <Icon className={`h-6 w-6 ${isFinale ? "text-purpleblack" : "text-white"}`} />

@@ -28,9 +28,9 @@ const POINTS = [
 
 export function ZumbaStep() {
   return (
-    <section className="relative py-16 lg:py-24 bg-gradient-to-br from-pink-50 via-white to-pink-50 overflow-hidden">
+    <section className="relative py-4 lg:py-6 bg-gradient-to-br from-pink-50 via-white to-pink-50 overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div className="grid lg:grid-cols-12 gap-4 lg:gap-4 items-start">
           {/* Left: explanation */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

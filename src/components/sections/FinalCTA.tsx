@@ -10,7 +10,7 @@ interface FinalCTAProps {
 
 export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
   return (
-    <section className="relative py-16 lg:py-24 overflow-hidden bg-brand-dark">
+    <section className="relative py-4 lg:py-6 overflow-hidden bg-brand-dark">
       {/* Crowd blur background */}
       <div
         className="absolute inset-0 opacity-15"
@@ -40,7 +40,7 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/15 backdrop-blur-md border border-gold/30 mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/15 backdrop-blur-md border border-gold/30 mb-3">
             <Sparkles className="h-4 w-4 text-gold-light" />
             <span
               className="text-xs font-bold text-gold-light tracking-widest uppercase"
@@ -66,7 +66,7 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
           </h2>
 
           <p
-            className="text-base sm:text-lg text-white/85 max-w-2xl mx-auto mb-8 leading-relaxed"
+            className="text-base sm:text-lg text-white/85 max-w-2xl mx-auto mb-3 leading-relaxed"
             style={{ fontFamily: "var(--font-geist-sans)" }}
           >
             20 kota. 10.000+ peserta. 1 rekor MURI. Jangan lewatkan kesempatan
@@ -75,7 +75,7 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
           </p>
 
           {/* Mini stats row */}
-          <div className="flex flex-wrap items-center justify-center gap-6 mb-8">
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-3">
             <div className="flex items-center gap-2 text-white">
               <Trophy className="h-5 w-5 text-gold-light" />
               <span className="font-bold" style={{ fontFamily: "var(--font-heading)" }}>

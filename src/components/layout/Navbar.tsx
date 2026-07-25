@@ -124,7 +124,7 @@ export function Navbar({ onRegisterClick }: NavbarProps) {
                   </div>
                 </SheetTitle>
               </SheetHeader>
-              <nav className="flex flex-col gap-1 mt-8">
+              <nav className="flex flex-col gap-1 mt-2">
                 {NAV_LINKS.map((link) => (
                   <Link
                     key={link.href}

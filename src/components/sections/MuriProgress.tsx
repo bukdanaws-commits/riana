@@ -46,7 +46,7 @@ export function MuriProgress() {
   }, {});
 
   return (
-    <section className="relative py-16 lg:py-24 bg-brand-dark overflow-hidden">
+    <section className="relative py-4 lg:py-6 bg-brand-dark overflow-hidden">
       <div className="absolute inset-0 opacity-30" style={{
         backgroundImage:
           "radial-gradient(circle at 20% 30%, rgba(236,10,139,0.5) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(255,106,44,0.4) 0%, transparent 40%)",
@@ -58,7 +58,7 @@ export function MuriProgress() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="text-center mb-4"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-400/20 backdrop-blur-md border border-magenta/30/30 mb-4">
             <Sparkles className="h-3.5 w-3.5 text-pink-300" />
@@ -87,7 +87,7 @@ export function MuriProgress() {
 
           <div className="relative">
             {/* Numbers row */}
-            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 mb-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 mb-3">
               <div className="text-center sm:text-left">
                 <div className="flex items-center gap-2 text-pink-300 text-xs font-bold uppercase tracking-widest mb-1">
                   <Users className="h-4 w-4" />
@@ -146,7 +146,7 @@ export function MuriProgress() {
             </div>
 
             {/* Regional breakdown */}
-            <div className="mt-8 pt-6 border-t border-white/10">
+            <div className="mt-2 pt-6 border-t border-white/10">
               <div className="text-xs text-white/60 font-bold uppercase tracking-widest mb-3">
                 Progress per Wilayah
               </div>

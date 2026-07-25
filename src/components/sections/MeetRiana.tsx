@@ -6,12 +6,12 @@ import { RIANA_STATS } from "@/data/event";
 
 export function MeetRiana() {
   return (
-    <section id="about" className="relative py-16 lg:py-24 bg-white overflow-hidden">
+    <section id="about" className="relative py-4 lg:py-6 bg-white overflow-hidden">
       <div className="absolute inset-0 pattern-dots opacity-40 -z-10" />
       <div className="absolute -left-32 top-1/3 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="grid lg:grid-cols-12 gap-4 lg:gap-4 items-center">
           {/* Left: portrait */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -123,7 +123,7 @@ export function MeetRiana() {
             </div>
 
             {/* Stats grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
               {RIANA_STATS.map((stat, i) => (
                 <motion.div
                   key={stat.label}

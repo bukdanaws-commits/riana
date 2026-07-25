@@ -25,7 +25,7 @@ const ICONS: Record<string, React.ElementType> = {
 
 export function Partners() {
   return (
-    <section id="partner" className="relative py-16 lg:py-24 bg-white overflow-hidden">
+    <section id="partner" className="relative py-4 lg:py-6 bg-white overflow-hidden">
       <div className="absolute inset-0 pattern-grid opacity-40 -z-10" />
       <div className="absolute -top-32 right-0 h-96 w-96 rounded-full bg-purple-200/40 blur-3xl -z-10" />
 
@@ -35,7 +35,7 @@ export function Partners() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12 max-w-3xl mx-auto"
+          className="text-center mb-4 max-w-3xl mx-auto"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-100 border border-purple-200 mb-4">
             <Handshake className="h-3.5 w-3.5 text-purple-600" />
@@ -52,7 +52,7 @@ export function Partners() {
         </motion.div>
 
         {/* Partner type grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {PARTNER_TYPES.map((p, i) => {
             const Icon = ICONS[p.label] ?? Sparkles;
             return (
@@ -90,7 +90,7 @@ export function Partners() {
           <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-pink-500/20 blur-3xl" />
 
           <div className="relative">
-            <div className="text-center mb-8">
+            <div className="text-center mb-3">
               <h3 className="text-2xl lg:text-3xl font-black mb-2" style={{ fontFamily: "var(--font-display)" }}>
                 Tier Sponsorship
               </h3>
@@ -120,7 +120,7 @@ export function Partners() {
               ))}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-2">
               <Button
                 size="lg"
                 className="bg-white text-cream hover:bg-white/90 font-bold h-12 px-7 rounded-full"

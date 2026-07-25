@@ -22,7 +22,7 @@ export function Testimonials() {
   const current = TESTIMONIALS[index];
 
   return (
-    <section className="relative py-16 lg:py-24 bg-gradient-to-br from-pink-50 via-pink-50 to-amber-50 overflow-hidden">
+    <section className="relative py-4 lg:py-6 bg-gradient-to-br from-pink-50 via-pink-50 to-amber-50 overflow-hidden">
       <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
       <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
 
@@ -32,7 +32,7 @@ export function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="text-center mb-4"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-dark border border-magenta/25 mb-4 shadow-sm">
             <Star className="h-3.5 w-3.5 text-pink-500 fill-pink-500" />
@@ -64,7 +64,7 @@ export function Testimonials() {
                   <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full opacity-10 blur-2xl" style={{ background: current.avatarColor }} />
                   <Quote className="absolute top-6 right-6 h-16 w-16 text-pink-100" />
 
-                  <div className="relative flex flex-col lg:flex-row gap-6 lg:gap-10 h-full">
+                  <div className="relative flex flex-col lg:flex-row gap-3 lg:gap-4 h-full">
                     {/* Left: avatar + info */}
                     <div className="lg:w-1/3 flex flex-col items-center lg:items-start text-center lg:text-left">
                       <div
@@ -142,7 +142,7 @@ export function Testimonials() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-12"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-3"
         >
           {[
             { value: "4.9/5", label: "Rating Rata-rata", color: "text-pink-500" },

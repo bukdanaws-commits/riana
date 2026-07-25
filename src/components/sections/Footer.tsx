@@ -84,10 +84,10 @@ export function Footer() {
       <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-pink-500/10 blur-3xl" />
       <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-pink-500/10 blur-3xl" />
 
-      <div className="relative container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="relative container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 lg:py-4">
         {/* Newsletter */}
-        <div className="rounded-3xl bg-gradient-to-br from-magenta/20 via-plum/10 to-gold/15 backdrop-blur-md border border-white/10 p-6 lg:p-8 mb-12">
-          <div className="grid md:grid-cols-2 gap-6 items-center">
+        <div className="rounded-3xl bg-gradient-to-br from-magenta/20 via-plum/10 to-gold/15 backdrop-blur-md border border-white/10 p-6 lg:p-8 mb-4">
+          <div className="grid md:grid-cols-2 gap-3 items-center">
             <div>
               <h3
                 className="text-3xl lg:text-4xl font-black mb-2 text-white leading-none"
@@ -125,7 +125,7 @@ export function Footer() {
         </div>
 
         {/* Main footer grid */}
-        <div className="grid lg:grid-cols-12 gap-10">
+        <div className="grid lg:grid-cols-12 gap-4">
           {/* Brand */}
           <div className="lg:col-span-4">
             <Link href="#" className="flex items-center gap-2 group mb-4">
@@ -179,7 +179,7 @@ export function Footer() {
           </div>
 
           {/* Nav sections */}
-          <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-6">
+          <div className="lg:col-span-5 grid grid-cols-2 sm:grid-cols-3 gap-3">
             {NAV_SECTIONS.map((section) => (
               <div key={section.title}>
                 <div className="text-xs font-bold text-white/40 uppercase tracking-widest mb-3">
@@ -236,7 +236,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50">
+        <div className="mt-3 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50">
           <div>
             © 2026 Riana On The Move • AktiveNation. All rights reserved.
           </div>

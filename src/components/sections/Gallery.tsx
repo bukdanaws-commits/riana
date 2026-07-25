@@ -11,14 +11,14 @@ export function Gallery() {
   const [tab, setTab] = useState<"photo" | "video">("photo");
 
   return (
-    <section id="galeri" className="relative py-16 lg:py-24 bg-white overflow-hidden">
+    <section id="galeri" className="relative py-4 lg:py-6 bg-white overflow-hidden">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="text-center mb-4"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-magenta/25 mb-4">
             <Camera className="h-3.5 w-3.5 text-pink-600" />
@@ -34,7 +34,7 @@ export function Gallery() {
         </motion.div>
 
         {/* Tabs */}
-        <div className="flex justify-center mb-8">
+        <div className="flex justify-center mb-3">
           <div className="inline-flex p-1 rounded-full bg-purpleblack border border-magenta/20">
             <button
               onClick={() => setTab("photo")}

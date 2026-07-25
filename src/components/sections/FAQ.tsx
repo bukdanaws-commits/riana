@@ -20,7 +20,7 @@ export function FAQ() {
     activeCategory === "all" ? FAQS : FAQS.filter((f) => f.category === activeCategory);
 
   return (
-    <section id="faq" className="relative py-16 lg:py-24 bg-purple-dark overflow-hidden">
+    <section id="faq" className="relative py-4 lg:py-6 bg-purple-dark overflow-hidden">
       <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
 
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
@@ -29,7 +29,7 @@ export function FAQ() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="text-center mb-4"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-magenta/25 mb-4">
             <HelpCircle className="h-3.5 w-3.5 text-pink-600" />
@@ -44,7 +44,7 @@ export function FAQ() {
         </motion.div>
 
         {/* Category filter */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-3">
           <CategoryPill
             active={activeCategory === "all"}
             onClick={() => setActiveCategory("all")}
@@ -106,7 +106,7 @@ export function FAQ() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-8 p-5 rounded-2xl bg-gradient-to-r from-pink-50 to-pink-50 border border-magenta/20 text-center"
+          className="mt-2 p-5 rounded-2xl bg-gradient-to-r from-pink-50 to-pink-50 border border-magenta/20 text-center"
         >
           <p className="text-sm text-cream/80">
             Masih ada pertanyaan? Tim kami siap membantu via WhatsApp{" "}

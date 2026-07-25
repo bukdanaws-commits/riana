@@ -15,7 +15,7 @@ const ICONS: Record<string, React.ElementType> = {
 
 export function WhyJoin() {
   return (
-    <section id="keuntungan" className="relative py-16 lg:py-24 bg-purple-dark overflow-hidden">
+    <section id="keuntungan" className="relative py-4 lg:py-6 bg-purple-dark overflow-hidden">
       <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
       <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-pink-200/40 blur-3xl -z-10" />
 
@@ -25,7 +25,7 @@ export function WhyJoin() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12 max-w-3xl mx-auto"
+          className="text-center mb-4 max-w-3xl mx-auto"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 border border-magenta/25 mb-4">
             <Star className="h-3.5 w-3.5 text-pink-600 fill-pink-500" />
@@ -40,7 +40,7 @@ export function WhyJoin() {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-3">
           {BENEFITS.map((b, i) => {
             const Icon = ICONS[b.icon];
             return (

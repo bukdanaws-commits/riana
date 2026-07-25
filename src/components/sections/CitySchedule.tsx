@@ -38,7 +38,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
   }, [filter]);
 
   return (
-    <section id="jadwal" className="relative py-16 lg:py-24 bg-brand-tech overflow-hidden">
+    <section id="jadwal" className="relative py-4 lg:py-6 bg-brand-tech overflow-hidden">
       {/* Tech grid pattern */}
       <div className="absolute inset-0 pattern-tech-grid opacity-50" />
       <div className="absolute -top-32 right-0 h-96 w-96 rounded-full bg-magenta/15 blur-3xl -z-10" />
@@ -50,7 +50,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="text-center mb-4"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-100 border border-magenta/25 mb-4">
             <Calendar className="h-3.5 w-3.5 text-magenta" />
@@ -83,7 +83,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
         </motion.div>
 
         {/* Filter pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-4">
           <FilterPill
             active={filter === "all"}
             onClick={() => setFilter("all")}
@@ -104,7 +104,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
         </div>
 
         {/* Map + Grid layout */}
-        <div className="grid lg:grid-cols-12 gap-8">
+        <div className="grid lg:grid-cols-12 gap-4">
           {/* Map (left on desktop, hidden on mobile) */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
