@@ -312,6 +312,14 @@ function CityCard({
 }
 
 function StatusBadge({ status }: { status: CityEvent["status"] }) {
+  if (status === "completed") {
+    return (
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gold/20 text-gold-light text-[10px] font-bold">
+        <CheckCircle2 className="h-3 w-3" />
+        Selesai
+      </span>
+    );
+  }
   if (status === "open") {
     return (
       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-[10px] font-bold">

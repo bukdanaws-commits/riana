@@ -2,11 +2,22 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Trophy, Users, TrendingUp, Sparkles } from "lucide-react";
-import { MURI_TARGET, getRegisteredTotal, CITIES } from "@/data/event";
+import { Trophy, Users, TrendingUp, Sparkles, CheckCircle2, MapPin } from "lucide-react";
+import {
+  MURI_TARGET,
+  getRegisteredTotal,
+  getCheckedInTotal,
+  getCompletedCitiesCount,
+  getOpenCitiesCount,
+  CITIES,
+  MILESTONES,
+} from "@/data/event";
 
 export function MuriProgress() {
   const baseTotal = getRegisteredTotal();
+  const checkedIn = getCheckedInTotal();
+  const completedCities = getCompletedCitiesCount();
+  const openCities = getOpenCitiesCount();
   const [count, setCount] = useState(0);
 
   // Animate count from 0 -> baseTotal on mount, then keep ticking slowly
@@ -146,10 +157,7 @@ export function MuriProgress() {
             </div>
 
             {/* Regional breakdown */}
-            <div className="mt-2 pt-6 border-t border-white/10">
-              <div className="text-xs text-white/60 font-bold uppercase tracking-widest mb-3">
-                Progress per Wilayah
-              </div>
+            <div className="mt-2 pt-3 border-t border-white/10">
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
                 {Object.entries(regionStats).map(([region, stats]) => {
                   const rpct = Math.round((stats.reg / stats.total) * 100);
@@ -172,6 +180,51 @@ export function MuriProgress() {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+
+            {/* Milestone tracker — progress kota */}
+            <div className="mt-3 pt-3 border-t border-white/10">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-xs text-white/60 font-bold uppercase tracking-widest">
+                  Timeline Kota Terbaru
+                </div>
+                <div className="flex items-center gap-2 text-[10px] font-mono">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gold/20 text-gold-light">
+                    <CheckCircle2 className="h-3 w-3" />
+                    {completedCities} selesai
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 text-green-400">
+                    <TrendingUp className="h-3 w-3" />
+                    {openCities} open
+                  </span>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                {MILESTONES.map((m, i) => (
+                  <motion.div
+                    key={m.city}
+                    initial={{ opacity: 0, y: 12 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: i * 0.08 }}
+                    className={`p-2 rounded-lg border ${
+                      m.status === "completed"
+                        ? "bg-gold/10 border-gold/30"
+                        : "bg-magenta/5 border-magenta/20"
+                    }`}
+                  >
+                    <div className="flex items-center gap-1 text-[10px]">
+                      <MapPin className={`h-2.5 w-2.5 ${m.status === "completed" ? "text-gold-light" : "text-magenta-light"}`} />
+                      <span className="font-bold text-white">{m.city}</span>
+                    </div>
+                    <div className="text-[9px] text-white/50 mt-0.5 font-mono">{m.date}</div>
+                    <div className={`text-sm font-black mt-1 ${m.status === "completed" ? "text-gold-light" : "text-magenta-light"}`}>
+                      {m.registered.toLocaleString("id-ID")}
+                    </div>
+                    <div className="text-[8px] text-white/40">peserta</div>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </div>

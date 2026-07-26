@@ -65,10 +65,7 @@ export function Gallery() {
         {tab === "photo" ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
             {GALLERY_ITEMS.map((item, i) => {
-              // Use real photos for first 3 items, gradient for the rest
-              const realPhotos = ["/brand/hero-photo.jpg", "/brand/extra-1.jpg", "/brand/extra-2.jpg"];
-              const useReal = i < 3;
-              const photoSrc = realPhotos[i % 3];
+              const useReal = !!item.isRealPhoto && !!item.photoUrl;
               return (
                 <motion.button
                   key={item.id}
@@ -84,7 +81,7 @@ export function Gallery() {
                   {/* Background image (real photo or gradient) */}
                   {useReal ? (
                     <img
-                      src={photoSrc}
+                      src={item.photoUrl}
                       alt={item.label}
                       className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
@@ -92,30 +89,37 @@ export function Gallery() {
                     <div
                       className="absolute inset-0 transition-transform duration-500 group-hover:scale-110"
                       style={{
-                        background: `linear-gradient(135deg, hsl(${item.hue} 65% 55%) 0%, hsl(${item.hue + 20} 55% 40%) 50%, hsl(${item.hue + 40} 50% 30%) 100%)`,
+                        background: `linear-gradient(135deg, hsl(${item.hue} 55% 35%) 0%, hsl(${item.hue + 20} 45% 25%) 50%, hsl(${item.hue + 40} 40% 18%) 100%)`,
                       }}
                     />
                   )}
-                  {/* Coral-rose tint overlay for brand consistency (only on real photos) */}
+                  {/* Magenta-orange tint overlay for brand consistency (only on real photos) */}
                   {useReal && (
                     <div
-                      className="absolute inset-0 mix-blend-multiply opacity-30 transition-opacity group-hover:opacity-10"
+                      className="absolute inset-0 mix-blend-multiply opacity-25 transition-opacity group-hover:opacity-10"
                       style={{
-                        background: "linear-gradient(135deg, rgba(247,114,88,0.6), rgba(227,139,150,0.6))",
+                        background: "linear-gradient(135deg, rgba(223,38,121,0.5), rgba(241,114,56,0.5))",
                       }}
                     />
                   )}
 
                   {/* Bottom gradient + label */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-purpleblack/90 via-purpleblack/20 to-transparent" />
                   <div className="absolute bottom-0 inset-x-0 p-3 lg:p-4 text-left">
-                    <div className="text-white font-bold text-sm lg:text-base leading-tight">{item.label}</div>
-                    <div className="text-white/70 text-[10px] lg:text-xs mt-0.5">Riana On The Move 2026</div>
+                    <div className="text-cream font-bold text-sm lg:text-base leading-tight">{item.label}</div>
+                    <div className="text-cream/60 text-[10px] lg:text-xs mt-0.5">{item.caption}</div>
+                    <div className="flex items-center gap-2 mt-1.5 text-[9px] text-cream/50">
+                      <span className="font-mono text-magenta-light">{item.city}</span>
+                      <span>•</span>
+                      <span>{item.date}</span>
+                      <span>•</span>
+                      <span className="font-mono text-gold-light">{item.participants} pax</span>
+                    </div>
                   </div>
 
                   {/* Hover icon */}
                   <div className="absolute top-3 right-3 h-9 w-9 rounded-full bg-purpleblack/40 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Maximize2 className="h-4 w-4 text-white" />
+                    <Maximize2 className="h-4 w-4 text-cream" />
                   </div>
                 </motion.button>
               );

@@ -80,9 +80,19 @@ export function Testimonials() {
                         {current.city}
                       </div>
                       <div className="flex items-center gap-0.5 mt-3">
-                        {Array.from({ length: current.rating }).map((_, i) => (
-                          <Star key={i} className="h-4 w-4 text-magenta-light fill-pink-400" />
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`h-4 w-4 ${
+                              i < current.rating
+                                ? "text-gold-light fill-gold"
+                                : "text-cream/20 fill-cream/10"
+                            }`}
+                          />
                         ))}
+                      </div>
+                      <div className="text-[10px] text-cream/50 mt-2 font-mono">
+                        {current.event}
                       </div>
                     </div>
 
@@ -145,12 +155,12 @@ export function Testimonials() {
           className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-3"
         >
           {[
-            { value: "4.9/5", label: "Rating Rata-rata", color: "text-magenta-light" },
-            { value: "4.500+", label: "Peserta Puas", color: "text-magenta-light" },
+            { value: "4.8/5", label: "Rating Rata-rata", color: "text-gold-light" },
+            { value: "899", label: "Peserta 2 Kota", color: "text-magenta-light" },
             { value: "92%", label: "Kembali Ikut", color: "text-magenta-light" },
-            { value: "10", label: "Kota Sebelumnya", color: "text-purple-600" },
+            { value: "2/20", label: "Kota Selesai", color: "text-orange-light" },
           ].map((s) => (
-            <div key={s.label} className="text-center p-4 rounded-2xl bg-purple-dark/60 backdrop-blur-sm border border-magenta/15 border border-white">
+            <div key={s.label} className="text-center p-4 rounded-2xl bg-purple-dark/60 backdrop-blur-sm border border-magenta/15">
               <div className={`text-3xl font-black ${s.color}`} style={{ fontFamily: "var(--font-display)" }}>{s.value}</div>
               <div className="text-xs text-cream/70 font-semibold mt-1">{s.label}</div>
             </div>

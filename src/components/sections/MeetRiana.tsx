@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Heart, Sparkles, Instagram, Music2 } from "lucide-react";
-import { RIANA_STATS } from "@/data/event";
+import { RIANA_STATS, RIANA_CERTIFICATIONS } from "@/data/event";
 
 export function MeetRiana() {
   return (
@@ -108,18 +108,34 @@ export function MeetRiana() {
             </h2>
             <div className="space-y-4 text-base text-cream/70 leading-relaxed">
               <p>
-                Riana adalah Zumba Education Specialist (ZES) bersertifikasi resmi dari Zumba Fitness LLC —
-                salah satu dari sedikit instruktur berlisensi ZES di Indonesia. Dengan lebih dari satu dekade
-                pengalaman mengajar di 120+ kota, Riana telah membangun komunitas aktif berkapasitas 850.000+
-                pengikut di seluruh platform sosial media.
+                <span className="font-bold text-cream">Riana Bismarak</span> (@rianaree) adalah
+                instruktur fitness bersertifikasi dengan 8 lisensi internasional — Zumba, Zumba
+                Toning, Zumba Step, Strong Nation, Barre Intensity, Inferno Hot Pilates, Pound, dan
+                Pound Unplugged. Dengan pengalaman 8+ tahun, Riana telah mengajar di 20+ kota dan
+                membangun komunitas 126K pengikut di Instagram.
               </p>
               <p>
-                Lewat program <span className="font-bold text-cream">AktiveNation</span>, Riana berkomitmen
-                menggerakkan masyarakat Indonesia menuju gaya hidup aktif dan sehat. Roadshow{" "}
-                <span className="font-bold text-cream">Riana On The Move</span> adalah mahakarya terbesarnya:
-                20 kota, 10.000+ peserta target, dan satu rekor MURI sebagai bukti bahwa Indonesia bisa hidup
-                lebih sehat bersama-sama.
+                Lewat brand <span className="font-bold text-cream">Genggobyos</span>,{" "}
+                <span className="font-bold text-cream">REE</span>, dan{" "}
+                <span className="font-bold text-cream">AktiveNation</span>, Riana berkomitmen
+                menggerakkan masyarakat Indonesia menuju gaya hidup aktif. Roadshow{" "}
+                <span className="font-bold text-cream">Riana On The Move</span> adalah mahakarya
+                terbesarnya: 20 kota, 10.000+ peserta target, dan satu rekor MURI sebagai bukti
+                bahwa Indonesia bisa hidup lebih sehat bersama-sama.
               </p>
+            </div>
+
+            {/* Certifications badges */}
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {RIANA_CERTIFICATIONS.map((cert) => (
+                <span
+                  key={cert}
+                  className="px-2.5 py-1 rounded-full bg-magenta/10 border border-magenta/25 text-magenta-light text-[10px] font-bold tracking-wide"
+                  style={{ fontFamily: "var(--font-heading)" }}
+                >
+                  {cert}
+                </span>
+              ))}
             </div>
 
             {/* Stats grid */}
