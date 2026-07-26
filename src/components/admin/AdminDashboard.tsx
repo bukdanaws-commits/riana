@@ -46,6 +46,9 @@ import { useAdminStore, type AdminView } from "@/lib/admin-store";
 import { REGIONS, REGION_COLORS, type CityStatus } from "@/data/event";
 import { toast } from "sonner";
 import { DashboardView } from "./views/DashboardView";
+import { RegistrationsView } from "./views/RegistrationsView";
+import { RegistrationsByCityView } from "./views/RegistrationsByCityView";
+import { RevenueView } from "./views/RevenueView";
 import { CitiesView } from "./views/CitiesView";
 import { TestimonialsView } from "./views/TestimonialsView";
 import { PartnersView } from "./views/PartnersView";
@@ -54,15 +57,18 @@ import { GalleryView } from "./views/GalleryView";
 import { RianaView } from "./views/RianaView";
 import { SettingsView } from "./views/SettingsView";
 
-const NAV_ITEMS: { id: AdminView; label: string; icon: React.ElementType }[] = [
-  { id: "dashboard",    label: "Dashboard",    icon: LayoutDashboard },
-  { id: "cities",       label: "20 Kota",      icon: MapPin },
-  { id: "testimonials", label: "Testimoni",    icon: Star },
-  { id: "partners",     label: "Partner",      icon: Handshake },
-  { id: "faq",          label: "FAQ",          icon: HelpCircle },
-  { id: "gallery",      label: "Galeri",       icon: Image },
-  { id: "riana",        label: "Profil Riana", icon: User },
-  { id: "settings",     label: "Settings",     icon: Settings },
+const NAV_ITEMS: { id: AdminView; label: string; icon: React.ElementType; badge?: string }[] = [
+  { id: "dashboard",      label: "Dashboard",         icon: LayoutDashboard },
+  { id: "registrations",  label: "Data Peserta",      icon: Users, badge: "100" },
+  { id: "by_city",        label: "Peserta per Kota",  icon: MapPin },
+  { id: "revenue",        label: "Revenue",           icon: TrendingUp },
+  { id: "cities",         label: "20 Kota",           icon: MapPin },
+  { id: "testimonials",   label: "Testimoni",         icon: Star },
+  { id: "partners",       label: "Partner",           icon: Handshake },
+  { id: "faq",            label: "FAQ",               icon: HelpCircle },
+  { id: "gallery",        label: "Galeri",            icon: Image },
+  { id: "riana",          label: "Profil Riana",      icon: User },
+  { id: "settings",       label: "Settings",          icon: Settings },
 ];
 
 export function AdminDashboard() {
@@ -122,7 +128,14 @@ export function AdminDashboard() {
                     style={{ fontFamily: "var(--font-heading)" }}
                   >
                     <Icon className="h-4 w-4 flex-shrink-0" />
-                    {item.label}
+                    <span className="flex-1 text-left">{item.label}</span>
+                    {item.badge && (
+                      <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono ${
+                        active ? "bg-white/20" : "bg-magenta/20 text-magenta-light"
+                      }`}>
+                        {item.badge}
+                      </span>
+                    )}
                   </button>
                 );
               })}
@@ -183,6 +196,9 @@ export function AdminDashboard() {
             {/* View content */}
             <div className="flex-1 overflow-y-auto custom-scroll p-6">
               {activeView === "dashboard" && <DashboardView />}
+              {activeView === "registrations" && <RegistrationsView />}
+              {activeView === "by_city" && <RegistrationsByCityView />}
+              {activeView === "revenue" && <RevenueView />}
               {activeView === "cities" && <CitiesView />}
               {activeView === "testimonials" && <TestimonialsView />}
               {activeView === "partners" && <PartnersView />}

@@ -21,6 +21,7 @@ import {
   type Region,
   type CityStatus,
 } from "@/data/event";
+import { generateMockRegistrations, type Registration } from "@/data/mock-registrations";
 
 // ============================================================
 // ADMIN AUTH
@@ -84,6 +85,15 @@ interface AdminState extends AdminAuth {
   updateGalleryItem: (idx: number, updates: Partial<GalleryItem>) => void;
   deleteGalleryItem: (idx: number) => void;
 
+  // Registrations (Data Peserta)
+  registrations: Registration[];
+  addRegistration: (r: Registration) => void;
+  updateRegistration: (id: string, updates: Partial<Registration>) => void;
+  deleteRegistration: (id: string) => void;
+  bulkUpdateRegistrations: (ids: string[], updates: Partial<Registration>) => void;
+  bulkDeleteRegistrations: (ids: string[]) => void;
+  resetRegistrations: () => void;
+
   // Riana
   updateRianaBio: (bio: string) => void;
   updateRianaStats: (stats: typeof DEFAULT_RIANA_STATS) => void;
@@ -97,6 +107,9 @@ interface AdminState extends AdminAuth {
 
 export type AdminView =
   | "dashboard"
+  | "registrations"
+  | "by_city"
+  | "revenue"
   | "cities"
   | "testimonials"
   | "partners"
@@ -111,6 +124,7 @@ const initialState = {
   partners: DEFAULT_PARTNERS,
   faqs: DEFAULT_FAQS,
   gallery: DEFAULT_GALLERY,
+  registrations: generateMockRegistrations(),
   rianaStats: DEFAULT_RIANA_STATS,
   rianaCerts: DEFAULT_RIANA_CERTS,
   rianaBio:
@@ -199,6 +213,30 @@ export const useAdminStore = create<AdminState>()(
       deleteGalleryItem: (idx) =>
         set((s) => ({ gallery: s.gallery.filter((_, i) => i !== idx) })),
 
+      // Registrations (Data Peserta)
+      addRegistration: (r) =>
+        set((s) => ({ registrations: [r, ...s.registrations] })),
+      updateRegistration: (id, updates) =>
+        set((s) => ({
+          registrations: s.registrations.map((r) =>
+            r.id === id ? { ...r, ...updates, updatedAt: new Date().toISOString() } : r
+          ),
+        })),
+      deleteRegistration: (id) =>
+        set((s) => ({ registrations: s.registrations.filter((r) => r.id !== id) })),
+      bulkUpdateRegistrations: (ids, updates) =>
+        set((s) => ({
+          registrations: s.registrations.map((r) =>
+            ids.includes(r.id) ? { ...r, ...updates, updatedAt: new Date().toISOString() } : r
+          ),
+        })),
+      bulkDeleteRegistrations: (ids) =>
+        set((s) => ({
+          registrations: s.registrations.filter((r) => !ids.includes(r.id)),
+        })),
+      resetRegistrations: () =>
+        set({ registrations: generateMockRegistrations() }),
+
       // Riana
       updateRianaBio: (bio) => set({ rianaBio: bio }),
       updateRianaStats: (stats) => set({ rianaStats: stats }),
@@ -254,6 +292,7 @@ export const useAdminStore = create<AdminState>()(
         partners: state.partners,
         faqs: state.faqs,
         gallery: state.gallery,
+        registrations: state.registrations,
         rianaStats: state.rianaStats,
         rianaCerts: state.rianaCerts,
         rianaBio: state.rianaBio,
@@ -294,6 +333,9 @@ export function useRianaBio() {
 export function useMuriTarget() {
   return useAdminStore((s) => s.muriTarget);
 }
+export function useRegistrations() {
+  return useAdminStore((s) => s.registrations);
+}
 
 // Re-export types
-export type { CityEvent, Testimonial, Partner, FAQItem, GalleryItem, Region, CityStatus };
+export type { CityEvent, Testimonial, Partner, FAQItem, GalleryItem, Region, CityStatus, Registration };

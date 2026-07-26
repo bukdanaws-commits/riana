@@ -12,7 +12,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { type CityEvent } from "@/data/event";
-import { useCities } from "@/lib/admin-store";
+import { useCities, useAdminStore } from "@/lib/admin-store";
+import { getCityPricing, formatRupiah, isEarlyBirdActive } from "@/data/pricing";
+import type { Registration } from "@/data/mock-registrations";
 import {
   CheckCircle2,
   ChevronLeft,
@@ -21,6 +23,8 @@ import {
   Calendar,
   Ticket,
   Sparkles,
+  Loader2,
+  Lock,
 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
@@ -51,7 +55,7 @@ export function RegisterModal({
   );
 }
 
-type Step = "select" | "form" | "success";
+type Step = "select" | "google" | "form" | "success";
 
 function RegisterModalInner({
   preselectedCity,
@@ -62,31 +66,140 @@ function RegisterModalInner({
 }) {
   // Compute initial state from props once per mount.
   const CITIES = useCities();
+  const addRegistration = useAdminStore((s) => s.addRegistration);
   const preselected = preselectedCity
     ? CITIES.find((c) => c.id === preselectedCity) ?? null
     : null;
 
   const [step, setStep] = useState<Step>(preselected ? "form" : "select");
   const [selectedCity, setSelectedCity] = useState<CityEvent | null>(preselected);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [googleUser, setGoogleUser] = useState<{
+    email: string;
+    name: string;
+    avatar: string;
+    userId: string;
+  } | null>(null);
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
-    ticketType: "regular",
+    birthDate: "",
+    gender: "P" as "L" | "P" | "other",
+    address: "",
+    cityDomicile: "",
+    postalCode: "",
+    emergencyName: "",
+    emergencyPhone: "",
+    ticketType: "regular" as "regular" | "vip",
+    referralSource: "instagram" as Registration["referralSource"],
+    marketingConsent: false,
   });
+
+  // Get pricing for selected city
+  const pricing = selectedCity ? getCityPricing(selectedCity.id, selectedCity.date) : null;
+  const earlyBirdActive = selectedCity ? isEarlyBirdActive(selectedCity.date) : false;
 
   const handleSelect = (city: CityEvent) => {
     setSelectedCity(city);
-    setStep("form");
+    setStep("google"); // Now requires Google sign-in first
+  };
+
+  // === Mock Google OAuth ===
+  const handleGoogleSignIn = () => {
+    setGoogleLoading(true);
+    // Simulate Google OAuth flow (1.5s loading)
+    setTimeout(() => {
+      // Generate mock Google user
+      const firstNames = ["Dewi", "Sinta", "Michael", "Ratna", "Budi", "Lia", "Andi", "Maya"];
+      const lastNames = ["Anggraini", "Prakoso", "Santoso", "Wibowo", "Kusumawardani", "Maharani"];
+      const fn = firstNames[Math.floor(Math.random() * firstNames.length)];
+      const ln = lastNames[Math.floor(Math.random() * lastNames.length)];
+      const name = `${fn} ${ln}`;
+      const email = `${fn.toLowerCase()}.${ln.toLowerCase()}${Math.floor(Math.random() * 99)}@gmail.com`;
+      const avatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}&backgroundColor=ff6b35,df2679,d4af37`;
+
+      setGoogleUser({ email, name, avatar, userId: `mock-${Date.now()}` });
+      setForm((f) => ({ ...f, name, email }));
+      setGoogleLoading(false);
+      setStep("form");
+      toast.success(`Berhasil login sebagai ${name}`);
+    }, 1500);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.phone) {
-      toast.error("Lengkapi semua field terlebih dahulu.");
+    if (!form.name || !form.email || !form.phone || !form.birthDate || !form.address) {
+      toast.error("Lengkapi semua field wajib (nama, email, phone, tanggal lahir, alamat).");
       return;
     }
+    if (!selectedCity || !googleUser) {
+      toast.error("Sesi tidak valid. Silakan mulai ulang.");
+      return;
+    }
+
+    // Generate registration
+    const regCount = useAdminStore.getState().registrations.length + 1;
+    const regId = `REG-2026-${String(regCount).padStart(5, "0")}`;
+    const now = new Date().toISOString();
+    const ticketPrice = form.ticketType === "vip"
+      ? (earlyBirdActive && pricing ? pricing.vip.earlyBirdPrice : pricing?.vip.price ?? 0)
+      : 0;
+
+    const newReg: Registration = {
+      id: regId,
+      registrationDate: now,
+      lastUpdate: now,
+
+      userId: googleUser.userId,
+      googleEmail: googleUser.email,
+      googleName: googleUser.name,
+      googleAvatarUrl: googleUser.avatar,
+
+      fullName: form.name,
+      phone: form.phone,
+      birthDate: form.birthDate,
+      age: new Date().getFullYear() - new Date(form.birthDate).getFullYear(),
+      gender: form.gender,
+      address: form.address,
+      cityDomicile: form.cityDomicile || selectedCity.city,
+      province: "",
+      postalCode: form.postalCode,
+      emergencyContactName: form.emergencyName || undefined,
+      emergencyContactPhone: form.emergencyPhone || undefined,
+
+      eventCityId: selectedCity.id,
+      eventCityName: selectedCity.city,
+      eventDate: selectedCity.date,
+      ticketType: form.ticketType,
+      ticketPrice,
+
+      paymentStatus: form.ticketType === "vip" ? "pending" : "free",
+      paymentAmount: ticketPrice,
+      invoiceNumber: form.ticketType === "vip" ? `INV-2026-${String(regCount).padStart(5, "0")}` : undefined,
+
+      status: "registered",
+
+      eTicketSent: form.ticketType === "regular",
+      eTicketSentAt: form.ticketType === "regular" ? now : undefined,
+      eCertificateSent: false,
+      whatsappReminderSent: false,
+
+      referralSource: form.referralSource,
+      referralCode: `${form.name.split(" ")[0].toUpperCase()}-${String(regCount).padStart(5, "0")}`,
+      marketingConsent: form.marketingConsent,
+
+      isMuriRecord: true,
+      muriVerified: false,
+
+      tags: [],
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    addRegistration(newReg);
     setStep("success");
+    toast.success(`Pendaftaran berhasil! ID: ${regId}`);
   };
 
   return (
@@ -102,12 +215,14 @@ function RegisterModalInner({
           </div>
           <DialogTitle className="text-2xl font-extrabold" style={{ fontFamily: "var(--font-display)" }}>
             {step === "select" && "Pilih Kota Anda"}
+            {step === "google" && "Sign in dengan Google"}
             {step === "form" && "Lengkapi Data Diri"}
             {step === "success" && "Pendaftaran Berhasil!"}
           </DialogTitle>
           <DialogDescription className="text-white/90">
             {step === "select" && "20 kota • 10.000+ peserta • 1 rekor sejarah"}
-            {step === "form" && `Event di ${selectedCity?.city} — ${selectedCity?.dateLabel} 2026`}
+            {step === "google" && selectedCity ? `Event di ${selectedCity.city} — ${selectedCity.dateLabel} 2026` : ""}
+            {step === "form" && googleUser ? `Login sebagai ${googleUser.name}` : ""}
             {step === "success" && "Selamat! Anda resmi menjadi bagian dari sejarah MURI."}
           </DialogDescription>
         </DialogHeader>
@@ -173,7 +288,105 @@ function RegisterModalInner({
           </div>
         )}
 
-        {step === "form" && selectedCity && (
+        {step === "google" && selectedCity && (
+          <div className="space-y-5">
+            {/* Selected city summary */}
+            <div className="rounded-2xl border border-magenta/30 bg-magenta/10 p-4">
+              <div className="flex items-start gap-3">
+                <div className="h-12 w-12 rounded-xl bg-brand-gradient flex items-center justify-center text-white">
+                  <MapPin className="h-6 w-6" />
+                </div>
+                <div className="flex-1">
+                  <div className="font-bold text-cream">{selectedCity.city}</div>
+                  <div className="text-xs text-cream/60 mt-0.5 flex items-center gap-2">
+                    <Calendar className="h-3 w-3" />
+                    {selectedCity.dateLabel} 2026 • {selectedCity.dayLabel}
+                  </div>
+                  <div className="text-xs text-cream/60 mt-0.5">{selectedCity.venue}</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setStep("select")}
+                  className="text-xs font-semibold text-magenta-light hover:underline"
+                >
+                  Ubah
+                </button>
+              </div>
+
+              {/* Pricing preview */}
+              {pricing && (
+                <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-magenta/20">
+                  <div className="p-2 rounded-lg bg-purpleblack/40 border border-magenta/15">
+                    <div className="text-[10px] text-cream/60 uppercase font-bold">Regular</div>
+                    <div className="text-cream font-black text-sm">{formatRupiah(pricing.regular.price)}</div>
+                    <div className="text-[9px] text-cream/50 mt-0.5">e-Cert + akses sesi</div>
+                  </div>
+                  <div className="p-2 rounded-lg bg-gold/10 border border-gold/30">
+                    <div className="text-[10px] text-gold-light uppercase font-bold">VIP</div>
+                    <div className="text-cream font-black text-sm">
+                      {earlyBirdActive ? pricing.vip.earlyBirdLabel : pricing.vip.label}
+                    </div>
+                    <div className="text-[9px] text-gold-light mt-0.5">
+                      {earlyBirdActive ? "🎁 Early Bird aktif!" : "Merch + front row"}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Google Sign-In button */}
+            <div className="text-center py-2">
+              <p className="text-xs text-cream/60 mb-4">
+                Untuk mendaftar, silakan login dengan akun Google Anda.
+                <br />
+                <span className="text-[10px] text-cream/40">
+                  Data email & nama akan diambil dari Google untuk mempermudah pendaftaran.
+                </span>
+              </p>
+              <button
+                onClick={handleGoogleSignIn}
+                disabled={googleLoading}
+                className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-full bg-white hover:bg-zinc-100 disabled:opacity-70 text-purpleblack font-bold transition-all shadow-lg"
+                style={{ fontFamily: "var(--font-heading)" }}
+              >
+                {googleLoading ? (
+                  <>
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Menghubungkan ke Google...
+                  </>
+                ) : (
+                  <>
+                    <svg className="h-5 w-5" viewBox="0 0 24 24">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Sign in dengan Google
+                  </>
+                )}
+              </button>
+              <div className="mt-4 flex items-center justify-center gap-1.5 text-[10px] text-cream/40">
+                <Lock className="h-3 w-3" />
+                Login aman via Google OAuth 2.0
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 pt-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setStep("select")}
+                className="flex-1 bg-purpleblack border-magenta/30 text-cream hover:bg-magenta/10"
+              >
+                <ChevronLeft className="h-4 w-4 mr-1" />
+                Kembali
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {step === "form" && selectedCity && googleUser && (
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Selected city summary */}
             <div className="rounded-2xl border border-magenta/30 bg-magenta/10 p-4">
@@ -199,41 +412,164 @@ function RegisterModalInner({
               </div>
             </div>
 
+            {/* Google user info banner */}
+            {googleUser && (
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-green-500/10 border border-green-500/30">
+                <img
+                  src={googleUser.avatar}
+                  alt={googleUser.name}
+                  className="h-10 w-10 rounded-full bg-purpleblack flex-shrink-0"
+                />
+                <div className="flex-1 min-w-0">
+                  <div className="text-xs text-green-400 font-bold uppercase">✓ Login Google</div>
+                  <div className="text-sm text-cream font-bold truncate">{googleUser.name}</div>
+                  <div className="text-[10px] text-cream/60 truncate">{googleUser.email}</div>
+                </div>
+              </div>
+            )}
+
             {/* Form fields */}
-            <div className="space-y-2">
-              <Label htmlFor="name">Nama Lengkap</Label>
-              <Input
-                id="name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="Contoh: Dewi Anggraini"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                placeholder="email@contoh.com"
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="phone">Nomor WhatsApp</Label>
-              <Input
-                id="phone"
-                value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                placeholder="0813-xxxx-xxxx"
-                required
-              />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-cream">Nama Lengkap *</Label>
+                <Input
+                  id="name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder="Dari Google"
+                  required
+                  className="bg-purpleblack border-magenta/25 text-cream"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-cream">Email Google *</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={form.email}
+                  disabled
+                  className="bg-purpleblack/50 border-magenta/25 text-cream/70 font-mono text-xs"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone" className="text-cream">WhatsApp *</Label>
+                <Input
+                  id="phone"
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  placeholder="0813-xxxx-xxxx"
+                  required
+                  className="bg-purpleblack border-magenta/25 text-cream font-mono"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="birthDate" className="text-cream">Tanggal Lahir *</Label>
+                <Input
+                  id="birthDate"
+                  type="date"
+                  value={form.birthDate}
+                  onChange={(e) => setForm({ ...form, birthDate: e.target.value })}
+                  required
+                  className="bg-purpleblack border-magenta/25 text-cream"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="gender" className="text-cream">Gender</Label>
+                <select
+                  id="gender"
+                  value={form.gender}
+                  onChange={(e) => setForm({ ...form, gender: e.target.value as "L" | "P" | "other" })}
+                  className="w-full h-9 px-3 rounded-md bg-purpleblack border border-magenta/25 text-cream text-sm"
+                >
+                  <option value="P">Perempuan</option>
+                  <option value="L">Laki-laki</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="postalCode" className="text-cream">Kode Pos</Label>
+                <Input
+                  id="postalCode"
+                  value={form.postalCode}
+                  onChange={(e) => setForm({ ...form, postalCode: e.target.value })}
+                  placeholder="40123"
+                  className="bg-purpleblack border-magenta/25 text-cream font-mono"
+                />
+              </div>
+              <div className="col-span-2 space-y-2">
+                <Label htmlFor="address" className="text-cream">Alamat Lengkap *</Label>
+                <Input
+                  id="address"
+                  value={form.address}
+                  onChange={(e) => setForm({ ...form, address: e.target.value })}
+                  placeholder="Jl. Contoh No. 123, Kelurahan, Kecamatan"
+                  required
+                  className="bg-purpleblack border-magenta/25 text-cream"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="cityDomicile" className="text-cream">Kota Domisili</Label>
+                <Input
+                  id="cityDomicile"
+                  value={form.cityDomicile}
+                  onChange={(e) => setForm({ ...form, cityDomicile: e.target.value })}
+                  placeholder={selectedCity.city}
+                  className="bg-purpleblack border-magenta/25 text-cream"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="referralSource" className="text-cream">Sumber Info</Label>
+                <select
+                  id="referralSource"
+                  value={form.referralSource}
+                  onChange={(e) => setForm({ ...form, referralSource: e.target.value as Registration["referralSource"] })}
+                  className="w-full h-9 px-3 rounded-md bg-purpleblack border border-magenta/25 text-cream text-sm"
+                >
+                  <option value="instagram">Instagram</option>
+                  <option value="tiktok">TikTok</option>
+                  <option value="friend">Teman</option>
+                  <option value="google">Google Search</option>
+                  <option value="youtube">YouTube</option>
+                  <option value="other">Lainnya</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="emergencyName" className="text-cream">Emergency Contact (opsional)</Label>
+                <Input
+                  id="emergencyName"
+                  value={form.emergencyName}
+                  onChange={(e) => setForm({ ...form, emergencyName: e.target.value })}
+                  placeholder="Nama keluarga"
+                  className="bg-purpleblack border-magenta/25 text-cream"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="emergencyPhone" className="text-cream">Emergency Phone (opsional)</Label>
+                <Input
+                  id="emergencyPhone"
+                  value={form.emergencyPhone}
+                  onChange={(e) => setForm({ ...form, emergencyPhone: e.target.value })}
+                  placeholder="08xx-xxxx-xxxx"
+                  className="bg-purpleblack border-magenta/25 text-cream font-mono"
+                />
+              </div>
+              <div className="col-span-2 flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  id="marketingConsent"
+                  checked={form.marketingConsent}
+                  onChange={(e) => setForm({ ...form, marketingConsent: e.target.checked })}
+                  className="h-4 w-4"
+                />
+                <Label htmlFor="marketingConsent" className="text-cream text-xs cursor-pointer">
+                  Saya setuju menerima info promo & update event via WhatsApp/Email
+                </Label>
+              </div>
             </div>
 
+            {/* Ticket type selection with pricing */}
             <div className="space-y-2">
-              <Label>Jenis Tiket</Label>
+              <Label className="text-cream">Jenis Tiket</Label>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
@@ -246,26 +582,38 @@ function RegisterModalInner({
                 >
                   <div className="flex items-center gap-1.5">
                     <Ticket className="h-4 w-4 text-magenta-light" />
-                    <span className="font-bold text-sm">Regular</span>
+                    <span className="font-bold text-sm text-cream">Regular</span>
                   </div>
-                  <div className="text-xs text-cream/60 mt-1">Gratis + e-Cert</div>
+                  <div className="text-xs text-cream font-bold mt-1">{formatRupiah(pricing?.regular.price ?? 0)}</div>
+                  <div className="text-[10px] text-cream/60">e-Cert + akses sesi</div>
                 </button>
                 <button
                   type="button"
                   onClick={() => setForm({ ...form, ticketType: "vip" })}
                   className={`p-3 rounded-xl border text-left transition-all ${
                     form.ticketType === "vip"
-                      ? "border-magenta bg-magenta/15"
-                      : "border-magenta/20 hover:border-magenta/40"
+                      ? "border-gold bg-gold/15"
+                      : "border-gold/30 hover:border-gold/50"
                   }`}
                 >
                   <div className="flex items-center gap-1.5">
-                    <Sparkles className="h-4 w-4 text-magenta-light" />
-                    <span className="font-bold text-sm">VIP</span>
+                    <Sparkles className="h-4 w-4 text-gold-light" />
+                    <span className="font-bold text-sm text-cream">VIP</span>
                   </div>
-                  <div className="text-xs text-cream/60 mt-1">Merch + Front Row</div>
+                  <div className="text-xs text-gold-light font-bold mt-1">
+                    {earlyBirdActive && pricing ? pricing.vip.earlyBirdLabel : pricing?.vip.label}
+                  </div>
+                  <div className="text-[10px] text-cream/60">
+                    {earlyBirdActive ? "🎁 Early Bird!" : "Merch + Front Row"}
+                  </div>
                 </button>
               </div>
+              {form.ticketType === "vip" && earlyBirdActive && pricing && (
+                <div className="text-[10px] text-gold-light mt-1 flex items-center gap-1">
+                  <Sparkles className="h-3 w-3" />
+                  Hemat {formatRupiah(pricing.vip.price - pricing.vip.earlyBirdPrice)} dengan Early Bird!
+                </div>
+              )}
             </div>
 
             <div className="flex items-center gap-2 pt-2">
