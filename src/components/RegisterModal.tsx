@@ -11,7 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { CITIES, type CityEvent } from "@/data/event";
+import { type CityEvent } from "@/data/event";
+import { useCities } from "@/lib/admin-store";
 import {
   CheckCircle2,
   ChevronLeft,
@@ -60,6 +61,7 @@ function RegisterModalInner({
   onOpenChange: (open: boolean) => void;
 }) {
   // Compute initial state from props once per mount.
+  const CITIES = useCities();
   const preselected = preselectedCity
     ? CITIES.find((c) => c.id === preselectedCity) ?? null
     : null;

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Trophy, HeartPulse, Users, Award, Gift, Star } from "lucide-react";
-import { BENEFITS } from "@/data/event";
+import { useAdminStore } from "@/lib/admin-store";
 
 const ICONS: Record<string, React.ElementType> = {
   Trophy,
@@ -14,6 +14,7 @@ const ICONS: Record<string, React.ElementType> = {
 };
 
 export function WhyJoin() {
+  const BENEFITS = useAdminStore((s) => s.benefits);
   return (
     <section id="keuntungan" className="relative py-4 lg:py-6 bg-brand-tech overflow-hidden">
       <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-magenta/20/40 blur-3xl -z-10" />

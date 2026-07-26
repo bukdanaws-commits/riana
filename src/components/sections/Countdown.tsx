@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Trophy, MapPin, Calendar } from "lucide-react";
-import { CITIES } from "@/data/event";
+import { useCities } from "@/lib/admin-store";
 
-function getNextCity() {
+function getNextCity(cities: { date: string }[]) {
   const now = new Date();
-  return CITIES.find((c) => new Date(c.date).getTime() > now.getTime()) ?? CITIES[CITIES.length - 1];
+  return cities.find((c) => new Date(c.date).getTime() > now.getTime()) ?? cities[cities.length - 1];
 }
 
 function computeTimeLeft(target: string) {
@@ -22,8 +22,9 @@ function computeTimeLeft(target: string) {
 }
 
 export function Countdown() {
-  const nextCity = getNextCity();
-  const finale = CITIES.find((c) => c.id === "jakarta")!;
+  const CITIES = useCities();
+  const nextCity = getNextCity(CITIES) ?? CITIES[0];
+  const finale = CITIES.find((c) => c.id === "jakarta") ?? CITIES[CITIES.length - 1];
 
   const [nextLeft, setNextLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [finaleLeft, setFinaleLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });

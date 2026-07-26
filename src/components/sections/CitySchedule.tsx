@@ -15,12 +15,12 @@ import {
   Sparkles,
 } from "lucide-react";
 import {
-  CITIES,
   REGIONS,
   REGION_COLORS,
   type Region,
   type CityEvent,
 } from "@/data/event";
+import { useCities } from "@/lib/admin-store";
 
 interface CityScheduleProps {
   onRegisterClick: (cityId?: string) => void;
@@ -31,11 +31,12 @@ type Filter = "all" | Region;
 export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
   const [filter, setFilter] = useState<Filter>("all");
   const [hoveredCity, setHoveredCity] = useState<string | null>(null);
+  const CITIES = useCities();
 
   const filtered = useMemo(() => {
     if (filter === "all") return CITIES;
     return CITIES.filter((c) => c.region === filter);
-  }, [filter]);
+  }, [filter, CITIES]);
 
   return (
     <section id="jadwal" className="relative py-4 lg:py-6 bg-brand-tech overflow-hidden">
@@ -356,6 +357,7 @@ function IndonesiaMap({
   onCityClick: (id: string) => void;
   filter: Filter;
 }) {
+  const CITIES = useCities();
   return (
     <div className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-purple-50 via-pink-50 to-pink-50 border-2 border-magenta/20 overflow-hidden p-4">
       <div className="absolute inset-0 pattern-dots opacity-50" />

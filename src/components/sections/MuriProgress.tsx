@@ -1,23 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Trophy, Users, TrendingUp, Sparkles, CheckCircle2, MapPin } from "lucide-react";
 import {
-  MURI_TARGET,
-  getRegisteredTotal,
-  getCheckedInTotal,
-  getCompletedCitiesCount,
-  getOpenCitiesCount,
-  CITIES,
   MILESTONES,
 } from "@/data/event";
+import { useCities, useMuriTarget } from "@/lib/admin-store";
 
 export function MuriProgress() {
-  const baseTotal = getRegisteredTotal();
-  const checkedIn = getCheckedInTotal();
-  const completedCities = getCompletedCitiesCount();
-  const openCities = getOpenCitiesCount();
+  const CITIES = useCities();
+  const MURI_TARGET = useMuriTarget();
+  const baseTotal = useMemo(() => CITIES.reduce((s, c) => s + c.registered, 0), [CITIES]);
+  const checkedIn = useMemo(() => CITIES.reduce((s, c) => s + (c.checkedIn ?? 0), 0), [CITIES]);
+  const completedCities = CITIES.filter((c) => c.status === "completed").length;
+  const openCities = CITIES.filter((c) => c.status === "open").length;
   const [count, setCount] = useState(0);
 
   // Animate count from 0 -> baseTotal on mount, then keep ticking slowly

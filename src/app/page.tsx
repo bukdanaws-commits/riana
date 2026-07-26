@@ -17,6 +17,7 @@ import { Partners } from "@/components/sections/Partners";
 import { FAQ } from "@/components/sections/FAQ";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Footer } from "@/components/sections/Footer";
+import { AdminTrigger } from "@/components/admin/AdminTrigger";
 
 export default function Home() {
   const [registerOpen, setRegisterOpen] = useState(false);
@@ -61,6 +62,9 @@ export default function Home() {
         onOpenChange={closeRegister}
         preselectedCity={preselectedCity}
       />
+
+      {/* Admin Dashboard — trigger via floating button (bottom-right) or Ctrl+Shift+A */}
+      <AdminTrigger />
     </main>
   );
 }

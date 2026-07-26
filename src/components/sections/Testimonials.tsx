@@ -4,9 +4,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Star, Quote, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
-import { TESTIMONIALS } from "@/data/event";
+import { useTestimonials } from "@/lib/admin-store";
 
 export function Testimonials() {
+  const TESTIMONIALS = useTestimonials();
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 

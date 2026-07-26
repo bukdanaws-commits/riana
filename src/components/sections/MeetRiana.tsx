@@ -2,9 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Heart, Sparkles, Instagram, Music2 } from "lucide-react";
-import { RIANA_STATS, RIANA_CERTIFICATIONS } from "@/data/event";
+import { useRianaStats, useRianaCerts, useRianaBio } from "@/lib/admin-store";
 
 export function MeetRiana() {
+  const RIANA_STATS = useRianaStats();
+  const RIANA_CERTIFICATIONS = useRianaCerts();
+  const rianaBio = useRianaBio();
   return (
     <section id="about" className="relative py-4 lg:py-6 bg-brand-tech overflow-hidden">
       <div className="absolute inset-0 pattern-dots opacity-40 -z-10" />
@@ -107,13 +110,7 @@ export function MeetRiana() {
               KENALI <span className="text-gradient-brand">RIANA</span>, SANG MASTER DI BALIK GERAKAN INI
             </h2>
             <div className="space-y-4 text-base text-cream/70 leading-relaxed">
-              <p>
-                <span className="font-bold text-cream">Riana Bismarak</span> (@rianaree) adalah
-                instruktur fitness bersertifikasi dengan 8 lisensi internasional — Zumba, Zumba
-                Toning, Zumba Step, Strong Nation, Barre Intensity, Inferno Hot Pilates, Pound, dan
-                Pound Unplugged. Dengan pengalaman 8+ tahun, Riana telah mengajar di 20+ kota dan
-                membangun komunitas 126K pengikut di Instagram.
-              </p>
+              <p>{rianaBio}</p>
               <p>
                 Lewat brand <span className="font-bold text-cream">Genggobyos</span>,{" "}
                 <span className="font-bold text-cream">REE</span>, dan{" "}

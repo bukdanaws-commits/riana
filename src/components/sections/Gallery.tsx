@@ -4,11 +4,12 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Play, Camera, Film, X, Maximize2 } from "lucide-react";
-import { GALLERY_ITEMS } from "@/data/event";
+import { useGallery } from "@/lib/admin-store";
 
 export function Gallery() {
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [tab, setTab] = useState<"photo" | "video">("photo");
+  const GALLERY_ITEMS = useGallery();
 
   return (
     <section id="galeri" className="relative py-4 lg:py-6 bg-brand-tech overflow-hidden">

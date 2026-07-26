@@ -16,7 +16,8 @@ import {
   Star,
   Megaphone,
 } from "lucide-react";
-import { PARTNER_TYPES, PARTNER_TIERS, PARTNERS, type Partner } from "@/data/event";
+import { PARTNER_TYPES, PARTNER_TIERS, type Partner } from "@/data/event";
+import { usePartners } from "@/lib/admin-store";
 
 const ICONS: Record<string, React.ElementType> = {
   Brand: Sparkles,
@@ -42,6 +43,7 @@ const TIER_COLORS: Record<Partner["tier"], string> = {
 };
 
 export function Partners() {
+  const PARTNERS = usePartners();
   // Group partners by tier
   const platinum = PARTNERS.filter((p) => p.tier === "Platinum");
   const gold = PARTNERS.filter((p) => p.tier === "Gold");

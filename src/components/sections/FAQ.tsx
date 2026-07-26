@@ -9,11 +9,13 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { HelpCircle, MessageSquareQuote } from "lucide-react";
-import { FAQS, type FAQItem } from "@/data/event";
+import { useFaqs } from "@/lib/admin-store";
+import type { FAQItem } from "@/data/event";
 
 const CATEGORIES: FAQItem["category"][] = ["Pendaftaran", "Teknis", "Hari-H", "Rekor MURI"];
 
 export function FAQ() {
+  const FAQS = useFaqs();
   const [activeCategory, setActiveCategory] = useState<FAQItem["category"] | "all">("all");
 
   const filtered =
