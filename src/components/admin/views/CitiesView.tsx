@@ -153,7 +153,7 @@ export function CitiesView() {
             <tbody>
               {filtered.map((city) => {
                 const pct = Math.round((city.registered / city.capacity) * 100);
-                const regionColor = REGION_COLORS[city.region as Region] ?? "#DF2679";
+                const regionColor = REGION_COLORS[city.region as Region] ?? "#FC7166";
                 return (
                   <tr
                     key={city.id}

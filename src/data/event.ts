@@ -71,13 +71,13 @@ export const REGIONS: Region[] = [
 ];
 
 export const REGION_COLORS: Record<Region, string> = {
-  "Jawa Barat":    "#DF2679", // magenta primary
-  "Jawa Tengah":   "#F17238", // orange secondary
-  "Jawa Timur":    "#F04E9A", // magenta light
-  "Bali & Nusra":  "#D4AF37", // gold accent
-  "Sumatera":      "#51343F", // plum
-  "Sulawesi":      "#B01A62", // magenta deep
-  "Kalimantan":    "#E8948F", // coral accent
+  "Jawa Barat":    "#FC7166", // magenta primary
+  "Jawa Tengah":   "#FD8656", // orange secondary
+  "Jawa Timur":    "#FF8A80", // magenta light
+  "Bali & Nusra":  "#F39F23", // gold accent
+  "Sumatera":      "#884D3E", // plum
+  "Sulawesi":      "#E54B40", // magenta deep
+  "Kalimantan":    "#C99789", // coral accent
 };
 
 export const MURI_TARGET = 10000;
@@ -205,7 +205,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Pengalaman terbaik dalam karier saya mengajar Zumba selama 8 tahun. Energinya gila, komunitasnya solid, dan Riana benar-benar inspiratif. Anak-anak murid saya yang ikut langsung ketagihan sampai sekarang rutin latihan.",
     rating: 5,
-    avatarColor: "#DF2679",
+    avatarColor: "#FC7166",
     event: "Bandung 12 Juli 2026",
   },
   {
@@ -215,7 +215,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Saya awalnya minder karena baru pertama kali ikut Zumba. Tapi semua orang sangat welcome, instruktur sabar, dan musiknya bikin semangat. Sekarang saya rutin latihan tiap minggu di komunitas lokal.",
     rating: 5,
-    avatarColor: "#F17238",
+    avatarColor: "#FD8656",
     event: "Bandung 12 Juli 2026",
   },
   {
@@ -225,7 +225,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Berkat Riana On The Move, saya turun 5 kg dalam 3 bulan setelah rutin latihan Zumba Step. Yang paling saya suka: community-nya bukan cuma soal olahraga, tapi soal support system antar peserta.",
     rating: 5,
-    avatarColor: "#51343F",
+    avatarColor: "#884D3E",
     event: "Purwokerto 19 Juli 2026",
   },
   {
@@ -235,7 +235,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Event-nya well-organized. Dari check-in, sesi Zumba, sampai doorprize semua smooth. Fotografernya profesional, foto-fotonya bagus banget buat update sosmed. Next kota aku pasti ikut lagi!",
     rating: 4,
-    avatarColor: "#F04E9A",
+    avatarColor: "#FF8A80",
     event: "Purwokerto 19 Juli 2026",
   },
   {
@@ -245,7 +245,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Zumba Step ini beda dengan Zumba biasa — lebih challenging, lebih banyak lower body, dan cardio-nya lebih intense. Cocok buat yang mauvariin rutinitas gym. Recommended banget!",
     rating: 5,
-    avatarColor: "#D4AF37",
+    avatarColor: "#F39F23",
     event: "Bandung 12 Juli 2026",
   },
   {
@@ -255,7 +255,7 @@ export const TESTIMONIALS: Testimonial[] = [
     quote:
       "Sebagai dokter, saya rekomendasiin Zumba Step ke pasien saya yang butuh aktivitas kardio low-impact tapi efektif. Riana On The Move jadi trigger banyak pasien saya mulai hidup aktif. E-Certificate MURI juga jadi motivasi tersendiri.",
     rating: 5,
-    avatarColor: "#B01A62",
+    avatarColor: "#E54B40",
     event: "Bandung 12 Juli 2026",
   },
 ];
@@ -284,7 +284,7 @@ export const PARTNERS: Partner[] = [
   { name: "Beyoutiful Sport", tier: "Gold", category: "Activewear", logoColor: "#9B59B6", benefit: "Co-sponsor regional Bali & Nusra" },
 
   // Silver (3)
-  { name: "AktiveNation", tier: "Silver", category: "Fitness Community", logoColor: "#DF2679", benefit: "Sponsor kota — Bandung" },
+  { name: "AktiveNation", tier: "Silver", category: "Fitness Community", logoColor: "#FC7166", benefit: "Sponsor kota — Bandung" },
   { name: "The Park Mall", tier: "Silver", category: "Venue Partner", logoColor: "#34495E", benefit: "Venue host Solo & Bekasi" },
   { name: "Zumba Indonesia", tier: "Silver", category: "Komunitas ZIN", logoColor: "#FF6B35", benefit: "Official ZIN community partner" },
 

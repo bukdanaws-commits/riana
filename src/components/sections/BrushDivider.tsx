@@ -15,20 +15,20 @@ export function BrushDivider({
 }: BrushDividerProps) {
   const colors = {
     "magenta-orange": {
-      top: "#DF2679",
-      bottom: "#F17238",
+      top: "#FC7166",
+      bottom: "#FD8656",
     },
     "gold": {
-      top: "#D4AF37",
-      bottom: "#E8C547",
+      top: "#F39F23",
+      bottom: "#FFB938",
     },
     "white-purple": {
       top: "#FFFFFF",
-      bottom: "#51343F",
+      bottom: "#884D3E",
     },
     "purple-gold": {
-      top: "#150F1E",
-      bottom: "#D4AF37",
+      top: "#181A22",
+      bottom: "#F39F23",
     },
   }[variant];
 

@@ -184,7 +184,7 @@ export function Hero({ onRegisterClick }: HeroProps) {
                 className="mt-4 flex items-center gap-3 text-xs sm:text-sm text-cream/70"
               >
                 <div className="flex -space-x-2">
-                  {["#DF2679", "#F17238", "#D4AF37", "#51343F", "#F04E9A"].map((c, i) => (
+                  {["#FC7166", "#FD8656", "#F39F23", "#884D3E", "#FF8A80"].map((c, i) => (
                     <div
                       key={i}
                       className="h-7 w-7 rounded-full border-2 border-purpleblack"

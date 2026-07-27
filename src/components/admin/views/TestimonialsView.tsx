@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 const emptyT: Testimonial = {
   name: "", role: "", city: "", quote: "", rating: 5,
-  avatarColor: "#DF2679", event: "",
+  avatarColor: "#FC7166", event: "",
 };
 
 export function TestimonialsView() {

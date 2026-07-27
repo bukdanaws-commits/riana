@@ -17,7 +17,7 @@ import { toast } from "sonner";
 const TIERS = ["Platinum", "Gold", "Silver", "Media Partner"] as const;
 
 const emptyP: Partner = {
-  name: "", tier: "Silver", category: "", logoColor: "#DF2679", benefit: "",
+  name: "", tier: "Silver", category: "", logoColor: "#FC7166", benefit: "",
 };
 
 export function PartnersView() {

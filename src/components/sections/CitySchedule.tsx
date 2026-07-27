@@ -88,7 +88,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
           <FilterPill
             active={filter === "all"}
             onClick={() => setFilter("all")}
-            color="#150F1E"
+            color="#181A22"
             label="Semua Kota"
             count={CITIES.length}
           />
