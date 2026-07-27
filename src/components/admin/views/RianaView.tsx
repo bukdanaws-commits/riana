@@ -54,7 +54,7 @@ export function RianaView() {
       {/* === BIO === */}
       <AdminCard>
         <h3
-          className="text-lg font-black text-cream mb-3"
+          className="text-lg font-black text-white mb-3"
           style={{ fontFamily: "var(--font-display)" }}
         >
           BIO RIANA
@@ -63,7 +63,7 @@ export function RianaView() {
           value={bio}
           onChange={(e) => setBio(e.target.value)}
           rows={5}
-          className="bg-purpleblack border-magenta/25 text-cream resize-none mb-3"
+          className="bg-[#0E0F14] border-[#FC7166]/25 text-white resize-none mb-3"
         />
         <div className="flex justify-end">
           <AdminButton onClick={handleSaveBio}>
@@ -75,7 +75,7 @@ export function RianaView() {
       {/* === STATS === */}
       <AdminCard>
         <h3
-          className="text-lg font-black text-cream mb-3"
+          className="text-lg font-black text-white mb-3"
           style={{ fontFamily: "var(--font-display)" }}
         >
           STATS RIANA
@@ -83,7 +83,7 @@ export function RianaView() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-3">
           {stats.map((stat, idx) => (
             <div key={idx} className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">
+              <Label className="text-white/80 text-xs font-bold uppercase">
                 {stat.label}
               </Label>
               <Input
@@ -93,7 +93,7 @@ export function RianaView() {
                   newStats[idx] = { ...stat, value: e.target.value };
                   setStats(newStats);
                 }}
-                className="bg-purpleblack border-magenta/25 text-cream"
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white"
               />
             </div>
           ))}
@@ -108,17 +108,17 @@ export function RianaView() {
       {/* === CERTIFICATIONS === */}
       <AdminCard>
         <h3
-          className="text-lg font-black text-cream mb-3 flex items-center gap-2"
+          className="text-lg font-black text-white mb-3 flex items-center gap-2"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <Award className="h-5 w-5 text-gold-light" />
+          <Award className="h-5 w-5 text-[#FFB938]" />
           SERTIFIKASI
         </h3>
         <div className="flex flex-wrap gap-2 mb-3">
           {certs.map((cert) => (
             <div
               key={cert}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-magenta/15 border border-magenta/30 text-magenta-light text-xs font-bold"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FC7166]/15 border border-[#FC7166]/30 text-[#FF8A80] text-xs font-bold"
             >
               {cert}
               <button
@@ -130,7 +130,7 @@ export function RianaView() {
             </div>
           ))}
           {certs.length === 0 && (
-            <p className="text-cream/40 text-sm italic">Belum ada sertifikasi.</p>
+            <p className="text-white/40 text-sm italic">Belum ada sertifikasi.</p>
           )}
         </div>
         <div className="flex gap-2 mb-3">
@@ -144,7 +144,7 @@ export function RianaView() {
               }
             }}
             placeholder="Tambah sertifikasi (mis: Yoga Alliance RYT-500)"
-            className="bg-purpleblack border-magenta/25 text-cream"
+            className="bg-[#0E0F14] border-[#FC7166]/25 text-white"
           />
           <AdminButton variant="outline" onClick={addCert}>
             <Plus className="h-4 w-4" />

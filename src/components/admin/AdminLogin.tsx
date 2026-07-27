@@ -46,11 +46,11 @@ function LoginForm({ onClose }: { onClose: () => void }) {
   return (
     <form onSubmit={handleSubmit} className="p-6 space-y-4">
       <div className="space-y-2">
-        <Label htmlFor="admin-password" className="text-cream">
+        <Label htmlFor="admin-password" className="text-white">
           Password
         </Label>
         <div className="relative">
-          <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-magenta-light" />
+          <KeyRound className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#FF8A80]" />
           <Input
             id="admin-password"
             type="password"
@@ -61,7 +61,7 @@ function LoginForm({ onClose }: { onClose: () => void }) {
             }}
             placeholder="••••••••"
             autoFocus
-            className="pl-9 bg-purple-dark border-magenta/30 text-cream placeholder:text-cream/30"
+            className="pl-9 bg-[#181A22] border-[#FC7166]/30 text-white placeholder:text-white/30"
           />
         </div>
         {error && (
@@ -74,18 +74,18 @@ function LoginForm({ onClose }: { onClose: () => void }) {
 
       <Button
         type="submit"
-        className="w-full bg-magenta hover:bg-magenta-deep text-white font-bold shadow-glow-pink"
+        className="w-full bg-[#FC7166] hover:bg-[#FC7166]-deep text-white font-bold shadow-[0_8px_24px_-8px_rgba(252,113,102,0.6)]"
         style={{ fontFamily: "var(--font-heading)" }}
       >
         <Lock className="mr-2 h-4 w-4" />
         Masuk ke Dashboard
       </Button>
 
-      <div className="text-center pt-2 border-t border-magenta/15">
-        <p className="text-[10px] text-cream/40 font-mono">
-          Default password: <span className="text-magenta-light">admin123</span>
+      <div className="text-center pt-2 border-t border-[#FC7166]/15">
+        <p className="text-[10px] text-white/40 font-mono">
+          Default password: <span className="text-[#FF8A80]">admin123</span>
         </p>
-        <p className="text-[9px] text-cream/30 mt-1">
+        <p className="text-[9px] text-white/30 mt-1">
           Ubah password di production via environment variable.
         </p>
       </div>
@@ -96,7 +96,7 @@ function LoginForm({ onClose }: { onClose: () => void }) {
 export function AdminLogin({ open, onOpenChange }: AdminLoginProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md p-0 overflow-hidden bg-purpleblack border border-magenta/40">
+      <DialogContent className="max-w-md p-0 overflow-hidden bg-[#0E0F14] border border-[#FC7166]/40">
         {/* Header */}
         <div className="bg-brand-gradient px-6 py-5 text-white relative overflow-hidden">
           <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/15" />

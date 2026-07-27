@@ -86,9 +86,9 @@ export function RevenueView() {
 
     // Revenue by source
     const bySource = [
-      { source: "Tiket VIP", amount: ticketRevenue, color: "bg-magenta" },
-      { source: "Merchandise", amount: merchRevenue, color: "bg-orange-brand" },
-      { source: "Sponsorship", amount: sponsorshipRevenue, color: "bg-gold" },
+      { source: "Tiket VIP", amount: ticketRevenue, color: "bg-[#FC7166]" },
+      { source: "Merchandise", amount: merchRevenue, color: "bg-[#FD8656]" },
+      { source: "Sponsorship", amount: sponsorshipRevenue, color: "bg-[#F39F23]" },
     ];
 
     return {
@@ -182,10 +182,10 @@ export function RevenueView() {
       <div className="grid lg:grid-cols-2 gap-4">
         <AdminCard>
           <h3
-            className="text-base font-black text-cream mb-3 flex items-center gap-2"
+            className="text-base font-black text-white mb-3 flex items-center gap-2"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <PieChart className="h-4 w-4 text-magenta-light" />
+            <PieChart className="h-4 w-4 text-[#FF8A80]" />
             REVENUE BY SOURCE
           </h3>
           <div className="space-y-3">
@@ -194,12 +194,12 @@ export function RevenueView() {
               return (
                 <div key={src.source}>
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-cream font-bold">{src.source}</span>
-                    <span className="text-sm text-cream/70 font-mono">
+                    <span className="text-sm text-white font-bold">{src.source}</span>
+                    <span className="text-sm text-white/70 font-mono">
                       {formatRupiah(src.amount)} ({pct.toFixed(1)}%)
                     </span>
                   </div>
-                  <div className="h-2 rounded-full bg-purpleblack overflow-hidden">
+                  <div className="h-2 rounded-full bg-[#0E0F14] overflow-hidden">
                     <div
                       className={`h-full ${src.color} rounded-full transition-all duration-500`}
                       style={{ width: `${pct}%` }}
@@ -214,10 +214,10 @@ export function RevenueView() {
         {/* === COST BREAKDOWN === */}
         <AdminCard>
           <h3
-            className="text-base font-black text-cream mb-3 flex items-center gap-2"
+            className="text-base font-black text-white mb-3 flex items-center gap-2"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <BarChart3 className="h-4 w-4 text-orange-light" />
+            <BarChart3 className="h-4 w-4 text-[#FFA577]" />
             COST BREAKDOWN
           </h3>
           <div className="space-y-2">
@@ -225,15 +225,15 @@ export function RevenueView() {
               const pct = (amount / revenue.totalCost) * 100;
               return (
                 <div key={cat} className="flex items-center justify-between text-xs">
-                  <span className="text-cream/70 capitalize">{cat.replace(/([A-Z])/g, " $1").trim()}</span>
+                  <span className="text-white/70 capitalize">{cat.replace(/([A-Z])/g, " $1").trim()}</span>
                   <div className="flex items-center gap-2">
-                    <div className="w-20 h-1.5 rounded-full bg-purpleblack overflow-hidden">
+                    <div className="w-20 h-1.5 rounded-full bg-[#0E0F14] overflow-hidden">
                       <div
-                        className="h-full bg-orange-brand rounded-full"
+                        className="h-full bg-[#FD8656] rounded-full"
                         style={{ width: `${pct}%` }}
                       />
                     </div>
-                    <span className="text-cream font-mono w-24 text-right">{formatRupiah(amount)}</span>
+                    <span className="text-white font-mono w-24 text-right">{formatRupiah(amount)}</span>
                   </div>
                 </div>
               );
@@ -246,10 +246,10 @@ export function RevenueView() {
       <AdminCard>
         <div className="flex items-center justify-between mb-3">
           <h3
-            className="text-base font-black text-cream flex items-center gap-2"
+            className="text-base font-black text-white flex items-center gap-2"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <BarChart3 className="h-4 w-4 text-gold-light" />
+            <BarChart3 className="h-4 w-4 text-[#FFB938]" />
             REVENUE BY CITY (Top Performing)
           </h3>
           <AdminButton size="sm" onClick={handleExport}>
@@ -260,10 +260,10 @@ export function RevenueView() {
         <div className="space-y-2">
           {revenue.byCity.slice(0, 10).map((c, idx) => (
             <div key={c.city} className="flex items-center gap-3">
-              <div className="text-xs text-cream/50 font-mono w-6">{String(idx + 1).padStart(2, "0")}</div>
-              <div className="text-sm text-cream font-bold w-24 truncate">{c.city}</div>
+              <div className="text-xs text-white/50 font-mono w-6">{String(idx + 1).padStart(2, "0")}</div>
+              <div className="text-sm text-white font-bold w-24 truncate">{c.city}</div>
               <div className="flex-1">
-                <div className="h-6 rounded-lg bg-purpleblack overflow-hidden relative">
+                <div className="h-6 rounded-lg bg-[#0E0F14] overflow-hidden relative">
                   <div
                     className="h-full bg-gradient-to-r from-magenta to-orange-brand rounded-lg flex items-center justify-end px-2 transition-all duration-500"
                     style={{ width: `${(c.total / maxCityRevenue) * 100}%` }}
@@ -274,7 +274,7 @@ export function RevenueView() {
                   </div>
                 </div>
               </div>
-              <div className="text-[10px] text-cream/50 font-mono w-20 text-right">
+              <div className="text-[10px] text-white/50 font-mono w-20 text-right">
                 {c.vipCount} VIP / {c.totalRegs} reg
               </div>
             </div>
@@ -284,9 +284,9 @@ export function RevenueView() {
 
       {/* === DETAILED TABLE === */}
       <AdminCard className="p-0 overflow-hidden">
-        <div className="px-4 py-3 border-b border-magenta/20 bg-purpleblack/30">
+        <div className="px-4 py-3 border-b border-[#FC7166]/20 bg-[#0E0F14]/30">
           <h3
-            className="text-sm font-black text-cream"
+            className="text-sm font-black text-white"
             style={{ fontFamily: "var(--font-display)" }}
           >
             REVENUE DETAIL PER KOTA
@@ -295,33 +295,33 @@ export function RevenueView() {
         <div className="overflow-x-auto custom-scroll">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-magenta/20 bg-purpleblack/50">
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Kota</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Total Peserta</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">VIP Count</th>
-                <th className="text-right p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Tiket Revenue</th>
-                <th className="text-right p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Merch Revenue</th>
-                <th className="text-right p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Total Revenue</th>
+              <tr className="border-b border-[#FC7166]/20 bg-[#0E0F14]/50">
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Kota</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Total Peserta</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">VIP Count</th>
+                <th className="text-right p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Tiket Revenue</th>
+                <th className="text-right p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Merch Revenue</th>
+                <th className="text-right p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Total Revenue</th>
               </tr>
             </thead>
             <tbody>
               {revenue.byCity.map((c) => (
-                <tr key={c.city} className="border-b border-magenta/10 hover:bg-magenta/5">
-                  <td className="p-3 font-bold text-cream">{c.city}</td>
-                  <td className="p-3 text-center text-cream/70">{c.totalRegs}</td>
-                  <td className="p-3 text-center text-cream/70">{c.vipCount}</td>
-                  <td className="p-3 text-right text-cream/70 font-mono text-xs">{formatRupiah(c.ticketRevenue)}</td>
-                  <td className="p-3 text-right text-cream/70 font-mono text-xs">{formatRupiah(c.merchRevenue)}</td>
-                  <td className="p-3 text-right font-bold text-cream font-mono text-xs">{formatRupiah(c.total)}</td>
+                <tr key={c.city} className="border-b border-[#FC7166]/10 hover:bg-[#FC7166]/5">
+                  <td className="p-3 font-bold text-white">{c.city}</td>
+                  <td className="p-3 text-center text-white/70">{c.totalRegs}</td>
+                  <td className="p-3 text-center text-white/70">{c.vipCount}</td>
+                  <td className="p-3 text-right text-white/70 font-mono text-xs">{formatRupiah(c.ticketRevenue)}</td>
+                  <td className="p-3 text-right text-white/70 font-mono text-xs">{formatRupiah(c.merchRevenue)}</td>
+                  <td className="p-3 text-right font-bold text-white font-mono text-xs">{formatRupiah(c.total)}</td>
                 </tr>
               ))}
             </tbody>
             <tfoot>
-              <tr className="border-t-2 border-magenta/30 bg-magenta/5">
-                <td colSpan={3} className="p-3 font-bold text-cream">TOTAL</td>
-                <td className="p-3 text-right font-bold text-cream font-mono text-xs">{formatRupiah(revenue.ticketRevenue)}</td>
-                <td className="p-3 text-right font-bold text-cream font-mono text-xs">{formatRupiah(revenue.merchRevenue)}</td>
-                <td className="p-3 text-right font-black text-cream font-mono text-xs">
+              <tr className="border-t-2 border-[#FC7166]/30 bg-[#FC7166]/5">
+                <td colSpan={3} className="p-3 font-bold text-white">TOTAL</td>
+                <td className="p-3 text-right font-bold text-white font-mono text-xs">{formatRupiah(revenue.ticketRevenue)}</td>
+                <td className="p-3 text-right font-bold text-white font-mono text-xs">{formatRupiah(revenue.merchRevenue)}</td>
+                <td className="p-3 text-right font-black text-white font-mono text-xs">
                   {formatRupiah(revenue.ticketRevenue + revenue.merchRevenue)}
                 </td>
               </tr>
@@ -330,8 +330,8 @@ export function RevenueView() {
         </div>
       </AdminCard>
 
-      <div className="text-xs text-cream/50 px-2">
-        💡 <span className="text-cream/70">Catatan:</span> Merchandise revenue adalah estimasi (30% VIP + 5% Regular membeli merch rata-rata Rp 125K). Sponsorship berdasarkan data partner Platinum (Rp 500jt) / Gold (Rp 175jt) / Silver (Rp 65jt). Cost adalah estimasi proyeksi untuk 20 kota.
+      <div className="text-xs text-white/50 px-2">
+        💡 <span className="text-white/70">Catatan:</span> Merchandise revenue adalah estimasi (30% VIP + 5% Regular membeli merch rata-rata Rp 125K). Sponsorship berdasarkan data partner Platinum (Rp 500jt) / Gold (Rp 175jt) / Silver (Rp 65jt). Cost adalah estimasi proyeksi untuk 20 kota.
       </div>
     </div>
   );
@@ -350,10 +350,10 @@ function BigStat({
   color?: "magenta" | "gold" | "green" | "orange" | "red";
 }) {
   const colors = {
-    magenta: "bg-magenta/15 text-magenta-light border-magenta/30",
-    gold: "bg-gold/15 text-gold-light border-gold/30",
+    magenta: "bg-[#FC7166]/15 text-[#FF8A80] border-[#FC7166]/30",
+    gold: "bg-[#F39F23]/15 text-[#FFB938] border-gold/30",
     green: "bg-green-500/15 text-green-400 border-green-500/30",
-    orange: "bg-orange-brand/15 text-orange-light border-orange-brand/30",
+    orange: "bg-[#FD8656]/15 text-[#FFA577] border-orange-brand/30",
     red: "bg-red-500/15 text-red-400 border-red-500/30",
   };
   return (
@@ -364,15 +364,15 @@ function BigStat({
         </div>
       </div>
       <div
-        className="text-xl lg:text-2xl font-black text-cream leading-tight"
+        className="text-xl lg:text-2xl font-black text-white leading-tight"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>
-      <div className="text-[10px] text-cream/60 font-bold uppercase tracking-wider mt-1">
+      <div className="text-[10px] text-white/60 font-bold uppercase tracking-wider mt-1">
         {label}
       </div>
-      {sub && <div className="text-[10px] text-cream/50 mt-0.5 font-mono">{sub}</div>}
+      {sub && <div className="text-[10px] text-white/50 mt-0.5 font-mono">{sub}</div>}
     </AdminCard>
   );
 }

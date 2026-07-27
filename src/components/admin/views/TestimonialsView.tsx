@@ -56,7 +56,7 @@ export function TestimonialsView() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-cream/60 text-sm">{testimonials.length} testimoni</p>
+        <p className="text-white/60 text-sm">{testimonials.length} testimoni</p>
         <AdminButton onClick={() => { setEditing({ ...emptyT }); setEditIdx(-1); }}>
           <Plus className="h-4 w-4 mr-1" />
           Tambah Testimoni
@@ -76,8 +76,8 @@ export function TestimonialsView() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="font-bold text-cream">{t.name}</div>
-                    <div className="text-xs text-cream/60">{t.role} • {t.city}</div>
+                    <div className="font-bold text-white">{t.name}</div>
+                    <div className="text-xs text-white/60">{t.role} • {t.city}</div>
                   </div>
                   <div className="flex items-center gap-0.5">
                     {Array.from({ length: 5 }).map((_, i) => (
@@ -85,28 +85,28 @@ export function TestimonialsView() {
                         key={i}
                         className={`h-3 w-3 ${
                           i < t.rating
-                            ? "text-gold-light fill-gold"
-                            : "text-cream/20 fill-cream/10"
+                            ? "text-[#FFB938] fill-[#F39F23]"
+                            : "text-white/20 fill-cream/10"
                         }`}
                       />
                     ))}
                   </div>
                 </div>
-                <p className="text-xs text-cream/70 italic mt-2 line-clamp-3">"{t.quote}"</p>
-                <div className="text-[10px] text-magenta-light mt-2 font-mono">{t.event}</div>
+                <p className="text-xs text-white/70 italic mt-2 line-clamp-3">"{t.quote}"</p>
+                <div className="text-[10px] text-[#FF8A80] mt-2 font-mono">{t.event}</div>
               </div>
             </div>
-            <div className="flex items-center justify-end gap-1 mt-3 pt-3 border-t border-magenta/15">
+            <div className="flex items-center justify-end gap-1 mt-3 pt-3 border-t border-[#FC7166]/15">
               <Button
                 size="icon" variant="ghost"
-                className="h-8 w-8 text-cream/60 hover:text-magenta-light"
+                className="h-8 w-8 text-white/60 hover:text-[#FF8A80]"
                 onClick={() => handleEdit(t, idx)}
               >
                 <Edit2 className="h-3.5 w-3.5" />
               </Button>
               <Button
                 size="icon" variant="ghost"
-                className="h-8 w-8 text-cream/60 hover:text-red-400"
+                className="h-8 w-8 text-white/60 hover:text-red-400"
                 onClick={() => handleDelete(idx)}
               >
                 <Trash2 className="h-3.5 w-3.5" />
@@ -124,47 +124,47 @@ export function TestimonialsView() {
         >
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Nama</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Nama</Label>
               <Input value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value })}
-                className="bg-purpleblack border-magenta/25 text-cream" />
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white" />
             </div>
             <div className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Role</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Role</Label>
               <Input value={editing.role} onChange={(e) => setEditing({ ...editing, role: e.target.value })}
-                className="bg-purpleblack border-magenta/25 text-cream" />
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white" />
             </div>
             <div className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Kota</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Kota</Label>
               <Input value={editing.city} onChange={(e) => setEditing({ ...editing, city: e.target.value })}
-                className="bg-purpleblack border-magenta/25 text-cream" />
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white" />
             </div>
             <div className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Event</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Event</Label>
               <Input value={editing.event} onChange={(e) => setEditing({ ...editing, event: e.target.value })}
                 placeholder="Bandung 12 Juli 2026"
-                className="bg-purpleblack border-magenta/25 text-cream" />
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white" />
             </div>
             <div className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Rating (1-5)</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Rating (1-5)</Label>
               <Input
                 type="number" min={1} max={5}
                 value={editing.rating}
                 onChange={(e) => setEditing({ ...editing, rating: Math.max(1, Math.min(5, parseInt(e.target.value) || 5)) })}
-                className="bg-purpleblack border-magenta/25 text-cream"
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white"
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Avatar Color (hex)</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Avatar Color (hex)</Label>
               <Input value={editing.avatarColor} onChange={(e) => setEditing({ ...editing, avatarColor: e.target.value })}
-                className="bg-purpleblack border-magenta/25 text-cream font-mono" />
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white font-mono" />
             </div>
             <div className="col-span-2 space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Quote</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Quote</Label>
               <Textarea
                 value={editing.quote}
                 onChange={(e) => setEditing({ ...editing, quote: e.target.value })}
                 rows={4}
-                className="bg-purpleblack border-magenta/25 text-cream resize-none"
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white resize-none"
               />
             </div>
           </div>
@@ -184,21 +184,21 @@ export function EditModal({
   children: React.ReactNode;
 }) {
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-purpleblack/80 backdrop-blur-md">
-      <div className="bg-purple-dark border border-magenta/30 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto custom-scroll">
-        <div className="flex items-center justify-between p-5 border-b border-magenta/20 sticky top-0 bg-purple-dark z-10">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#0E0F14]/80 backdrop-blur-md">
+      <div className="bg-[#181A22] border border-[#FC7166]/30 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto custom-scroll">
+        <div className="flex items-center justify-between p-5 border-b border-[#FC7166]/20 sticky top-0 bg-[#181A22] z-10">
           <h3
-            className="text-xl font-black text-cream"
+            className="text-xl font-black text-white"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {title}
           </h3>
-          <Button size="icon" variant="ghost" className="text-cream/60 hover:text-cream" onClick={onClose}>
+          <Button size="icon" variant="ghost" className="text-white/60 hover:text-white" onClick={onClose}>
             <X className="h-5 w-5" />
           </Button>
         </div>
         <div className="p-5">{children}</div>
-        <div className="flex items-center justify-end gap-2 p-5 border-t border-magenta/20 sticky bottom-0 bg-purple-dark">
+        <div className="flex items-center justify-end gap-2 p-5 border-t border-[#FC7166]/20 sticky bottom-0 bg-[#181A22]">
           <AdminButton variant="outline" onClick={onClose}>
             <X className="h-4 w-4 mr-1" /> Batal
           </AdminButton>

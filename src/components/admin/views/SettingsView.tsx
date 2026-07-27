@@ -64,12 +64,12 @@ export function SettingsView() {
       {/* === MURI TARGET === */}
       <AdminCard>
         <h3
-          className="text-lg font-black text-cream mb-3"
+          className="text-lg font-black text-white mb-3"
           style={{ fontFamily: "var(--font-display)" }}
         >
           TARGET MURI
         </h3>
-        <p className="text-xs text-cream/60 mb-3">
+        <p className="text-xs text-white/60 mb-3">
           Jumlah peserta target untuk pemecahan rekor MURI. Default: 10.000.
         </p>
         <div className="flex gap-2">
@@ -77,7 +77,7 @@ export function SettingsView() {
             type="number"
             value={targetInput}
             onChange={(e) => setTargetInput(e.target.value)}
-            className="bg-purpleblack border-magenta/25 text-cream"
+            className="bg-[#0E0F14] border-[#FC7166]/25 text-white"
           />
           <AdminButton onClick={handleSaveTarget}>
             <Save className="h-4 w-4 mr-1" /> Simpan
@@ -88,12 +88,12 @@ export function SettingsView() {
       {/* === BACKUP & RESTORE === */}
       <AdminCard>
         <h3
-          className="text-lg font-black text-cream mb-3"
+          className="text-lg font-black text-white mb-3"
           style={{ fontFamily: "var(--font-display)" }}
         >
           BACKUP & RESTORE
         </h3>
-        <p className="text-xs text-cream/60 mb-3">
+        <p className="text-xs text-white/60 mb-3">
           Export semua data ke file JSON untuk backup, atau import dari file untuk restore.
         </p>
         <div className="flex flex-wrap gap-2">
@@ -126,7 +126,7 @@ export function SettingsView() {
             >
               DANGER ZONE
             </h3>
-            <p className="text-xs text-cream/60">
+            <p className="text-xs text-white/60">
               Reset semua data ke nilai default. Tindakan ini tidak bisa dibatalkan.
             </p>
           </div>
@@ -139,19 +139,19 @@ export function SettingsView() {
       {/* === INFO === */}
       <AdminCard>
         <h3
-          className="text-base font-black text-cream mb-2"
+          className="text-base font-black text-white mb-2"
           style={{ fontFamily: "var(--font-display)" }}
         >
           INFORMASI
         </h3>
-        <div className="space-y-1 text-xs text-cream/70">
+        <div className="space-y-1 text-xs text-white/70">
           <div className="flex justify-between">
             <span>Versi:</span>
-            <span className="font-mono text-gold-light">v2.0</span>
+            <span className="font-mono text-[#FFB938]">v2.0</span>
           </div>
           <div className="flex justify-between">
             <span>Storage:</span>
-            <span className="font-mono text-magenta-light">localStorage</span>
+            <span className="font-mono text-[#FF8A80]">localStorage</span>
           </div>
           <div className="flex justify-between">
             <span>Sync:</span>
@@ -159,10 +159,10 @@ export function SettingsView() {
           </div>
           <div className="flex justify-between">
             <span>Default Password:</span>
-            <span className="font-mono text-magenta-light">admin123</span>
+            <span className="font-mono text-[#FF8A80]">admin123</span>
           </div>
         </div>
-        <div className="mt-3 pt-3 border-t border-magenta/15 text-[10px] text-cream/40">
+        <div className="mt-3 pt-3 border-t border-[#FC7166]/15 text-[10px] text-white/40">
           Data tersimpan di browser (localStorage). Untuk production, integrate dengan
           backend API untuk multi-user & persistence server-side.
         </div>

@@ -60,7 +60,7 @@ export function FaqView() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-cream/60 text-sm">{faqs.length} FAQ total</p>
+        <p className="text-white/60 text-sm">{faqs.length} FAQ total</p>
         <AdminButton onClick={() => { setEditing({ ...emptyF }); setEditIdx(-1); }}>
           <Plus className="h-4 w-4 mr-1" />
           Tambah FAQ
@@ -70,30 +70,30 @@ export function FaqView() {
       {byCategory.map(({ category, items }) => (
         <AdminCard key={category}>
           <h3
-            className="text-base font-black text-cream mb-3 flex items-center gap-2"
+            className="text-base font-black text-white mb-3 flex items-center gap-2"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            <span className="inline-block h-2.5 w-2.5 rounded-full bg-magenta" />
+            <span className="inline-block h-2.5 w-2.5 rounded-full bg-[#FC7166]" />
             {category.toUpperCase()}
-            <span className="text-xs text-cream/50 font-mono">({items.length})</span>
+            <span className="text-xs text-white/50 font-mono">({items.length})</span>
           </h3>
           {items.length === 0 ? (
-            <p className="text-cream/40 text-sm italic">Belum ada FAQ di kategori ini.</p>
+            <p className="text-white/40 text-sm italic">Belum ada FAQ di kategori ini.</p>
           ) : (
             <Accordion type="single" collapsible className="space-y-2">
               {items.map((f) => (
                 <AccordionItem
                   key={f._idx}
                   value={`item-${f._idx}`}
-                  className="rounded-xl bg-purpleblack border border-magenta/15 px-3 overflow-hidden"
+                  className="rounded-xl bg-[#0E0F14] border border-[#FC7166]/15 px-3 overflow-hidden"
                 >
                   <AccordionTrigger className="text-left hover:no-underline py-3 group">
                     <div className="flex items-start justify-between gap-3 pr-2 flex-1">
-                      <span className="text-sm font-bold text-cream">{f.question}</span>
+                      <span className="text-sm font-bold text-white">{f.question}</span>
                       <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
                         <Button
                           size="icon" variant="ghost"
-                          className="h-7 w-7 text-cream/60 hover:text-magenta-light"
+                          className="h-7 w-7 text-white/60 hover:text-[#FF8A80]"
                           onClick={(e) => {
                             e.preventDefault();
                             setEditing({ ...f });
@@ -104,7 +104,7 @@ export function FaqView() {
                         </Button>
                         <Button
                           size="icon" variant="ghost"
-                          className="h-7 w-7 text-cream/60 hover:text-red-400"
+                          className="h-7 w-7 text-white/60 hover:text-red-400"
                           onClick={(e) => {
                             e.preventDefault();
                             if (confirm("Hapus FAQ ini?")) {
@@ -118,7 +118,7 @@ export function FaqView() {
                       </div>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="text-cream/70 text-sm pb-3">
+                  <AccordionContent className="text-white/70 text-sm pb-3">
                     {f.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -136,29 +136,29 @@ export function FaqView() {
         >
           <div className="space-y-3">
             <div className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Kategori</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Kategori</Label>
               <Select
                 value={editing.category}
                 onValueChange={(v) => setEditing({ ...editing, category: v as FAQItem["category"] })}
               >
-                <SelectTrigger className="bg-purpleblack border-magenta/25 text-cream">
+                <SelectTrigger className="bg-[#0E0F14] border-[#FC7166]/25 text-white">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-purple-dark border-magenta/30">
+                <SelectContent className="bg-[#181A22] border-[#FC7166]/30">
                   {CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
                 </SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Pertanyaan</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Pertanyaan</Label>
               <Input value={editing.question} onChange={(e) => setEditing({ ...editing, question: e.target.value })}
-                className="bg-purpleblack border-magenta/25 text-cream" />
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white" />
             </div>
             <div className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Jawaban</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Jawaban</Label>
               <Textarea value={editing.answer} onChange={(e) => setEditing({ ...editing, answer: e.target.value })}
                 rows={6}
-                className="bg-purpleblack border-magenta/25 text-cream resize-none" />
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white resize-none" />
             </div>
           </div>
         </EditModal>

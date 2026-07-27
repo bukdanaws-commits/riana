@@ -53,7 +53,7 @@ export function GalleryView() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <p className="text-cream/60 text-sm">{gallery.length} item galeri</p>
+        <p className="text-white/60 text-sm">{gallery.length} item galeri</p>
         <AdminButton onClick={() => { setEditing({ ...emptyG }); setEditIdx(-1); }}>
           <Plus className="h-4 w-4 mr-1" />
           Tambah Item
@@ -76,23 +76,23 @@ export function GalleryView() {
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-purpleblack/90 via-transparent to-transparent" />
               <div className="absolute bottom-0 inset-x-0 p-2">
-                <div className="text-cream font-bold text-xs">{g.label}</div>
-                <div className="text-cream/60 text-[9px] truncate">{g.caption}</div>
-                <div className="text-[8px] text-magenta-light mt-0.5 font-mono">
+                <div className="text-white font-bold text-xs">{g.label}</div>
+                <div className="text-white/60 text-[9px] truncate">{g.caption}</div>
+                <div className="text-[8px] text-[#FF8A80] mt-0.5 font-mono">
                   {g.city} • {g.participants} pax
                 </div>
               </div>
               <div className="absolute top-2 right-2 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                 <Button
                   size="icon" variant="ghost"
-                  className="h-7 w-7 bg-purpleblack/60 backdrop-blur-md text-cream hover:text-magenta-light"
+                  className="h-7 w-7 bg-[#0E0F14]/60 backdrop-blur-md text-white hover:text-[#FF8A80]"
                   onClick={() => { setEditing({ ...g }); setEditIdx(idx); }}
                 >
                   <Edit2 className="h-3 w-3" />
                 </Button>
                 <Button
                   size="icon" variant="ghost"
-                  className="h-7 w-7 bg-purpleblack/60 backdrop-blur-md text-cream hover:text-red-400"
+                  className="h-7 w-7 bg-[#0E0F14]/60 backdrop-blur-md text-white hover:text-red-400"
                   onClick={() => {
                     if (confirm("Hapus item ini?")) {
                       deleteGalleryItem(idx);
@@ -107,7 +107,7 @@ export function GalleryView() {
           </AdminCard>
         ))}
         {gallery.length === 0 && (
-          <div className="col-span-full text-center py-12 text-cream/40">
+          <div className="col-span-full text-center py-12 text-white/40">
             <ImageIcon className="h-12 w-12 mx-auto mb-2 opacity-50" />
             Belum ada item galeri.
           </div>
@@ -122,53 +122,53 @@ export function GalleryView() {
         >
           <div className="space-y-3">
             <div className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Label</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Label</Label>
               <Input value={editing.label} onChange={(e) => setEditing({ ...editing, label: e.target.value })}
-                className="bg-purpleblack border-magenta/25 text-cream" />
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white" />
             </div>
             <div className="space-y-2">
-              <Label className="text-cream/80 text-xs font-bold uppercase">Caption</Label>
+              <Label className="text-white/80 text-xs font-bold uppercase">Caption</Label>
               <Input value={editing.caption} onChange={(e) => setEditing({ ...editing, caption: e.target.value })}
-                className="bg-purpleblack border-magenta/25 text-cream" />
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white" />
             </div>
             <div className="grid grid-cols-3 gap-3">
               <div className="space-y-2">
-                <Label className="text-cream/80 text-xs font-bold uppercase">Kota</Label>
+                <Label className="text-white/80 text-xs font-bold uppercase">Kota</Label>
                 <Input value={editing.city} onChange={(e) => setEditing({ ...editing, city: e.target.value })}
-                  className="bg-purpleblack border-magenta/25 text-cream" />
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-white" />
               </div>
               <div className="space-y-2">
-                <Label className="text-cream/80 text-xs font-bold uppercase">Tanggal</Label>
+                <Label className="text-white/80 text-xs font-bold uppercase">Tanggal</Label>
                 <Input value={editing.date} onChange={(e) => setEditing({ ...editing, date: e.target.value })}
                   placeholder="12 Juli 2026"
-                  className="bg-purpleblack border-magenta/25 text-cream" />
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-white" />
               </div>
               <div className="space-y-2">
-                <Label className="text-cream/80 text-xs font-bold uppercase">Pax</Label>
+                <Label className="text-white/80 text-xs font-bold uppercase">Pax</Label>
                 <Input
                   type="number"
                   value={editing.participants}
                   onChange={(e) => setEditing({ ...editing, participants: parseInt(e.target.value) || 0 })}
-                  className="bg-purpleblack border-magenta/25 text-cream" />
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-white" />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
-                <Label className="text-cream/80 text-xs font-bold uppercase">Photo URL</Label>
+                <Label className="text-white/80 text-xs font-bold uppercase">Photo URL</Label>
                 <Input
                   value={editing.photoUrl ?? ""}
                   onChange={(e) => setEditing({ ...editing, photoUrl: e.target.value })}
                   placeholder="/brand/photo.jpg atau https://..."
-                  className="bg-purpleblack border-magenta/25 text-cream font-mono text-xs"
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-white font-mono text-xs"
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-cream/80 text-xs font-bold uppercase">Hue (gradient fallback)</Label>
+                <Label className="text-white/80 text-xs font-bold uppercase">Hue (gradient fallback)</Label>
                 <Input
                   type="number" min={0} max={360}
                   value={editing.hue}
                   onChange={(e) => setEditing({ ...editing, hue: parseInt(e.target.value) || 0 })}
-                  className="bg-purpleblack border-magenta/25 text-cream" />
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-white" />
               </div>
             </div>
             <div className="flex items-center gap-2 pt-2">
@@ -179,7 +179,7 @@ export function GalleryView() {
                 onChange={(e) => setEditing({ ...editing, isRealPhoto: e.target.checked })}
                 className="h-4 w-4"
               />
-              <Label htmlFor="isRealPhoto" className="text-cream/80 text-sm cursor-pointer">
+              <Label htmlFor="isRealPhoto" className="text-white/80 text-sm cursor-pointer">
                 Pakai foto asli (bukan gradient)
               </Label>
             </div>

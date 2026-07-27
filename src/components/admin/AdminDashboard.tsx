@@ -89,23 +89,23 @@ export function AdminDashboard() {
 
   return (
     <Dialog open={isAdminOpen} onOpenChange={setAdminOpen}>
-      <DialogContent className="max-w-[95vw] w-[1400px] max-h-[95vh] h-[95vh] p-0 overflow-hidden bg-purpleblack border border-magenta/30">
+      <DialogContent className="max-w-[95vw] w-[1400px] max-h-[95vh] h-[95vh] p-0 overflow-hidden bg-[#0E0F14] border border-[#FC7166]/30">
         <div className="flex h-full">
           {/* === SIDEBAR === */}
-          <aside className="w-64 flex-shrink-0 bg-purple-dark border-r border-magenta/20 flex flex-col">
+          <aside className="w-64 flex-shrink-0 bg-gradient-to-b from-[#181A22] to-[#0E0F14] border-r border-[#FC7166]/20 flex flex-col">
             {/* Logo */}
-            <div className="p-4 border-b border-magenta/20 flex items-center gap-2">
-              <div className="h-10 w-10 rounded-xl bg-magenta flex items-center justify-center shadow-glow-pink">
+            <div className="p-4 border-b border-[#FC7166]/20 flex items-center gap-2">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[#FC7166] to-[#FD8656] flex items-center justify-center shadow-[0_8px_24px_-8px_rgba(252,113,102,0.6)]">
                 <Trophy className="h-5 w-5 text-white" />
               </div>
               <div>
                 <div
-                  className="text-base font-black tracking-wider text-cream"
+                  className="text-base font-black tracking-wider text-white"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   RIANA ADMIN
                 </div>
-                <div className="text-[9px] text-gold-light font-bold tracking-[0.2em]">
+                <div className="text-[9px] text-[#F39F23] font-bold tracking-[0.2em]">
                   CONTROL PANEL
                 </div>
               </div>
@@ -122,8 +122,8 @@ export function AdminDashboard() {
                     onClick={() => setActiveView(item.id)}
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold transition-all mb-1 ${
                       active
-                        ? "bg-magenta text-white shadow-glow-pink"
-                        : "text-cream/70 hover:text-cream hover:bg-magenta/10"
+                        ? "bg-gradient-to-r from-[#FC7166] to-[#FD8656] text-white shadow-[0_8px_24px_-8px_rgba(252,113,102,0.6)]"
+                        : "text-white/70 hover:text-white hover:bg-[#FC7166]/10"
                     }`}
                     style={{ fontFamily: "var(--font-heading)" }}
                   >
@@ -131,7 +131,7 @@ export function AdminDashboard() {
                     <span className="flex-1 text-left">{item.label}</span>
                     {item.badge && (
                       <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-mono ${
-                        active ? "bg-white/20" : "bg-magenta/20 text-magenta-light"
+                        active ? "bg-white/20" : "bg-[#FC7166]/20 text-[#FF8A80]"
                       }`}>
                         {item.badge}
                       </span>
@@ -142,12 +142,12 @@ export function AdminDashboard() {
             </nav>
 
             {/* Footer */}
-            <div className="p-3 border-t border-magenta/20 space-y-2">
+            <div className="p-3 border-t border-[#FC7166]/20 space-y-2">
               <Button
                 onClick={handleClose}
                 variant="outline"
                 size="sm"
-                className="w-full bg-purpleblack border-magenta/30 text-cream hover:bg-magenta/10 hover:text-cream justify-start"
+                className="w-full bg-[#0E0F14] border-[#FC7166]/30 text-white hover:bg-[#FC7166]/10 hover:text-white justify-start"
               >
                 <X className="h-4 w-4 mr-2" />
                 Tutup Admin
@@ -156,7 +156,7 @@ export function AdminDashboard() {
                 onClick={handleLogout}
                 variant="outline"
                 size="sm"
-                className="w-full bg-purpleblack border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-400 justify-start"
+                className="w-full bg-[#0E0F14] border-red-500/40 text-red-400 hover:bg-red-500/10 hover:text-red-400 justify-start"
               >
                 <LogOut className="h-4 w-4 mr-2" />
                 Logout
@@ -167,27 +167,27 @@ export function AdminDashboard() {
           {/* === MAIN CONTENT === */}
           <main className="flex-1 overflow-hidden flex flex-col">
             {/* Header */}
-            <header className="px-6 py-3 border-b border-magenta/20 bg-purple-dark flex items-center justify-between flex-shrink-0">
+            <header className="px-6 py-3 border-b border-[#FC7166]/20 bg-gradient-to-r from-[#181A22] to-[#0E0F14] flex items-center justify-between flex-shrink-0">
               <div>
                 <h1
-                  className="text-2xl font-black text-cream leading-none"
+                  className="text-2xl font-black text-white leading-none"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
                   {NAV_ITEMS.find((n) => n.id === activeView)?.label.toUpperCase()}
                 </h1>
-                <p className="text-xs text-cream/50 mt-0.5">
+                <p className="text-xs text-white/50 mt-0.5">
                   Edit data — perubahan langsung reflect ke landing page
                 </p>
               </div>
               <div className="flex items-center gap-2">
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                <Badge className="bg-green-500/20 text-green-400 border-green-500/40">
                   <span className="relative flex h-1.5 w-1.5 mr-1.5">
                     <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping" />
                     <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-400" />
                   </span>
                   LIVE SYNC
                 </Badge>
-                <Badge className="bg-gold/20 text-gold-light border-gold/30 font-mono">
+                <Badge className="bg-[#F39F23]/20 text-[#FFB938] border-[#F39F23]/40 font-mono">
                   v2.0
                 </Badge>
               </div>
@@ -215,12 +215,36 @@ export function AdminDashboard() {
 }
 
 // ============================================================
-// Reusable components
+// Reusable components — Dark mode + colorful gradient cards
 // ============================================================
-export function AdminCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+
+type CardVariant = "default" | "coral" | "orange" | "golden" | "terracotta" | "peach" | "navy" | "success" | "danger";
+
+const CARD_VARIANTS: Record<CardVariant, { gradient: string; border: string; glow?: string }> = {
+  default:    { gradient: "bg-gradient-to-br from-[#1F2129] to-[#181A22]",            border: "border-[#FC7166]/15" },
+  coral:      { gradient: "bg-gradient-to-br from-[#FC7166]/20 to-[#FC7166]/5",       border: "border-[#FC7166]/40",  glow: "shadow-[0_8px_32px_-12px_rgba(252,113,102,0.4)]" },
+  orange:     { gradient: "bg-gradient-to-br from-[#FD8656]/20 to-[#FD8656]/5",       border: "border-[#FD8656]/40",  glow: "shadow-[0_8px_32px_-12px_rgba(253,134,86,0.4)]" },
+  golden:     { gradient: "bg-gradient-to-br from-[#F39F23]/20 to-[#F39F23]/5",       border: "border-[#F39F23]/40",  glow: "shadow-[0_8px_32px_-12px_rgba(243,159,35,0.4)]" },
+  terracotta: { gradient: "bg-gradient-to-br from-[#884D3E]/25 to-[#884D3E]/5",       border: "border-[#884D3E]/40",  glow: "shadow-[0_8px_32px_-12px_rgba(136,77,62,0.4)]" },
+  peach:      { gradient: "bg-gradient-to-br from-[#C99789]/20 to-[#C99789]/5",       border: "border-[#C99789]/40",  glow: "shadow-[0_8px_32px_-12px_rgba(201,151,137,0.4)]" },
+  navy:       { gradient: "bg-gradient-to-br from-[#252D3A]/40 to-[#252D3A]/10",      border: "border-[#252D3A]/60",  glow: "shadow-[0_8px_32px_-12px_rgba(37,45,58,0.5)]" },
+  success:    { gradient: "bg-gradient-to-br from-green-500/20 to-green-500/5",       border: "border-green-500/40",  glow: "shadow-[0_8px_32px_-12px_rgba(34,197,94,0.4)]" },
+  danger:     { gradient: "bg-gradient-to-br from-red-500/20 to-red-500/5",            border: "border-red-500/40",    glow: "shadow-[0_8px_32px_-12px_rgba(239,68,68,0.4)]" },
+};
+
+export function AdminCard({
+  children,
+  className = "",
+  variant = "default",
+}: {
+  children: React.ReactNode;
+  className?: string;
+  variant?: CardVariant;
+}) {
+  const v = CARD_VARIANTS[variant];
   return (
     <div
-      className={`bg-purple-dark border border-magenta/20 rounded-2xl p-4 ${className}`}
+      className={`${v.gradient} ${v.border} ${v.glow ?? ""} border rounded-2xl p-4 ${className}`}
     >
       {children}
     </div>
@@ -235,10 +259,10 @@ export function AdminButton({
   ...props
 }: React.ComponentProps<typeof Button> & { variant?: "default" | "outline" | "ghost" | "destructive" }) {
   const variants = {
-    default: "bg-magenta hover:bg-magenta-deep text-white shadow-glow-pink",
-    outline: "bg-purpleblack border-magenta/30 text-cream hover:bg-magenta/10 hover:text-cream",
-    ghost: "bg-transparent text-cream/70 hover:text-cream hover:bg-magenta/10",
-    destructive: "bg-red-500/20 border-red-500/30 text-red-400 hover:bg-red-500/30 hover:text-red-400",
+    default:     "bg-gradient-to-r from-[#FC7166] to-[#FD8656] hover:opacity-90 text-white shadow-[0_8px_24px_-8px_rgba(252,113,102,0.6)]",
+    outline:     "bg-[#0E0F14] border-[#FC7166]/30 text-white hover:bg-[#FC7166]/10 hover:text-white",
+    ghost:       "bg-transparent text-white/70 hover:text-white hover:bg-[#FC7166]/10",
+    destructive: "bg-red-500/20 border-red-500/40 text-red-400 hover:bg-red-500/30 hover:text-red-400",
   };
   return (
     <Button
@@ -256,14 +280,14 @@ export function AdminInput(props: React.ComponentProps<typeof Input>) {
   return (
     <Input
       {...props}
-      className={`bg-purpleblack border-magenta/25 text-cream placeholder:text-cream/30 ${props.className ?? ""}`}
+      className={`bg-[#0E0F14] border-[#FC7166]/25 text-white placeholder:text-white/30 ${props.className ?? ""}`}
     />
   );
 }
 
 export function AdminLabel({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <Label className={`text-cream/80 text-xs font-bold uppercase tracking-wider ${className}`}>
+    <Label className={`text-white/80 text-xs font-bold uppercase tracking-wider ${className}`}>
       {children}
     </Label>
   );
@@ -273,41 +297,38 @@ export function StatCard({
   icon: Icon,
   label,
   value,
-  color = "magenta",
+  color = "coral",
   trend,
 }: {
   icon: React.ElementType;
   label: string;
   value: string | number;
-  color?: "magenta" | "gold" | "green" | "orange";
+  color?: CardVariant;
   trend?: string;
 }) {
-  const colors = {
-    magenta: "bg-magenta/15 text-magenta-light border-magenta/30",
-    gold: "bg-gold/15 text-gold-light border-gold/30",
-    green: "bg-green-500/15 text-green-400 border-green-500/30",
-    orange: "bg-orange-brand/15 text-orange-light border-orange-brand/30",
-  };
   return (
-    <AdminCard className="relative overflow-hidden">
-      <div className="flex items-start justify-between mb-2">
-        <div className={`h-10 w-10 rounded-xl flex items-center justify-center border ${colors[color]}`}>
+    <AdminCard variant={color} className="relative overflow-hidden">
+      {/* Decorative blob */}
+      <div className="absolute -top-8 -right-8 h-24 w-24 rounded-full bg-white/5 blur-2xl pointer-events-none" />
+
+      <div className="flex items-start justify-between mb-2 relative">
+        <div className="h-10 w-10 rounded-xl flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 text-white">
           <Icon className="h-5 w-5" />
         </div>
         {trend && (
-          <Badge className={`text-[9px] font-mono ${colors[color]} border-0`}>
+          <Badge className="text-[9px] font-mono bg-white/10 text-white border border-white/20">
             <TrendingUp className="h-2.5 w-2.5 mr-0.5" />
             {trend}
           </Badge>
         )}
       </div>
       <div
-        className="text-3xl font-black text-cream leading-none"
+        className="text-3xl font-black text-white leading-none"
         style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>
-      <div className="text-xs text-cream/60 font-bold uppercase tracking-wider mt-1">
+      <div className="text-xs text-white/70 font-bold uppercase tracking-wider mt-1">
         {label}
       </div>
     </AdminCard>

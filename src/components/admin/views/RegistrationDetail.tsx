@@ -58,32 +58,32 @@ export function RegistrationDetail({ registration, onClose }: Props) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-purpleblack/80 backdrop-blur-md">
-      <div className="bg-purple-dark border border-magenta/30 rounded-2xl max-w-2xl w-full max-h-[95vh] overflow-y-auto custom-scroll">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#0E0F14]/80 backdrop-blur-md">
+      <div className="bg-[#181A22] border border-[#FC7166]/30 rounded-2xl max-w-2xl w-full max-h-[95vh] overflow-y-auto custom-scroll">
         {/* === HEADER === */}
-        <div className="sticky top-0 z-10 bg-purple-dark border-b border-magenta/20 p-5">
+        <div className="sticky top-0 z-10 bg-[#181A22] border-b border-[#FC7166]/20 p-5">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
               <img
                 src={r.googleAvatarUrl}
                 alt={r.fullName}
-                className="h-14 w-14 rounded-full bg-purpleblack border-2 border-magenta/30"
+                className="h-14 w-14 rounded-full bg-[#0E0F14] border-2 border-[#FC7166]/30"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = "none";
                 }}
               />
               <div>
-                <div className="font-mono text-[10px] text-magenta-light tracking-wider">{r.id}</div>
-                <h2 className="text-xl font-black text-cream leading-tight" style={{ fontFamily: "var(--font-display)" }}>
+                <div className="font-mono text-[10px] text-[#FF8A80] tracking-wider">{r.id}</div>
+                <h2 className="text-xl font-black text-white leading-tight" style={{ fontFamily: "var(--font-display)" }}>
                   {r.fullName}
                 </h2>
-                <div className="text-xs text-cream/60">{r.googleEmail}</div>
+                <div className="text-xs text-white/60">{r.googleEmail}</div>
                 <div className="mt-1">
                   <StatusBadge status={r.status} />
                 </div>
               </div>
             </div>
-            <Button size="icon" variant="ghost" className="text-cream/60 hover:text-cream" onClick={onClose}>
+            <Button size="icon" variant="ghost" className="text-white/60 hover:text-white" onClick={onClose}>
               <X className="h-5 w-5" />
             </Button>
           </div>
@@ -112,10 +112,10 @@ export function RegistrationDetail({ registration, onClose }: Props) {
               label="Tipe tiket"
               value={
                 <span className="flex items-center gap-2">
-                  <Badge className={r.ticketType === "vip" ? "bg-gold/20 text-gold-light border-gold/30" : "bg-magenta/15 text-magenta-light border-magenta/30"}>
+                  <Badge className={r.ticketType === "vip" ? "bg-[#F39F23]/20 text-[#FFB938] border-gold/30" : "bg-[#FC7166]/15 text-[#FF8A80] border-[#FC7166]/30"}>
                     {r.ticketType === "vip" ? "VIP" : "Regular"}
                   </Badge>
-                  <span className="text-cream">{formatRupiah(r.ticketPrice)}</span>
+                  <span className="text-white">{formatRupiah(r.ticketPrice)}</span>
                 </span>
               }
             />
@@ -125,8 +125,8 @@ export function RegistrationDetail({ registration, onClose }: Props) {
               value={
                 <span className="flex items-center gap-2">
                   <PayBadge status={r.paymentStatus} />
-                  {r.paymentGateway && <span className="text-xs text-cream/60">{r.paymentGateway}</span>}
-                  {r.paymentDate && <span className="text-xs text-cream/50">• {formatDate(r.paymentDate)}</span>}
+                  {r.paymentGateway && <span className="text-xs text-white/60">{r.paymentGateway}</span>}
+                  {r.paymentDate && <span className="text-xs text-white/50">• {formatDate(r.paymentDate)}</span>}
                 </span>
               }
             />
@@ -143,7 +143,7 @@ export function RegistrationDetail({ registration, onClose }: Props) {
 
           {/* === TIMELINE === */}
           <Section title="TIMELINE" icon={Clock}>
-            <div className="space-y-2 pl-2 border-l-2 border-magenta/20 ml-2">
+            <div className="space-y-2 pl-2 border-l-2 border-[#FC7166]/20 ml-2">
               <TimelineItem
                 icon={User}
                 label="Registered"
@@ -163,7 +163,7 @@ export function RegistrationDetail({ registration, onClose }: Props) {
                   icon={Send}
                   label="E-ticket sent via email"
                   date={r.eTicketSentAt}
-                  color="text-magenta-light"
+                  color="text-[#FF8A80]"
                 />
               )}
               {r.checkInTime && (
@@ -179,7 +179,7 @@ export function RegistrationDetail({ registration, onClose }: Props) {
                   icon={Award}
                   label="E-certificate sent"
                   date={r.eCertificateSentAt}
-                  color="text-gold-light"
+                  color="text-[#FFB938]"
                 />
               )}
             </div>
@@ -214,16 +214,16 @@ export function RegistrationDetail({ registration, onClose }: Props) {
           {/* === ADMIN NOTES === */}
           <Section title="ADMIN NOTES" icon={Edit2}>
             {r.notes ? (
-              <div className="p-3 rounded-lg bg-purpleblack border border-magenta/15 text-cream/80 text-sm">
+              <div className="p-3 rounded-lg bg-[#0E0F14] border border-[#FC7166]/15 text-white/80 text-sm">
                 {r.notes}
               </div>
             ) : (
-              <div className="text-cream/40 text-sm italic">Belum ada catatan.</div>
+              <div className="text-white/40 text-sm italic">Belum ada catatan.</div>
             )}
             {r.tags.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {r.tags.map((tag) => (
-                  <Badge key={tag} className="bg-magenta/15 text-magenta-light border-magenta/30 text-[10px]">
+                  <Badge key={tag} className="bg-[#FC7166]/15 text-[#FF8A80] border-[#FC7166]/30 text-[10px]">
                     <Tag className="h-2.5 w-2.5 mr-1" />
                     {tag}
                   </Badge>
@@ -234,7 +234,7 @@ export function RegistrationDetail({ registration, onClose }: Props) {
         </div>
 
         {/* === FOOTER ACTIONS === */}
-        <div className="sticky bottom-0 bg-purple-dark border-t border-magenta/20 p-4 flex flex-wrap items-center justify-end gap-2">
+        <div className="sticky bottom-0 bg-[#181A22] border-t border-[#FC7166]/20 p-4 flex flex-wrap items-center justify-end gap-2">
           {r.status === "registered" && (
             <Button
               onClick={handleCheckIn}
@@ -248,7 +248,7 @@ export function RegistrationDetail({ registration, onClose }: Props) {
           <Button
             onClick={handleResendTicket}
             variant="outline"
-            className="bg-purpleblack border-magenta/30 text-cream hover:bg-magenta/10"
+            className="bg-[#0E0F14] border-[#FC7166]/30 text-white hover:bg-[#FC7166]/10"
           >
             <Send className="h-4 w-4 mr-1.5" />
             Resend E-ticket
@@ -256,7 +256,7 @@ export function RegistrationDetail({ registration, onClose }: Props) {
           <Button
             onClick={handleDelete}
             variant="outline"
-            className="bg-purpleblack border-red-500/30 text-red-400 hover:bg-red-500/10"
+            className="bg-[#0E0F14] border-red-500/30 text-red-400 hover:bg-red-500/10"
           >
             <Trash2 className="h-4 w-4 mr-1.5" />
             Delete
@@ -280,10 +280,10 @@ function Section({
   return (
     <div>
       <h3
-        className="text-sm font-black text-cream mb-2 flex items-center gap-2"
+        className="text-sm font-black text-white mb-2 flex items-center gap-2"
         style={{ fontFamily: "var(--font-display)" }}
       >
-        <Icon className="h-4 w-4 text-magenta-light" />
+        <Icon className="h-4 w-4 text-[#FF8A80]" />
         {title}
       </h3>
       <div className="space-y-1.5 pl-1">{children}</div>
@@ -301,10 +301,10 @@ function DetailRow({
 }) {
   return (
     <div className="flex items-start gap-2 text-sm py-1">
-      <Icon className="h-3.5 w-3.5 text-cream/40 mt-1 flex-shrink-0" />
+      <Icon className="h-3.5 w-3.5 text-white/40 mt-1 flex-shrink-0" />
       <div className="flex-1 min-w-0">
-        <div className="text-[10px] text-cream/50 font-bold uppercase tracking-wider">{label}</div>
-        <div className={`text-cream ${mono ? "font-mono text-xs" : ""}`}>{value}</div>
+        <div className="text-[10px] text-white/50 font-bold uppercase tracking-wider">{label}</div>
+        <div className={`text-white ${mono ? "font-mono text-xs" : ""}`}>{value}</div>
       </div>
     </div>
   );
@@ -320,12 +320,12 @@ function TimelineItem({
 }) {
   return (
     <div className="flex items-center gap-2 -ml-[19px] relative">
-      <div className={`h-4 w-4 rounded-full bg-purple-dark border-2 flex items-center justify-center ${color}`}>
+      <div className={`h-4 w-4 rounded-full bg-[#181A22] border-2 flex items-center justify-center ${color}`}>
         <Icon className="h-2 w-2" />
       </div>
       <div className="flex-1">
-        <span className="text-xs text-cream/80">{label}</span>
-        {date && <span className="text-[10px] text-cream/40 ml-2">• {formatDateShort(date)}</span>}
+        <span className="text-xs text-white/80">{label}</span>
+        {date && <span className="text-[10px] text-white/40 ml-2">• {formatDateShort(date)}</span>}
       </div>
     </div>
   );

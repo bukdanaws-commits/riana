@@ -170,19 +170,19 @@ export function RegistrationsView() {
       <AdminCard>
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative flex-1 min-w-[220px]">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-cream/40" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
             <Input
               placeholder="Cari nama, email, phone, ID..."
               value={search}
               onChange={(e) => onFilterChange(() => setSearch(e.target.value))}
-              className="pl-9 bg-purpleblack border-magenta/25 text-cream placeholder:text-cream/30"
+              className="pl-9 bg-[#0E0F14] border-[#FC7166]/25 text-white placeholder:text-white/30"
             />
           </div>
           <Select value={filterCity} onValueChange={(v) => onFilterChange(() => setFilterCity(v))}>
-            <SelectTrigger className="w-[140px] bg-purpleblack border-magenta/25 text-cream">
+            <SelectTrigger className="w-[140px] bg-[#0E0F14] border-[#FC7166]/25 text-white">
               <SelectValue placeholder="Kota" />
             </SelectTrigger>
-            <SelectContent className="bg-purple-dark border-magenta/30">
+            <SelectContent className="bg-[#181A22] border-[#FC7166]/30">
               <SelectItem value="all">Semua Kota</SelectItem>
               {useAdminStore.getState().cities.map((c) => (
                 <SelectItem key={c.id} value={c.id}>{c.city}</SelectItem>
@@ -190,10 +190,10 @@ export function RegistrationsView() {
             </SelectContent>
           </Select>
           <Select value={filterStatus} onValueChange={(v) => onFilterChange(() => setFilterStatus(v as StatusFilter))}>
-            <SelectTrigger className="w-[140px] bg-purpleblack border-magenta/25 text-cream">
+            <SelectTrigger className="w-[140px] bg-[#0E0F14] border-[#FC7166]/25 text-white">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
-            <SelectContent className="bg-purple-dark border-magenta/30">
+            <SelectContent className="bg-[#181A22] border-[#FC7166]/30">
               <SelectItem value="all">Semua Status</SelectItem>
               <SelectItem value="registered">Registered</SelectItem>
               <SelectItem value="checked_in">Checked-in</SelectItem>
@@ -203,20 +203,20 @@ export function RegistrationsView() {
             </SelectContent>
           </Select>
           <Select value={filterTicket} onValueChange={(v) => onFilterChange(() => setFilterTicket(v as TicketFilter))}>
-            <SelectTrigger className="w-[120px] bg-purpleblack border-magenta/25 text-cream">
+            <SelectTrigger className="w-[120px] bg-[#0E0F14] border-[#FC7166]/25 text-white">
               <SelectValue placeholder="Tiket" />
             </SelectTrigger>
-            <SelectContent className="bg-purple-dark border-magenta/30">
+            <SelectContent className="bg-[#181A22] border-[#FC7166]/30">
               <SelectItem value="all">Semua Tiket</SelectItem>
               <SelectItem value="regular">Regular</SelectItem>
               <SelectItem value="vip">VIP</SelectItem>
             </SelectContent>
           </Select>
           <Select value={filterPay} onValueChange={(v) => onFilterChange(() => setFilterPay(v as PayFilter))}>
-            <SelectTrigger className="w-[140px] bg-purpleblack border-magenta/25 text-cream">
+            <SelectTrigger className="w-[140px] bg-[#0E0F14] border-[#FC7166]/25 text-white">
               <SelectValue placeholder="Pembayaran" />
             </SelectTrigger>
-            <SelectContent className="bg-purple-dark border-magenta/30">
+            <SelectContent className="bg-[#181A22] border-[#FC7166]/30">
               <SelectItem value="all">Semua Bayar</SelectItem>
               <SelectItem value="free">Free</SelectItem>
               <SelectItem value="pending">Pending</SelectItem>
@@ -236,13 +236,13 @@ export function RegistrationsView() {
 
         {/* Active filters */}
         {activeFilters.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-magenta/15">
-            <span className="text-xs text-cream/50 font-bold uppercase">Filter aktif:</span>
+          <div className="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t border-[#FC7166]/15">
+            <span className="text-xs text-white/50 font-bold uppercase">Filter aktif:</span>
             {activeFilters.map((f, i) => (
               <button
                 key={i}
                 onClick={f.clear}
-                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-magenta/15 border border-magenta/30 text-magenta-light text-xs font-bold hover:bg-magenta/25"
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#FC7166]/15 border border-[#FC7166]/30 text-[#FF8A80] text-xs font-bold hover:bg-[#FC7166]/25"
               >
                 {f.label}
                 <X className="h-3 w-3" />
@@ -254,9 +254,9 @@ export function RegistrationsView() {
 
       {/* === BULK ACTIONS (when selected) === */}
       {selectedIds.size > 0 && (
-        <AdminCard className="border-magenta/40 bg-magenta/5">
+        <AdminCard className="border-[#FC7166]/40 bg-[#FC7166]/5">
           <div className="flex items-center justify-between">
-            <span className="text-cream font-bold">
+            <span className="text-white font-bold">
               {selectedIds.size} peserta dipilih
             </span>
             <div className="flex items-center gap-2">
@@ -285,7 +285,7 @@ export function RegistrationsView() {
         <div className="overflow-x-auto custom-scroll">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-magenta/20 bg-purpleblack/50">
+              <tr className="border-b border-[#FC7166]/20 bg-[#0E0F14]/50">
                 <th className="p-3 w-10">
                   <input
                     type="checkbox"
@@ -294,23 +294,23 @@ export function RegistrationsView() {
                     className="h-4 w-4"
                   />
                 </th>
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">ID</th>
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Nama</th>
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider hidden lg:table-cell">Google Email</th>
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider hidden md:table-cell">Phone</th>
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Kota Event</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Tiket</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider hidden lg:table-cell">Bayar</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Status</th>
-                <th className="text-right p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Aksi</th>
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">ID</th>
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Nama</th>
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider hidden lg:table-cell">Google Email</th>
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider hidden md:table-cell">Phone</th>
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Kota Event</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Tiket</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider hidden lg:table-cell">Bayar</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Status</th>
+                <th className="text-right p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {paged.map((r) => (
                 <tr
                   key={r.id}
-                  className={`border-b border-magenta/10 hover:bg-magenta/5 transition-colors ${
-                    selectedIds.has(r.id) ? "bg-magenta/10" : ""
+                  className={`border-b border-[#FC7166]/10 hover:bg-[#FC7166]/5 transition-colors ${
+                    selectedIds.has(r.id) ? "bg-[#FC7166]/10" : ""
                   }`}
                 >
                   <td className="p-3">
@@ -321,34 +321,34 @@ export function RegistrationsView() {
                       className="h-4 w-4"
                     />
                   </td>
-                  <td className="p-3 font-mono text-[10px] text-cream/70">{r.id}</td>
+                  <td className="p-3 font-mono text-[10px] text-white/70">{r.id}</td>
                   <td className="p-3">
                     <div className="flex items-center gap-2">
                       <img
                         src={r.googleAvatarUrl}
                         alt={r.fullName}
-                        className="h-7 w-7 rounded-full bg-purpleblack flex-shrink-0"
+                        className="h-7 w-7 rounded-full bg-[#0E0F14] flex-shrink-0"
                         onError={(e) => {
                           (e.target as HTMLImageElement).style.display = "none";
                         }}
                       />
                       <div>
-                        <div className="font-bold text-cream text-sm">{r.fullName}</div>
-                        <div className="text-[10px] text-cream/50">{r.gender === "P" ? "Perempuan" : "Laki-laki"} • {r.age} thn</div>
+                        <div className="font-bold text-white text-sm">{r.fullName}</div>
+                        <div className="text-[10px] text-white/50">{r.gender === "P" ? "Perempuan" : "Laki-laki"} • {r.age} thn</div>
                       </div>
                     </div>
                   </td>
-                  <td className="p-3 text-cream/70 text-xs hidden lg:table-cell">{r.googleEmail}</td>
-                  <td className="p-3 text-cream/70 text-xs hidden md:table-cell font-mono">{r.phone}</td>
+                  <td className="p-3 text-white/70 text-xs hidden lg:table-cell">{r.googleEmail}</td>
+                  <td className="p-3 text-white/70 text-xs hidden md:table-cell font-mono">{r.phone}</td>
                   <td className="p-3">
-                    <div className="text-cream text-sm font-semibold">{r.eventCityName}</div>
-                    <div className="text-[10px] text-cream/50">{r.eventDate}</div>
+                    <div className="text-white text-sm font-semibold">{r.eventCityName}</div>
+                    <div className="text-[10px] text-white/50">{r.eventDate}</div>
                   </td>
                   <td className="p-3 text-center">
                     {r.ticketType === "vip" ? (
-                      <Badge className="bg-gold/20 text-gold-light border-gold/30 text-[9px]">VIP</Badge>
+                      <Badge className="bg-[#F39F23]/20 text-[#FFB938] border-gold/30 text-[9px]">VIP</Badge>
                     ) : (
-                      <Badge className="bg-magenta/15 text-magenta-light border-magenta/30 text-[9px]">REG</Badge>
+                      <Badge className="bg-[#FC7166]/15 text-[#FF8A80] border-[#FC7166]/30 text-[9px]">REG</Badge>
                     )}
                   </td>
                   <td className="p-3 text-center hidden lg:table-cell">
@@ -362,7 +362,7 @@ export function RegistrationsView() {
                       <Button
                         size="icon"
                         variant="ghost"
-                        className="h-7 w-7 text-cream/60 hover:text-magenta-light"
+                        className="h-7 w-7 text-white/60 hover:text-[#FF8A80]"
                         onClick={() => setDetailReg(r)}
                       >
                         <Eye className="h-3.5 w-3.5" />
@@ -370,7 +370,7 @@ export function RegistrationsView() {
                       <Button
                         size="icon"
                         variant="ghost"
-                        className="h-7 w-7 text-cream/60 hover:text-red-400"
+                        className="h-7 w-7 text-white/60 hover:text-red-400"
                         onClick={() => {
                           if (confirm(`Hapus peserta ${r.fullName}?`)) {
                             deleteRegistration(r.id);
@@ -386,7 +386,7 @@ export function RegistrationsView() {
               ))}
               {paged.length === 0 && (
                 <tr>
-                  <td colSpan={10} className="p-12 text-center text-cream/40">
+                  <td colSpan={10} className="p-12 text-center text-white/40">
                     <Users className="h-12 w-12 mx-auto mb-2 opacity-50" />
                     Tidak ada peserta yang cocok dengan filter.
                   </td>
@@ -398,8 +398,8 @@ export function RegistrationsView() {
 
         {/* Pagination */}
         {filtered.length > 0 && (
-          <div className="flex items-center justify-between p-3 border-t border-magenta/20 bg-purpleblack/30">
-            <div className="text-xs text-cream/60">
+          <div className="flex items-center justify-between p-3 border-t border-[#FC7166]/20 bg-[#0E0F14]/30">
+            <div className="text-xs text-white/60">
               Menampilkan {(page - 1) * PAGE_SIZE + 1}-{Math.min(page * PAGE_SIZE, filtered.length)} dari {filtered.length} peserta
             </div>
             <div className="flex items-center gap-1">
@@ -408,11 +408,11 @@ export function RegistrationsView() {
                 variant="outline"
                 disabled={page === 1}
                 onClick={() => setPage((p) => p - 1)}
-                className="bg-purpleblack border-magenta/25 text-cream"
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
-              <span className="text-xs text-cream/70 px-2 font-mono">
+              <span className="text-xs text-white/70 px-2 font-mono">
                 {page} / {totalPages}
               </span>
               <Button
@@ -420,7 +420,7 @@ export function RegistrationsView() {
                 variant="outline"
                 disabled={page === totalPages}
                 onClick={() => setPage((p) => p + 1)}
-                className="bg-purpleblack border-magenta/25 text-cream"
+                className="bg-[#0E0F14] border-[#FC7166]/25 text-white"
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>
@@ -453,10 +453,10 @@ function StatCard({
   small?: boolean;
 }) {
   const colors = {
-    magenta: "bg-magenta/15 text-magenta-light border-magenta/30",
-    gold: "bg-gold/15 text-gold-light border-gold/30",
+    magenta: "bg-[#FC7166]/15 text-[#FF8A80] border-[#FC7166]/30",
+    gold: "bg-[#F39F23]/15 text-[#FFB938] border-gold/30",
     green: "bg-green-500/15 text-green-400 border-green-500/30",
-    orange: "bg-orange-brand/15 text-orange-light border-orange-brand/30",
+    orange: "bg-[#FD8656]/15 text-[#FFA577] border-orange-brand/30",
   };
   return (
     <AdminCard className="relative overflow-hidden">
@@ -466,12 +466,12 @@ function StatCard({
         </div>
       </div>
       <div
-        className={`font-black text-cream leading-none ${small ? "text-lg" : "text-2xl"}`}
+        className={`font-black text-white leading-none ${small ? "text-lg" : "text-2xl"}`}
         style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>
-      <div className="text-[10px] text-cream/60 font-bold uppercase tracking-wider mt-1">
+      <div className="text-[10px] text-white/60 font-bold uppercase tracking-wider mt-1">
         {label}
       </div>
     </AdminCard>

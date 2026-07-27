@@ -68,62 +68,62 @@ export function RegistrationsByCityView() {
 
       {/* === TABLE PER KOTA === */}
       <AdminCard className="p-0 overflow-hidden">
-        <div className="px-4 py-3 border-b border-magenta/20 bg-purpleblack/30">
+        <div className="px-4 py-3 border-b border-[#FC7166]/20 bg-[#0E0F14]/30">
           <h3
-            className="text-base font-black text-cream"
+            className="text-base font-black text-white"
             style={{ fontFamily: "var(--font-display)" }}
           >
             PESERTA PER KOTA ({cities.length} kota)
           </h3>
-          <p className="text-xs text-cream/60 mt-0.5">
+          <p className="text-xs text-white/60 mt-0.5">
             Klik row untuk detail peserta per kota, atau klik tombol Export untuk download CSV.
           </p>
         </div>
         <div className="overflow-x-auto custom-scroll">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-magenta/20 bg-purpleblack/50">
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">#</th>
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Kota</th>
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider hidden md:table-cell">Tanggal Event</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Total</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider hidden sm:table-cell">Regular</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">VIP</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Checked-in</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider hidden lg:table-cell">Revenue</th>
-                <th className="text-right p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Aksi</th>
+              <tr className="border-b border-[#FC7166]/20 bg-[#0E0F14]/50">
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">#</th>
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Kota</th>
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider hidden md:table-cell">Tanggal Event</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Total</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider hidden sm:table-cell">Regular</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">VIP</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Checked-in</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider hidden lg:table-cell">Revenue</th>
+                <th className="text-right p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {cityStats.map((stat, idx) => (
                 <tr
                   key={stat.city.id}
-                  className="border-b border-magenta/10 hover:bg-magenta/5 cursor-pointer transition-colors"
+                  className="border-b border-[#FC7166]/10 hover:bg-[#FC7166]/5 cursor-pointer transition-colors"
                   onClick={() => setSelectedCity(stat.city.id)}
                 >
-                  <td className="p-3 text-cream/50 font-mono text-xs">{String(idx + 1).padStart(2, "0")}</td>
+                  <td className="p-3 text-white/50 font-mono text-xs">{String(idx + 1).padStart(2, "0")}</td>
                   <td className="p-3">
                     <div className="flex items-center gap-2">
-                      <div className="h-2 w-2 rounded-full bg-magenta" />
+                      <div className="h-2 w-2 rounded-full bg-[#FC7166]" />
                       <div>
-                        <div className="font-bold text-cream">{stat.city.city}</div>
-                        <div className="text-[10px] text-cream/50">{stat.city.venue}</div>
+                        <div className="font-bold text-white">{stat.city.city}</div>
+                        <div className="text-[10px] text-white/50">{stat.city.venue}</div>
                       </div>
                     </div>
                   </td>
-                  <td className="p-3 text-cream/70 text-xs hidden md:table-cell font-mono">
+                  <td className="p-3 text-white/70 text-xs hidden md:table-cell font-mono">
                     {stat.city.dateLabel}
                   </td>
-                  <td className="p-3 text-center font-bold text-cream">{stat.total}</td>
-                  <td className="p-3 text-center text-cream/70 hidden sm:table-cell">{stat.regular}</td>
+                  <td className="p-3 text-center font-bold text-white">{stat.total}</td>
+                  <td className="p-3 text-center text-white/70 hidden sm:table-cell">{stat.regular}</td>
                   <td className="p-3 text-center">
-                    <Badge className="bg-gold/20 text-gold-light border-gold/30 text-[10px]">{stat.vip}</Badge>
+                    <Badge className="bg-[#F39F23]/20 text-[#FFB938] border-gold/30 text-[10px]">{stat.vip}</Badge>
                   </td>
                   <td className="p-3 text-center">
-                    <div className="text-cream font-bold">{stat.checkedIn}</div>
-                    <div className="text-[9px] text-cream/50 font-mono">{stat.checkInRate}%</div>
+                    <div className="text-white font-bold">{stat.checkedIn}</div>
+                    <div className="text-[9px] text-white/50 font-mono">{stat.checkInRate}%</div>
                   </td>
-                  <td className="p-3 text-center text-cream/70 hidden lg:table-cell font-mono text-xs">
+                  <td className="p-3 text-center text-white/70 hidden lg:table-cell font-mono text-xs">
                     {stat.revenue > 0 ? formatRupiah(stat.revenue) : "—"}
                   </td>
                   <td className="p-3 text-right">
@@ -131,7 +131,7 @@ export function RegistrationsByCityView() {
                       <Button
                         size="icon"
                         variant="ghost"
-                        className="h-7 w-7 text-cream/60 hover:text-magenta-light"
+                        className="h-7 w-7 text-white/60 hover:text-[#FF8A80]"
                         onClick={(e) => {
                           e.stopPropagation();
                           exportCityCSV(stat.city.id, stat.city.city, registrations);
@@ -139,24 +139,24 @@ export function RegistrationsByCityView() {
                       >
                         <Download className="h-3.5 w-3.5" />
                       </Button>
-                      <ChevronRight className="h-4 w-4 text-cream/40" />
+                      <ChevronRight className="h-4 w-4 text-white/40" />
                     </div>
                   </td>
                 </tr>
               ))}
             </tbody>
             <tfoot>
-              <tr className="border-t-2 border-magenta/30 bg-magenta/5">
-                <td colSpan={3} className="p-3 font-bold text-cream">TOTAL</td>
-                <td className="p-3 text-center font-black text-cream">{totalReg}</td>
-                <td className="p-3 text-center font-bold text-cream/70 hidden sm:table-cell">
+              <tr className="border-t-2 border-[#FC7166]/30 bg-[#FC7166]/5">
+                <td colSpan={3} className="p-3 font-bold text-white">TOTAL</td>
+                <td className="p-3 text-center font-black text-white">{totalReg}</td>
+                <td className="p-3 text-center font-bold text-white/70 hidden sm:table-cell">
                   {cityStats.reduce((s, c) => s + c.regular, 0)}
                 </td>
                 <td className="p-3 text-center">
-                  <Badge className="bg-gold/20 text-gold-light border-gold/30">{totalVip}</Badge>
+                  <Badge className="bg-[#F39F23]/20 text-[#FFB938] border-gold/30">{totalVip}</Badge>
                 </td>
-                <td className="p-3 text-center font-black text-cream">{totalCheckedIn}</td>
-                <td className="p-3 text-center font-black text-cream hidden lg:table-cell font-mono text-xs">
+                <td className="p-3 text-center font-black text-white">{totalCheckedIn}</td>
+                <td className="p-3 text-center font-black text-white hidden lg:table-cell font-mono text-xs">
                   {formatRupiah(totalRevenue)}
                 </td>
                 <td></td>
@@ -166,8 +166,8 @@ export function RegistrationsByCityView() {
         </div>
       </AdminCard>
 
-      <div className="text-xs text-cream/50 px-2">
-        💡 <span className="text-cream/70">Tip:</span> Klik row kota untuk melihat detail peserta + demografi + export QR code PDF + WhatsApp broadcast template.
+      <div className="text-xs text-white/50 px-2">
+        💡 <span className="text-white/70">Tip:</span> Klik row kota untuk melihat detail peserta + demografi + export QR code PDF + WhatsApp broadcast template.
       </div>
     </div>
   );
@@ -218,18 +218,18 @@ function CityDetail({
         <Button
           variant="outline"
           onClick={onBack}
-          className="bg-purpleblack border-magenta/30 text-cream hover:bg-magenta/10"
+          className="bg-[#0E0F14] border-[#FC7166]/30 text-white hover:bg-[#FC7166]/10"
         >
           <X className="h-4 w-4 mr-1" /> Kembali
         </Button>
         <div>
           <h2
-            className="text-2xl font-black text-cream"
+            className="text-2xl font-black text-white"
             style={{ fontFamily: "var(--font-display)" }}
           >
             PESERTA: {cityName.toUpperCase()}
           </h2>
-          <p className="text-xs text-cream/60">{cityRegs.length} peserta terdaftar</p>
+          <p className="text-xs text-white/60">{cityRegs.length} peserta terdaftar</p>
         </div>
       </div>
 
@@ -244,10 +244,10 @@ function CityDetail({
       {/* === EXPORT OPTIONS === */}
       <AdminCard>
         <h3
-          className="text-sm font-black text-cream mb-3 flex items-center gap-2"
+          className="text-sm font-black text-white mb-3 flex items-center gap-2"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          <Download className="h-4 w-4 text-magenta-light" />
+          <Download className="h-4 w-4 text-[#FF8A80]" />
           EXPORT OPTIONS
         </h3>
         <div className="flex flex-wrap gap-2">
@@ -268,9 +268,9 @@ function CityDetail({
 
       {/* === LIST PESERTA === */}
       <AdminCard className="p-0 overflow-hidden">
-        <div className="px-4 py-3 border-b border-magenta/20 bg-purpleblack/30">
+        <div className="px-4 py-3 border-b border-[#FC7166]/20 bg-[#0E0F14]/30">
           <h3
-            className="text-sm font-black text-cream"
+            className="text-sm font-black text-white"
             style={{ fontFamily: "var(--font-display)" }}
           >
             LIST PESERTA ({cityRegs.length})
@@ -278,29 +278,29 @@ function CityDetail({
         </div>
         <div className="overflow-x-auto custom-scroll max-h-[500px]">
           <table className="w-full text-sm">
-            <thead className="sticky top-0 bg-purple-dark">
-              <tr className="border-b border-magenta/20">
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">ID</th>
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Nama</th>
-                <th className="text-left p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider hidden md:table-cell">Phone</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Tiket</th>
-                <th className="text-center p-3 text-cream/60 font-bold uppercase text-[10px] tracking-wider">Status</th>
+            <thead className="sticky top-0 bg-[#181A22]">
+              <tr className="border-b border-[#FC7166]/20">
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">ID</th>
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Nama</th>
+                <th className="text-left p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider hidden md:table-cell">Phone</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Tiket</th>
+                <th className="text-center p-3 text-white/60 font-bold uppercase text-[10px] tracking-wider">Status</th>
               </tr>
             </thead>
             <tbody>
               {cityRegs.map((r) => (
-                <tr key={r.id} className="border-b border-magenta/10 hover:bg-magenta/5">
-                  <td className="p-3 font-mono text-[10px] text-cream/60">{r.id}</td>
+                <tr key={r.id} className="border-b border-[#FC7166]/10 hover:bg-[#FC7166]/5">
+                  <td className="p-3 font-mono text-[10px] text-white/60">{r.id}</td>
                   <td className="p-3">
-                    <div className="font-bold text-cream text-sm">{r.fullName}</div>
-                    <div className="text-[10px] text-cream/50">{r.googleEmail}</div>
+                    <div className="font-bold text-white text-sm">{r.fullName}</div>
+                    <div className="text-[10px] text-white/50">{r.googleEmail}</div>
                   </td>
-                  <td className="p-3 text-cream/70 text-xs hidden md:table-cell font-mono">{r.phone}</td>
+                  <td className="p-3 text-white/70 text-xs hidden md:table-cell font-mono">{r.phone}</td>
                   <td className="p-3 text-center">
                     {r.ticketType === "vip" ? (
-                      <Badge className="bg-gold/20 text-gold-light border-gold/30 text-[9px]">VIP</Badge>
+                      <Badge className="bg-[#F39F23]/20 text-[#FFB938] border-gold/30 text-[9px]">VIP</Badge>
                     ) : (
-                      <Badge className="bg-magenta/15 text-magenta-light border-magenta/30 text-[9px]">REG</Badge>
+                      <Badge className="bg-[#FC7166]/15 text-[#FF8A80] border-[#FC7166]/30 text-[9px]">REG</Badge>
                     )}
                   </td>
                   <td className="p-3 text-center">
@@ -317,7 +317,7 @@ function CityDetail({
               ))}
               {cityRegs.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="p-8 text-center text-cream/40">
+                  <td colSpan={5} className="p-8 text-center text-white/40">
                     Belum ada peserta di kota ini.
                   </td>
                 </tr>
@@ -371,10 +371,10 @@ function StatCard({
   small?: boolean;
 }) {
   const colors = {
-    magenta: "bg-magenta/15 text-magenta-light border-magenta/30",
-    gold: "bg-gold/15 text-gold-light border-gold/30",
+    magenta: "bg-[#FC7166]/15 text-[#FF8A80] border-[#FC7166]/30",
+    gold: "bg-[#F39F23]/15 text-[#FFB938] border-gold/30",
     green: "bg-green-500/15 text-green-400 border-green-500/30",
-    orange: "bg-orange-brand/15 text-orange-light border-orange-brand/30",
+    orange: "bg-[#FD8656]/15 text-[#FFA577] border-orange-brand/30",
   };
   return (
     <AdminCard className="relative overflow-hidden">
@@ -384,12 +384,12 @@ function StatCard({
         </div>
       </div>
       <div
-        className={`font-black text-cream leading-none ${small ? "text-base" : "text-2xl"}`}
+        className={`font-black text-white leading-none ${small ? "text-base" : "text-2xl"}`}
         style={{ fontFamily: "var(--font-display)" }}
       >
         {value}
       </div>
-      <div className="text-[10px] text-cream/60 font-bold uppercase tracking-wider mt-1">
+      <div className="text-[10px] text-white/60 font-bold uppercase tracking-wider mt-1">
         {label}
       </div>
     </AdminCard>
