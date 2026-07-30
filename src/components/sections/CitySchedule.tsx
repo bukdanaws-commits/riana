@@ -39,10 +39,10 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
   }, [filter, CITIES]);
 
   return (
-    <section id="jadwal" className="relative py-4 lg:py-6 bg-brand-tech overflow-hidden">
+    <section id="jadwal" className="relative py-4 lg:py-6 bg-white overflow-hidden">
       {/* Tech grid pattern */}
       <div className="absolute inset-0 pattern-tech-grid opacity-50" />
-      <div className="absolute -top-32 right-0 h-96 w-96 rounded-full bg-magenta/15 blur-3xl -z-10" />
+      <div className="absolute -top-32 right-0 h-96 w-96 rounded-full bg-[#FC7166]/15 blur-3xl -z-10" />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
         {/* Header */}
@@ -53,7 +53,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
           transition={{ duration: 0.5 }}
           className="text-center mb-4"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-magenta/15 border border-magenta/25 mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FC7166]/15 border border-[#FC7166]/25 mb-4">
             <Calendar className="h-3.5 w-3.5 text-magenta" />
             <span
               className="text-xs font-bold text-magenta-deep tracking-wide uppercase"
@@ -63,13 +63,13 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
             </span>
           </div>
           <h2
-            className="text-5xl sm:text-6xl lg:text-7xl font-black text-purpleblack mb-3 leading-none"
+            className="text-5xl sm:text-6xl lg:text-7xl font-black text-[#0E0F14] mb-3 leading-none"
             style={{ fontFamily: "var(--font-display)" }}
           >
             20 KOTA, <span className="text-gradient-brand">1 PERJALANAN</span>
           </h2>
           <p
-            className="text-base text-plum max-w-2xl mx-auto"
+            className="text-base text-[#884D3E] max-w-2xl mx-auto"
             style={{ fontFamily: "var(--font-geist-sans)" }}
           >
             Pilih kota Anda dan jadilah bagian dari sejarah. Klik pin di peta atau
@@ -171,7 +171,7 @@ function FilterPill({
       className={`group inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 font-semibold text-sm transition-all ${
         active
           ? "text-white border-transparent shadow-md"
-          : "text-cream/80 bg-purple-dark border-magenta/20 hover:border-magenta/25"
+          : "text-cream/80 bg-[#FFF1ED] border-[#FC7166]/20 hover:border-[#FC7166]/25"
       }`}
       style={active ? { background: color } : undefined}
     >
@@ -182,7 +182,7 @@ function FilterPill({
       {label}
       <span
         className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-          active ? "bg-purpleblack/40" : "bg-purpleblack"
+          active ? "bg-[#0E0F14]/40" : "bg-[#0E0F14]"
         }`}
       >
         {count}
@@ -215,7 +215,7 @@ function CityCard({
       transition={{ duration: 0.3, delay: Math.min(index * 0.03, 0.4) }}
       onMouseEnter={() => onHover(city.id)}
       onMouseLeave={() => onHover(null)}
-      className="group relative p-5 rounded-2xl bg-purple-dark border border-magenta/20 hover:border-magenta hover:shadow-glow-pink transition-all cursor-pointer overflow-hidden corner-bracket"
+      className="group relative p-5 rounded-2xl bg-[#FFF1ED] border border-[#FC7166]/20 hover:border-[#FC7166] hover:shadow-lg transition-all cursor-pointer overflow-hidden "
       onClick={onClick}
     >
       {/* Color accent bar */}
@@ -239,25 +239,25 @@ function CityCard({
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span
-              className="text-xs font-bold uppercase tracking-wider text-purpleblack"
+              className="text-xs font-bold uppercase tracking-wider text-[#0E0F14]"
               style={{ fontFamily: "var(--font-heading)" }}
             >
               {city.dayLabel}, {city.dateLabel}
             </span>
             {isFinale && (
-              <Badge className="bg-gold text-purpleblack text-[9px] hover:bg-gold px-1.5 py-0 font-black">
+              <Badge className="bg-[#F39F23] text-[#0E0F14] text-[9px] hover:bg-[#F39F23] px-1.5 py-0 font-black">
                 <Sparkles className="h-2.5 w-2.5 mr-0.5" />
                 FINALE
               </Badge>
             )}
           </div>
           <h3
-            className="text-2xl font-black text-purpleblack leading-tight"
+            className="text-2xl font-black text-[#0E0F14] leading-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {city.city}
           </h3>
-          <div className="text-xs text-plum mt-1 flex items-center gap-1">
+          <div className="text-xs text-[#884D3E] mt-1 flex items-center gap-1">
             <MapPin className="h-3 w-3" />
             <span className="truncate max-w-[14rem]">{city.venue}</span>
           </div>
@@ -281,17 +281,17 @@ function CityCard({
       {/* Status */}
       <div className="flex items-center justify-between mt-3 relative">
         <StatusBadge status={city.status} />
-        <div className="flex items-center gap-1.5 text-xs text-plum">
+        <div className="flex items-center gap-1.5 text-xs text-[#884D3E]">
           <Users className="h-3.5 w-3.5" />
           <span>
-            <span className="font-bold text-purpleblack">{city.registered}</span>/{city.capacity}
+            <span className="font-bold text-[#0E0F14]">{city.registered}</span>/{city.capacity}
           </span>
         </div>
       </div>
 
       {city.registered > 0 && (
         <div className="mt-2 relative">
-          <div className="h-1 w-full rounded-full bg-purpleblack overflow-hidden">
+          <div className="h-1 w-full rounded-full bg-[#0E0F14] overflow-hidden">
             <div
               className="h-full transition-all duration-500"
               style={{ width: `${seatsPct}%`, background: color }}
@@ -302,7 +302,7 @@ function CityCard({
 
       <Button
         size="sm"
-        className="w-full mt-4 bg-purpleblack group-hover:bg-magenta text-white font-bold rounded-xl transition-all relative"
+        className="w-full mt-4 bg-[#0E0F14] group-hover:bg-[#FC7166] text-white font-bold rounded-xl transition-all relative"
         style={{ fontFamily: "var(--font-heading)" }}
       >
         Daftar di {city.city}
@@ -315,7 +315,7 @@ function CityCard({
 function StatusBadge({ status }: { status: CityEvent["status"] }) {
   if (status === "completed") {
     return (
-      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gold/20 text-gold-light text-[10px] font-bold">
+      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#F39F23]/20 text-[#C97D0E] text-[10px] font-bold">
         <CheckCircle2 className="h-3 w-3" />
         Selesai
       </span>
@@ -338,7 +338,7 @@ function StatusBadge({ status }: { status: CityEvent["status"] }) {
     );
   }
   return (
-    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gold/15 text-magenta-light text-[10px] font-bold">
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#F39F23]/15 text-[#FC7166] text-[10px] font-bold">
       <Clock className="h-3 w-3" />
       Segera
     </span>
@@ -359,7 +359,7 @@ function IndonesiaMap({
 }) {
   const CITIES = useCities();
   return (
-    <div className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-purple-50 via-pink-50 to-pink-50 border-2 border-magenta/20 overflow-hidden p-4">
+    <div className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-purple-50 via-pink-50 to-pink-50 border-2 border-[#FC7166]/20 overflow-hidden p-4">
       <div className="absolute inset-0 pattern-dots opacity-50" />
 
       {/* Map header */}
@@ -460,7 +460,7 @@ function IndonesiaMap({
                 />
                 {/* Tooltip on hover */}
                 {isHovered && (
-                  <div className="absolute left-1/2 -translate-x-1/2 -top-12 whitespace-nowrap px-3 py-1.5 rounded-lg bg-purpleblack text-white text-[10px] font-bold shadow-xl z-40 pointer-events-none">
+                  <div className="absolute left-1/2 -translate-x-1/2 -top-12 whitespace-nowrap px-3 py-1.5 rounded-lg bg-[#0E0F14] text-white text-[10px] font-bold shadow-xl z-40 pointer-events-none">
                     {city.city}
                     <div className="text-[8px] text-white/70 font-normal">{city.dateLabel} 2026</div>
                   </div>
@@ -473,7 +473,7 @@ function IndonesiaMap({
         {/* Legend */}
         <div className="absolute bottom-2 left-2 right-2 flex flex-wrap gap-1.5">
           {REGIONS.map((r) => (
-            <div key={r} className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-purpleblack/70 backdrop-blur-sm">
+            <div key={r} className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#0E0F14]/70 backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: REGION_COLORS[r] }} />
               <span className="text-[8px] font-semibold text-cream/70">{r}</span>
             </div>
