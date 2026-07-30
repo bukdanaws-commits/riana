@@ -104,35 +104,15 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
           ))}
         </div>
 
-        {/* Map + Grid layout */}
-        <div className="grid lg:grid-cols-12 gap-4">
-          {/* Map (left on desktop, hidden on mobile) */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-5 hidden lg:block"
-          >
-            <div className="sticky top-24">
-              <IndonesiaMap
-                hoveredCity={hoveredCity}
-                onCityHover={setHoveredCity}
-                onCityClick={(id) => onRegisterClick(id)}
-                filter={filter}
-              />
-            </div>
-          </motion.div>
-
-          {/* City cards grid */}
-          <div className="lg:col-span-7">
-            <AnimatePresence mode="popLayout">
-              <motion.div
-                key={filter}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="grid sm:grid-cols-2 gap-4"
+        {/* City cards grid — single grid, no map */}
+        <div>
+          <AnimatePresence mode="popLayout">
+            <motion.div
+              key={filter}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
               >
                 {filtered.map((city, i) => (
                   <CityCard
@@ -145,7 +125,6 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
                 ))}
               </motion.div>
             </AnimatePresence>
-          </div>
         </div>
       </div>
     </section>
