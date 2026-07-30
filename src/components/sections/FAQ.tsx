@@ -77,7 +77,7 @@ export function FAQ() {
               <AccordionItem
                 key={`${activeCategory}-${i}`}
                 value={`item-${i}`}
-                className="rounded-2xl bg-[#181A22] border-2 border-[#FC7166]/15 px-4 sm:px-5 shadow-sm overflow-hidden data-[state=open]:border-[#FC7166]/30 data-[state=open]:shadow-lg transition-all"
+                className="rounded-2xl bg-white border-2 border-[#FC7166]/15 px-4 sm:px-5 shadow-sm overflow-hidden data-[state=open]:border-[#FC7166]/30 data-[state=open]:shadow-lg transition-all"
               >
                 <AccordionTrigger className="text-left hover:no-underline py-5 group">
                   <div className="flex items-start gap-3 pr-2">
@@ -149,7 +149,7 @@ function CategoryPill({
     >
       {label}
       <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-        active ? "bg-[#0E0F14]/40" : "bg-[#0E0F14]"
+        active ? "bg-[#FFF1ED]" : "bg-[#FFF1ED]"
       }`}>
         {count}
       </span>

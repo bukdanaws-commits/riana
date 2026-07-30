@@ -143,7 +143,7 @@ export function Partners() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.4, delay: i * 0.06 }}
-                  className="group p-4 rounded-2xl bg-[#181A22] border border-[#FC7166]/20 hover:border-[#FC7166]/40 hover:shadow-lg transition-all"
+                  className="group p-4 rounded-2xl bg-white border border-[#FC7166]/20 hover:border-[#FC7166]/40 hover:shadow-lg transition-all"
                 >
                   <div className="flex items-start gap-3">
                     <div className="flex-shrink-0 h-11 w-11 rounded-xl bg-gradient-to-r from-[#FC7166] to-[#FD8656] flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform">
@@ -188,7 +188,7 @@ export function Partners() {
               {PARTNER_TIERS.map((tier, i) => (
                 <div
                   key={tier.name}
-                  className={`relative p-5 rounded-2xl bg-[#181A22]/60 backdrop-blur-md border border-[#FC7166]/15 hover:border-[#FC7166]/40 transition-all ${
+                  className={`relative p-5 rounded-2xl bg-white/60 backdrop-blur-md border border-[#FC7166]/15 hover:border-[#FC7166]/40 transition-all ${
                     i === 0 ? "ring-2 ring-magenta/40" : ""
                   }`}
                 >
@@ -274,7 +274,7 @@ function PartnerTierRow({
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.3, delay: i * 0.05 }}
-            className="group relative p-3 rounded-xl bg-[#181A22] border border-[#FC7166]/15 hover:border-[#FC7166]/30 transition-all"
+            className="group relative p-3 rounded-xl bg-white border border-[#FC7166]/15 hover:border-[#FC7166]/30 transition-all"
           >
             <div className="flex items-center gap-3">
               {/* Logo placeholder with brand color */}

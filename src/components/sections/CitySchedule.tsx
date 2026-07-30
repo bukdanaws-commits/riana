@@ -182,7 +182,7 @@ function FilterPill({
       {label}
       <span
         className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
-          active ? "bg-[#0E0F14]/40" : "bg-[#0E0F14]"
+          active ? "bg-[#FFF1ED]" : "bg-[#FFF1ED]"
         }`}
       >
         {count}
@@ -291,7 +291,7 @@ function CityCard({
 
       {city.registered > 0 && (
         <div className="mt-2 relative">
-          <div className="h-1 w-full rounded-full bg-[#0E0F14] overflow-hidden">
+          <div className="h-1 w-full rounded-full bg-[#FFE0D6] overflow-hidden">
             <div
               className="h-full transition-all duration-500"
               style={{ width: `${seatsPct}%`, background: color }}
@@ -473,7 +473,7 @@ function IndonesiaMap({
         {/* Legend */}
         <div className="absolute bottom-2 left-2 right-2 flex flex-wrap gap-1.5">
           {REGIONS.map((r) => (
-            <div key={r} className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#0E0F14]/70 backdrop-blur-sm">
+            <div key={r} className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#FFF1ED]/70 backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: REGION_COLORS[r] }} />
               <span className="text-[8px] font-semibold text-[#0E0F14]/70">{r}</span>
             </div>

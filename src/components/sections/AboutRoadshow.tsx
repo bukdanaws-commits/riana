@@ -78,7 +78,7 @@ function Pillar({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.5, delay }}
-      className="group relative p-7 rounded-3xl bg-[#181A22] border-2 border-[#FC7166]/15 hover:border-[#FC7166]/25 hover:shadow-xl transition-all overflow-hidden"
+      className="group relative p-7 rounded-3xl bg-white border-2 border-[#FC7166]/15 hover:border-[#FC7166]/25 hover:shadow-xl transition-all overflow-hidden"
     >
       <div className={`absolute -top-12 -right-12 h-32 w-32 rounded-full ${color} opacity-10 blur-2xl group-hover:opacity-20 transition-opacity`} />
       <div className={`relative h-14 w-14 rounded-2xl ${color} flex items-center justify-center shadow-lg mb-4 group-hover:scale-110 transition-transform`}>

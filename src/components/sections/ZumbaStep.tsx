@@ -85,7 +85,7 @@ export function ZumbaStep() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: i * 0.08 }}
-                className="group relative p-6 rounded-3xl bg-[#181A22] border-2 border-[#FC7166]/15 hover:border-[#FC7166]/30 hover:shadow-lg transition-all"
+                className="group relative p-6 rounded-3xl bg-white border-2 border-[#FC7166]/15 hover:border-[#FC7166]/30 hover:shadow-lg transition-all"
               >
                 <div className="absolute -top-3 -right-3 h-12 w-12 rounded-2xl bg-gradient-to-r from-[#FC7166] to-[#FD8656] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   <point.icon className="h-6 w-6 text-white" />

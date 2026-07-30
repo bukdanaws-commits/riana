@@ -36,7 +36,7 @@ export function Gallery() {
 
         {/* Tabs */}
         <div className="flex justify-center mb-3">
-          <div className="inline-flex p-1 rounded-full bg-[#0E0F14] border border-[#FC7166]/20">
+          <div className="inline-flex p-1 rounded-full bg-white border border-[#FC7166]/20">
             <button
               onClick={() => setTab("photo")}
               className={`inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-bold transition-all ${
@@ -119,7 +119,7 @@ export function Gallery() {
                   </div>
 
                   {/* Hover icon */}
-                  <div className="absolute top-3 right-3 h-9 w-9 rounded-full bg-[#0E0F14]/40 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute top-3 right-3 h-9 w-9 rounded-full bg-[#FFF1ED] backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                     <Maximize2 className="h-4 w-4 text-[#0E0F14]" />
                   </div>
                 </motion.button>
@@ -138,7 +138,7 @@ export function Gallery() {
                 backgroundImage: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, transparent 50%), radial-gradient(circle at 70% 70%, rgba(255,203,5,0.3) 0%, transparent 50%)",
               }} />
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                <div className="h-20 w-20 rounded-full bg-[#0E0F14]/40 backdrop-blur-md flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <div className="h-20 w-20 rounded-full bg-[#FFF1ED] backdrop-blur-md flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                   <Play className="h-10 w-10 text-white fill-white ml-1" />
                 </div>
                 <div className="text-xl font-extrabold mb-1">Official Highlight 2025</div>
@@ -158,7 +158,7 @@ export function Gallery() {
               ].map((v, i) => (
                 <div
                   key={i}
-                  className="group flex items-center gap-3 p-3 rounded-2xl bg-[#181A22] hover:bg-[#FC7166]/10 cursor-pointer transition-colors border border-[#FC7166]/15"
+                  className="group flex items-center gap-3 p-3 rounded-2xl bg-white hover:bg-[#FC7166]/10 cursor-pointer transition-colors border border-[#FC7166]/15"
                 >
                   <div className="relative h-16 w-24 rounded-xl overflow-hidden flex-shrink-0 bg-gradient-to-br from-magenta to-magenta-deep flex items-center justify-center">
                     <Play className="h-6 w-6 text-white fill-white" />
@@ -185,7 +185,7 @@ export function Gallery() {
           onClick={() => setLightbox(null)}
           className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
         >
-          <button className="absolute top-4 right-4 h-10 w-10 rounded-full bg-white/10 hover:bg-[#0E0F14]/40 flex items-center justify-center text-white">
+          <button className="absolute top-4 right-4 h-10 w-10 rounded-full bg-white/10 hover:bg-[#FFF1ED] flex items-center justify-center text-white">
             <X className="h-5 w-5" />
           </button>
           <div

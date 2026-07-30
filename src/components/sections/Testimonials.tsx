@@ -35,7 +35,7 @@ export function Testimonials() {
           transition={{ duration: 0.5 }}
           className="text-center mb-4"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#181A22] border border-[#FC7166]/25 mb-4 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#FC7166]/25 mb-4 shadow-sm">
             <Star className="h-3.5 w-3.5 text-[#FC7166] fill-[#FC7166]" />
             <span className="text-xs font-bold text-[#FC7166] tracking-wide uppercase">Kata Mereka</span>
           </div>
@@ -61,7 +61,7 @@ export function Testimonials() {
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 className="absolute inset-0"
               >
-                <div className="relative h-full p-6 lg:p-10 rounded-3xl bg-[#181A22] shadow-xl border border-[#FC7166]/20 overflow-hidden">
+                <div className="relative h-full p-6 lg:p-10 rounded-3xl bg-white shadow-xl border border-[#FC7166]/20 overflow-hidden">
                   <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full opacity-10 blur-2xl" style={{ background: current.avatarColor }} />
                   <Quote className="absolute top-6 right-6 h-16 w-16 text-[#FC7166]/60" />
 
@@ -161,7 +161,7 @@ export function Testimonials() {
             { value: "92%", label: "Kembali Ikut", color: "text-[#FC7166]" },
             { value: "2/20", label: "Kota Selesai", color: "text-[#FD8656]" },
           ].map((s) => (
-            <div key={s.label} className="text-center p-4 rounded-2xl bg-[#181A22]/60 backdrop-blur-sm border border-[#FC7166]/15">
+            <div key={s.label} className="text-center p-4 rounded-2xl bg-white/60 backdrop-blur-sm border border-[#FC7166]/15">
               <div className={`text-3xl font-black ${s.color}`} style={{ fontFamily: "var(--font-display)" }}>{s.value}</div>
               <div className="text-xs text-[#0E0F14]/70 font-semibold mt-1">{s.label}</div>
             </div>

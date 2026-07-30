@@ -51,7 +51,7 @@ export function WhyJoin() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: i * 0.07 }}
-                className="group relative p-6 lg:p-7 rounded-3xl bg-[#181A22] border-2 border-[#FC7166]/15 hover:border-transparent hover:shadow-2xl transition-all overflow-hidden"
+                className="group relative p-6 lg:p-7 rounded-3xl bg-white border-2 border-[#FC7166]/15 hover:border-transparent hover:shadow-2xl transition-all overflow-hidden"
               >
                 {/* Hover gradient backdrop */}
                 <div className="absolute inset-0 bg-gradient-to-r from-[#FC7166] to-[#FD8656] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

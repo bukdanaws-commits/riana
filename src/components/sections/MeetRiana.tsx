@@ -28,7 +28,7 @@ export function MeetRiana() {
               <div className="absolute -inset-3 rounded-[2.5rem] bg-gradient-to-r from-[#FC7166] to-[#FD8656] opacity-20 blur-2xl" />
               <div className="absolute -inset-1 rounded-[2.25rem] bg-gradient-to-r from-[#FC7166] to-[#FD8656]" />
 
-              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-[#0E0F14]">
+              <div className="relative aspect-[4/5] rounded-[2rem] overflow-hidden bg-[#884D3E]">
                 {/* Real photo of Riana from mockup */}
                 <img
                   src="/brand/riana-portrait.png"
@@ -69,14 +69,14 @@ export function MeetRiana() {
               </div>
 
               {/* Floating chips */}
-              <div className="absolute -top-3 -right-3 px-3 py-2 rounded-2xl bg-[#181A22] shadow-lg flex items-center gap-2">
+              <div className="absolute -top-3 -right-3 px-3 py-2 rounded-2xl bg-white shadow-lg border border-[#FC7166]/20 flex items-center gap-2">
                 <Instagram className="h-4 w-4 text-[#FC7166]" />
                 <div className="leading-tight">
                   <div className="text-xs font-extrabold">850K</div>
                   <div className="text-[9px] text-[#0E0F14]/60">Followers</div>
                 </div>
               </div>
-              <div className="absolute -bottom-3 -left-3 px-3 py-2 rounded-2xl bg-[#181A22] shadow-lg flex items-center gap-2">
+              <div className="absolute -bottom-3 -left-3 px-3 py-2 rounded-2xl bg-white shadow-lg border border-[#FC7166]/20 flex items-center gap-2">
                 <Music2 className="h-4 w-4 text-[#FC7166]" />
                 <div className="leading-tight">
                   <div className="text-xs font-extrabold">10+ Years</div>
