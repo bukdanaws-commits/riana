@@ -19,32 +19,22 @@ interface HeroProps {
 
 export function Hero({ onRegisterClick }: HeroProps) {
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#0E0F14]">
-      {/* === FULL-WIDTH BACKGROUND IMAGE === */}
+    <section className="relative min-h-screen w-full overflow-hidden">
+      {/* === FULL-WIDTH BACKGROUND IMAGE — 100% opacity, no overlay === */}
       <div className="absolute inset-0">
         <img
           src="/brand/user-hero-processed.jpg"
           alt="Riana On The Move — 10.000 peserta Zumba bersama instruktur Riana"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        {/* Dark gradient overlay for content readability */}
+        {/* Minimal dark scrim only at bottom for text legibility */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(11,7,16,0.75) 0%, rgba(11,7,16,0.55) 35%, rgba(11,7,16,0.8) 70%, rgba(11,7,16,0.98) 100%), radial-gradient(ellipse at 70% 30%, rgba(223,38,121,0.3) 0%, transparent 60%)",
+              "linear-gradient(180deg, transparent 0%, transparent 40%, rgba(14,15,20,0.4) 70%, rgba(14,15,20,0.7) 100%)",
           }}
         />
-        {/* Magenta-orange tint overlay */}
-        <div
-          className="absolute inset-0 mix-blend-soft-light opacity-40"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(223,38,121,0.4) 0%, rgba(241,114,56,0.3) 50%, rgba(212,175,55,0.2) 100%)",
-          }}
-        />
-        {/* Tech scanlines subtle */}
-        <div className="absolute inset-0 pattern-scanlines opacity-30 pointer-events-none" />
       </div>
 
       {/* === FLOATING DECORATIVE BLOBS === */}
