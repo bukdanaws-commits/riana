@@ -76,9 +76,9 @@ export function Footer() {
   };
 
   return (
-    <footer className="relative bg-purpleblack text-white overflow-hidden">
+    <footer className="relative bg-[#0E0F14] text-white overflow-hidden">
       {/* Top accent */}
-      <div className="h-1 bg-brand-gradient" />
+      <div className="h-1 bg-gradient-to-r from-[#FC7166] to-[#FD8656]" />
 
       {/* Decorative */}
       <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-pink-500/10 blur-3xl" />
@@ -114,7 +114,7 @@ export function Footer() {
               <Button
                 type="submit"
                 size="lg"
-                className="bg-magenta hover:bg-magenta-deep text-white font-bold h-12 px-6 rounded-full shadow-glow-pink"
+                className="bg-[#FC7166] hover:bg-[#FC7166]-deep text-white font-bold h-12 px-6 rounded-full shadow-lg"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
                 <Send className="h-4 w-4 mr-1" />
@@ -129,7 +129,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-4">
             <Link href="#" className="flex items-center gap-2 group mb-4">
-              <div className="h-11 w-11 rounded-xl bg-magenta flex items-center justify-center shadow-glow-pink">
+              <div className="h-11 w-11 rounded-xl bg-[#FC7166] flex items-center justify-center shadow-lg">
                 <Heart className="h-6 w-6 text-white fill-white" />
               </div>
               <div>
@@ -140,7 +140,7 @@ export function Footer() {
                   RIANA ZUMBA
                 </div>
                 <div
-                  className="text-[10px] text-gold-light font-bold tracking-[0.25em] -mt-1"
+                  className="text-[10px] text-[#C97D0E] font-bold tracking-[0.25em] -mt-1"
                   style={{ fontFamily: "var(--font-heading)" }}
                 >
                   ON THE MOVE
@@ -155,7 +155,7 @@ export function Footer() {
               Indonesia.
             </p>
             <div
-              className="font-script text-xl text-gold-light mb-4"
+              className="font-script text-xl text-[#C97D0E] mb-4"
               style={{ fontFamily: "var(--font-script)" }}
             >
               Move Together. Make History.
@@ -164,15 +164,15 @@ export function Footer() {
             {/* Contact */}
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2 text-white/75">
-                <Phone className="h-4 w-4 text-gold-light" />
+                <Phone className="h-4 w-4 text-[#C97D0E]" />
                 <span>0813-2099-9969</span>
               </div>
               <div className="flex items-center gap-2 text-white/75">
-                <Mail className="h-4 w-4 text-gold-light" />
+                <Mail className="h-4 w-4 text-[#C97D0E]" />
                 <span>partnership@rianaonthemove.id</span>
               </div>
               <div className="flex items-center gap-2 text-white/75">
-                <MapPin className="h-4 w-4 text-gold-light" />
+                <MapPin className="h-4 w-4 text-[#C97D0E]" />
                 <span>Jakarta, Indonesia</span>
               </div>
             </div>
@@ -190,7 +190,7 @@ export function Footer() {
                     <li key={link.label}>
                       <Link
                         href={link.href}
-                        className="text-sm text-white/70 hover:text-magenta-light transition-colors"
+                        className="text-sm text-white/70 hover:text-[#FC7166] transition-colors"
                       >
                         {link.label}
                       </Link>

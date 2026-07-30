@@ -54,9 +54,9 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
           className="text-center mb-4"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FC7166]/15 border border-[#FC7166]/25 mb-4">
-            <Calendar className="h-3.5 w-3.5 text-magenta" />
+            <Calendar className="h-3.5 w-3.5 text-[#FC7166]" />
             <span
-              className="text-xs font-bold text-magenta-deep tracking-wide uppercase"
+              className="text-xs font-bold text-[#B01A62] tracking-wide uppercase"
               style={{ fontFamily: "var(--font-heading)" }}
             >
               Tour Schedule 2026
@@ -76,7 +76,7 @@ export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
             kartu kota untuk mendaftar.
           </p>
           <div
-            className="font-script text-xl sm:text-2xl text-magenta mt-3"
+            className="font-script text-xl sm:text-2xl text-[#FC7166] mt-3"
             style={{ fontFamily: "var(--font-script)" }}
           >
             Satu Gerakan, Satu Tujuan: Sehat & Bersejarah!
@@ -171,7 +171,7 @@ function FilterPill({
       className={`group inline-flex items-center gap-2 px-4 py-2 rounded-full border-2 font-semibold text-sm transition-all ${
         active
           ? "text-white border-transparent shadow-md"
-          : "text-cream/80 bg-[#FFF1ED] border-[#FC7166]/20 hover:border-[#FC7166]/25"
+          : "text-[#0E0F14]/80 bg-[#FFF1ED] border-[#FC7166]/20 hover:border-[#FC7166]/25"
       }`}
       style={active ? { background: color } : undefined}
     >
@@ -365,10 +365,10 @@ function IndonesiaMap({
       {/* Map header */}
       <div className="relative flex items-center justify-between mb-2">
         <div>
-          <div className="text-xs text-cream/60 font-bold uppercase tracking-wider">Interactive Map</div>
-          <div className="text-sm font-extrabold text-cream">20 Kota di Indonesia</div>
+          <div className="text-xs text-[#0E0F14]/60 font-bold uppercase tracking-wider">Interactive Map</div>
+          <div className="text-sm font-extrabold text-[#0E0F14]">20 Kota di Indonesia</div>
         </div>
-        <div className="text-[10px] text-cream/50">Hover • Click to register</div>
+        <div className="text-[10px] text-[#0E0F14]/50">Hover • Click to register</div>
       </div>
 
       {/* SVG-based simplified Indonesia silhouette */}
@@ -462,7 +462,7 @@ function IndonesiaMap({
                 {isHovered && (
                   <div className="absolute left-1/2 -translate-x-1/2 -top-12 whitespace-nowrap px-3 py-1.5 rounded-lg bg-[#0E0F14] text-white text-[10px] font-bold shadow-xl z-40 pointer-events-none">
                     {city.city}
-                    <div className="text-[8px] text-white/70 font-normal">{city.dateLabel} 2026</div>
+                    <div className="text-[8px] text-[#0E0F14]/70 font-normal">{city.dateLabel} 2026</div>
                   </div>
                 )}
               </div>
@@ -475,7 +475,7 @@ function IndonesiaMap({
           {REGIONS.map((r) => (
             <div key={r} className="flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#0E0F14]/70 backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full" style={{ background: REGION_COLORS[r] }} />
-              <span className="text-[8px] font-semibold text-cream/70">{r}</span>
+              <span className="text-[8px] font-semibold text-[#0E0F14]/70">{r}</span>
             </div>
           ))}
         </div>

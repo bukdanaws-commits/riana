@@ -24,8 +24,8 @@ export function Testimonials() {
 
   return (
     <section className="relative py-4 lg:py-6 bg-gradient-to-br from-pink-50 via-pink-50 to-amber-50 overflow-hidden">
-      <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-magenta/20/40 blur-3xl -z-10" />
-      <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-magenta/20/40 blur-3xl -z-10" />
+      <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-[#FC7166]/20/40 blur-3xl -z-10" />
+      <div className="absolute -bottom-32 -right-32 h-96 w-96 rounded-full bg-[#FC7166]/20/40 blur-3xl -z-10" />
 
       <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -35,14 +35,14 @@ export function Testimonials() {
           transition={{ duration: 0.5 }}
           className="text-center mb-4"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-purple-dark border border-magenta/25 mb-4 shadow-sm">
-            <Star className="h-3.5 w-3.5 text-magenta-light fill-magenta" />
-            <span className="text-xs font-bold text-magenta-light tracking-wide uppercase">Kata Mereka</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#181A22] border border-[#FC7166]/25 mb-4 shadow-sm">
+            <Star className="h-3.5 w-3.5 text-[#FC7166] fill-[#FC7166]" />
+            <span className="text-xs font-bold text-[#FC7166] tracking-wide uppercase">Kata Mereka</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-3" style={{ fontFamily: "var(--font-display)" }}>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0E0F14] mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Cerita dari <span className="text-gradient-brand">Peserta</span>
           </h2>
-          <p className="text-base text-cream/70 max-w-2xl mx-auto">
+          <p className="text-base text-[#0E0F14]/70 max-w-2xl mx-auto">
             Lebih dari 4.500 orang telah merasakan transformasi lewat Riana On The Move. Inilah
             sebagian cerita mereka.
           </p>
@@ -61,9 +61,9 @@ export function Testimonials() {
                 transition={{ duration: 0.35, ease: "easeOut" }}
                 className="absolute inset-0"
               >
-                <div className="relative h-full p-6 lg:p-10 rounded-3xl bg-purple-dark shadow-xl border border-magenta/20 overflow-hidden">
+                <div className="relative h-full p-6 lg:p-10 rounded-3xl bg-[#181A22] shadow-xl border border-[#FC7166]/20 overflow-hidden">
                   <div className="absolute -top-10 -right-10 h-40 w-40 rounded-full opacity-10 blur-2xl" style={{ background: current.avatarColor }} />
-                  <Quote className="absolute top-6 right-6 h-16 w-16 text-magenta-light/60" />
+                  <Quote className="absolute top-6 right-6 h-16 w-16 text-[#FC7166]/60" />
 
                   <div className="relative flex flex-col lg:flex-row gap-3 lg:gap-4 h-full">
                     {/* Left: avatar + info */}
@@ -74,9 +74,9 @@ export function Testimonials() {
                       >
                         {current.name.charAt(0)}
                       </div>
-                      <div className="font-extrabold text-cream text-lg">{current.name}</div>
-                      <div className="text-sm text-cream/60">{current.role}</div>
-                      <div className="inline-flex items-center gap-1 mt-2 px-2.5 py-1 rounded-full bg-magenta/10 text-magenta-light text-xs font-semibold">
+                      <div className="font-extrabold text-[#0E0F14] text-lg">{current.name}</div>
+                      <div className="text-sm text-[#0E0F14]/60">{current.role}</div>
+                      <div className="inline-flex items-center gap-1 mt-2 px-2.5 py-1 rounded-full bg-[#FC7166]/10 text-[#FC7166] text-xs font-semibold">
                         <MapPin className="h-3 w-3" />
                         {current.city}
                       </div>
@@ -86,20 +86,20 @@ export function Testimonials() {
                             key={i}
                             className={`h-4 w-4 ${
                               i < current.rating
-                                ? "text-gold-light fill-gold"
-                                : "text-cream/20 fill-cream/10"
+                                ? "text-[#C97D0E] fill-[#F39F23]"
+                                : "text-[#0E0F14]/20 fill-[#0E0F14]/10"
                             }`}
                           />
                         ))}
                       </div>
-                      <div className="text-[10px] text-cream/50 mt-2 font-mono">
+                      <div className="text-[10px] text-[#0E0F14]/50 mt-2 font-mono">
                         {current.event}
                       </div>
                     </div>
 
                     {/* Right: quote */}
                     <div className="lg:w-2/3 flex items-center">
-                      <p className="text-lg lg:text-xl text-cream/80 leading-relaxed italic">
+                      <p className="text-lg lg:text-xl text-[#0E0F14]/80 leading-relaxed italic">
                         &ldquo;{current.quote}&rdquo;
                       </p>
                     </div>
@@ -115,7 +115,7 @@ export function Testimonials() {
               variant="outline"
               size="icon"
               onClick={prev}
-              className="h-11 w-11 rounded-full border-2 border-magenta/25 hover:border-pink-400 hover:bg-magenta/10"
+              className="h-11 w-11 rounded-full border-2 border-[#FC7166]/25 hover:border-pink-400 hover:bg-[#FC7166]/10"
             >
               <ChevronLeft className="h-5 w-5" />
             </Button>
@@ -129,7 +129,7 @@ export function Testimonials() {
                     setIndex(i);
                   }}
                   className={`h-2 rounded-full transition-all ${
-                    i === index ? "w-8 bg-pink-600" : "w-2 bg-magenta/20 hover:bg-pink-300"
+                    i === index ? "w-8 bg-pink-600" : "w-2 bg-[#FC7166]/20 hover:bg-pink-300"
                   }`}
                   aria-label={`Testimonial ${i + 1}`}
                 />
@@ -140,7 +140,7 @@ export function Testimonials() {
               variant="outline"
               size="icon"
               onClick={next}
-              className="h-11 w-11 rounded-full border-2 border-magenta/25 hover:border-pink-400 hover:bg-magenta/10"
+              className="h-11 w-11 rounded-full border-2 border-[#FC7166]/25 hover:border-pink-400 hover:bg-[#FC7166]/10"
             >
               <ChevronRight className="h-5 w-5" />
             </Button>
@@ -156,14 +156,14 @@ export function Testimonials() {
           className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-3"
         >
           {[
-            { value: "4.8/5", label: "Rating Rata-rata", color: "text-gold-light" },
-            { value: "899", label: "Peserta 2 Kota", color: "text-magenta-light" },
-            { value: "92%", label: "Kembali Ikut", color: "text-magenta-light" },
-            { value: "2/20", label: "Kota Selesai", color: "text-orange-light" },
+            { value: "4.8/5", label: "Rating Rata-rata", color: "text-[#C97D0E]" },
+            { value: "899", label: "Peserta 2 Kota", color: "text-[#FC7166]" },
+            { value: "92%", label: "Kembali Ikut", color: "text-[#FC7166]" },
+            { value: "2/20", label: "Kota Selesai", color: "text-[#FD8656]" },
           ].map((s) => (
-            <div key={s.label} className="text-center p-4 rounded-2xl bg-purple-dark/60 backdrop-blur-sm border border-magenta/15">
+            <div key={s.label} className="text-center p-4 rounded-2xl bg-[#181A22]/60 backdrop-blur-sm border border-[#FC7166]/15">
               <div className={`text-3xl font-black ${s.color}`} style={{ fontFamily: "var(--font-display)" }}>{s.value}</div>
-              <div className="text-xs text-cream/70 font-semibold mt-1">{s.label}</div>
+              <div className="text-xs text-[#0E0F14]/70 font-semibold mt-1">{s.label}</div>
             </div>
           ))}
         </motion.div>

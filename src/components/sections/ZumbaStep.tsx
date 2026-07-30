@@ -39,22 +39,22 @@ export function ZumbaStep() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-5 lg:sticky lg:top-24"
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-magenta/15 border border-magenta/25 mb-4">
-              <Footprints className="h-3.5 w-3.5 text-magenta-light" />
-              <span className="text-xs font-bold text-magenta-light tracking-wide uppercase">Step by Step</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FC7166]/15 border border-[#FC7166]/25 mb-4">
+              <Footprints className="h-3.5 w-3.5 text-[#FC7166]" />
+              <span className="text-xs font-bold text-[#FC7166] tracking-wide uppercase">Step by Step</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-cream mb-4" style={{ fontFamily: "var(--font-display)" }}>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0E0F14] mb-4" style={{ fontFamily: "var(--font-display)" }}>
               Apa Itu <span className="text-gradient-brand">Zumba Step</span>?
             </h2>
-            <p className="text-base text-cream/70 leading-relaxed mb-4">
-              <span className="font-bold text-cream">Zumba Step</span> adalah evolusi dari Zumba
-              tradisional yang mengintegrasikan penggunaan <span className="font-bold text-cream">step board</span>{" "}
+            <p className="text-base text-[#0E0F14]/70 leading-relaxed mb-4">
+              <span className="font-bold text-[#0E0F14]">Zumba Step</span> adalah evolusi dari Zumba
+              tradisional yang mengintegrasikan penggunaan <span className="font-bold text-[#0E0F14]">step board</span>{" "}
               dalam setiap koreografi. Inilah yang membuatnya spesial — dan inilah yang akan memecahkan
               rekor MURI sebagai Zumba Step terbesar yang pernah digelar di Indonesia.
             </p>
-            <p className="text-base text-cream/70 leading-relaxed">
+            <p className="text-base text-[#0E0F14]/70 leading-relaxed">
               Berbeda dari Zumba biasa yang berfokus pada gerakan dance full-body, Zumba Step menambahkan
-              dimensi <span className="font-bold text-cream">vertical movement</span> yang menantang
+              dimensi <span className="font-bold text-[#0E0F14]">vertical movement</span> yang menantang
               keseimbangan, kekuatan kaki, dan kardio secara simultan. Hasilnya: workout yang lebih efektif,
               lebih seru, dan lebih inklusif untuk semua level kebugaran.
             </p>
@@ -67,7 +67,7 @@ export function ZumbaStep() {
                 <div className="text-5xl font-black text-gradient-brand" style={{ fontFamily: "var(--font-display)" }}>
                   +30%
                 </div>
-                <div className="text-sm text-white/80">
+                <div className="text-sm text-[#0E0F14]/80">
                   Lebih banyak kalori dibakar
                   <br />
                   dibanding Zumba tradisional
@@ -85,16 +85,16 @@ export function ZumbaStep() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.4, delay: i * 0.08 }}
-                className="group relative p-6 rounded-3xl bg-purple-dark border-2 border-magenta/15 hover:border-magenta/30 hover:shadow-glow-pink transition-all"
+                className="group relative p-6 rounded-3xl bg-[#181A22] border-2 border-[#FC7166]/15 hover:border-[#FC7166]/30 hover:shadow-lg transition-all"
               >
-                <div className="absolute -top-3 -right-3 h-12 w-12 rounded-2xl bg-brand-gradient flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                <div className="absolute -top-3 -right-3 h-12 w-12 rounded-2xl bg-gradient-to-r from-[#FC7166] to-[#FD8656] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   <point.icon className="h-6 w-6 text-white" />
                 </div>
-                <div className="text-5xl font-black text-magenta-light/60 leading-none mb-3" style={{ fontFamily: "var(--font-display)" }}>
+                <div className="text-5xl font-black text-[#FC7166]/60 leading-none mb-3" style={{ fontFamily: "var(--font-display)" }}>
                   {String(i + 1).padStart(2, "0")}
                 </div>
-                <h3 className="text-lg font-extrabold text-cream mb-2">{point.title}</h3>
-                <p className="text-sm text-cream/70 leading-relaxed">{point.desc}</p>
+                <h3 className="text-lg font-extrabold text-[#0E0F14] mb-2">{point.title}</h3>
+                <p className="text-sm text-[#0E0F14]/70 leading-relaxed">{point.desc}</p>
               </motion.div>
             ))}
           </div>

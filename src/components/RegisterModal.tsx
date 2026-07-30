@@ -44,7 +44,7 @@ export function RegisterModal({
   // This guarantees fresh state without calling setState inside effects.
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg sm:max-w-xl p-0 overflow-hidden max-h-[90vh] overflow-y-auto custom-scroll bg-purpleblack border border-magenta/30">
+      <DialogContent className="max-w-lg sm:max-w-xl p-0 overflow-hidden max-h-[90vh] overflow-y-auto custom-scroll bg-[#0E0F14] border border-[#FC7166]/30">
         <RegisterModalInner
           key={`${open}-${preselectedCity ?? "none"}`}
           preselectedCity={preselectedCity}
@@ -205,7 +205,7 @@ function RegisterModalInner({
   return (
     <>
       {/* Header band */}
-      <div className="bg-brand-gradient px-6 py-5 text-white relative overflow-hidden">
+      <div className="bg-gradient-to-r from-[#FC7166] to-[#FD8656] px-6 py-5 text-white relative overflow-hidden">
         <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/15" />
         <div className="absolute -right-4 bottom-0 h-20 w-20 rounded-full bg-white/10" />
         <DialogHeader className="relative">
@@ -241,12 +241,12 @@ function RegisterModalInner({
                 <button
                   key={city.id}
                   onClick={() => handleSelect(city)}
-                  className="group w-full text-left flex items-center gap-4 p-4 rounded-2xl border border-magenta/20 hover:border-magenta hover:bg-magenta/10 transition-all"
+                  className="group w-full text-left flex items-center gap-4 p-4 rounded-2xl border border-[#FC7166]/20 hover:border-[#FC7166] hover:bg-[#FC7166]/10 transition-all"
                 >
                   <div
                     className={`flex-shrink-0 h-14 w-14 rounded-2xl flex flex-col items-center justify-center text-white font-bold ${
                       isFinale
-                        ? "bg-brand-warm"
+                        ? "bg-gradient-to-r from-[#FD8656] to-[#FC7166]"
                         : "bg-gradient-to-br from-magenta to-magenta-deep"
                     }`}
                   >
@@ -257,31 +257,31 @@ function RegisterModalInner({
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-cream">{city.city}</span>
+                      <span className="font-bold text-[#0E0F14]">{city.city}</span>
                       {isFinale && (
-                        <Badge className="bg-gold text-purpleblack text-[10px] hover:bg-gold">
+                        <Badge className="bg-[#F39F23] text-[#0E0F14] text-[10px] hover:bg-[#F39F23]">
                           GRAND FINALE
                         </Badge>
                       )}
                     </div>
-                    <div className="text-xs text-cream/60 truncate mt-0.5">
+                    <div className="text-xs text-[#0E0F14]/60 truncate mt-0.5">
                       {city.venue}
                     </div>
                     {city.registered > 0 && (
                       <div className="mt-1.5">
-                        <div className="h-1 w-full rounded-full bg-purpleblack overflow-hidden">
+                        <div className="h-1 w-full rounded-full bg-[#0E0F14] overflow-hidden">
                           <div
-                            className="h-full bg-brand-warm"
+                            className="h-full bg-gradient-to-r from-[#FD8656] to-[#FC7166]"
                             style={{ width: `${seatsPct}%` }}
                           />
                         </div>
-                        <div className="text-[10px] text-cream/60 mt-0.5">
+                        <div className="text-[10px] text-[#0E0F14]/60 mt-0.5">
                           {city.registered}/{city.capacity} terdaftar
                         </div>
                       </div>
                     )}
                   </div>
-                  <ChevronRight className="h-5 w-5 text-cream/40 group-hover:text-magenta-light transition-colors flex-shrink-0" />
+                  <ChevronRight className="h-5 w-5 text-[#0E0F14]/40 group-hover:text-[#FC7166] transition-colors flex-shrink-0" />
                 </button>
               );
             })}
@@ -291,23 +291,23 @@ function RegisterModalInner({
         {step === "google" && selectedCity && (
           <div className="space-y-5">
             {/* Selected city summary */}
-            <div className="rounded-2xl border border-magenta/30 bg-magenta/10 p-4">
+            <div className="rounded-2xl border border-[#FC7166]/30 bg-[#FC7166]/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="h-12 w-12 rounded-xl bg-brand-gradient flex items-center justify-center text-white">
+                <div className="h-12 w-12 rounded-xl bg-gradient-to-r from-[#FC7166] to-[#FD8656] flex items-center justify-center text-white">
                   <MapPin className="h-6 w-6" />
                 </div>
                 <div className="flex-1">
-                  <div className="font-bold text-cream">{selectedCity.city}</div>
-                  <div className="text-xs text-cream/60 mt-0.5 flex items-center gap-2">
+                  <div className="font-bold text-[#0E0F14]">{selectedCity.city}</div>
+                  <div className="text-xs text-[#0E0F14]/60 mt-0.5 flex items-center gap-2">
                     <Calendar className="h-3 w-3" />
                     {selectedCity.dateLabel} 2026 • {selectedCity.dayLabel}
                   </div>
-                  <div className="text-xs text-cream/60 mt-0.5">{selectedCity.venue}</div>
+                  <div className="text-xs text-[#0E0F14]/60 mt-0.5">{selectedCity.venue}</div>
                 </div>
                 <button
                   type="button"
                   onClick={() => setStep("select")}
-                  className="text-xs font-semibold text-magenta-light hover:underline"
+                  className="text-xs font-semibold text-[#FC7166] hover:underline"
                 >
                   Ubah
                 </button>
@@ -315,18 +315,18 @@ function RegisterModalInner({
 
               {/* Pricing preview */}
               {pricing && (
-                <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-magenta/20">
-                  <div className="p-2 rounded-lg bg-purpleblack/40 border border-magenta/15">
-                    <div className="text-[10px] text-cream/60 uppercase font-bold">Regular</div>
-                    <div className="text-cream font-black text-sm">{formatRupiah(pricing.regular.price)}</div>
-                    <div className="text-[9px] text-cream/50 mt-0.5">e-Cert + akses sesi</div>
+                <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-[#FC7166]/20">
+                  <div className="p-2 rounded-lg bg-[#0E0F14]/40 border border-[#FC7166]/15">
+                    <div className="text-[10px] text-[#0E0F14]/60 uppercase font-bold">Regular</div>
+                    <div className="text-[#0E0F14] font-black text-sm">{formatRupiah(pricing.regular.price)}</div>
+                    <div className="text-[9px] text-[#0E0F14]/50 mt-0.5">e-Cert + akses sesi</div>
                   </div>
-                  <div className="p-2 rounded-lg bg-gold/10 border border-gold/30">
-                    <div className="text-[10px] text-gold-light uppercase font-bold">VIP</div>
-                    <div className="text-cream font-black text-sm">
+                  <div className="p-2 rounded-lg bg-[#F39F23]/10 border border-[#F39F23]/30">
+                    <div className="text-[10px] text-[#C97D0E] uppercase font-bold">VIP</div>
+                    <div className="text-[#0E0F14] font-black text-sm">
                       {earlyBirdActive ? pricing.vip.earlyBirdLabel : pricing.vip.label}
                     </div>
-                    <div className="text-[9px] text-gold-light mt-0.5">
+                    <div className="text-[9px] text-[#C97D0E] mt-0.5">
                       {earlyBirdActive ? "🎁 Early Bird aktif!" : "Merch + front row"}
                     </div>
                   </div>
@@ -336,17 +336,17 @@ function RegisterModalInner({
 
             {/* Google Sign-In button */}
             <div className="text-center py-2">
-              <p className="text-xs text-cream/60 mb-4">
+              <p className="text-xs text-[#0E0F14]/60 mb-4">
                 Untuk mendaftar, silakan login dengan akun Google Anda.
                 <br />
-                <span className="text-[10px] text-cream/40">
+                <span className="text-[10px] text-[#0E0F14]/40">
                   Data email & nama akan diambil dari Google untuk mempermudah pendaftaran.
                 </span>
               </p>
               <button
                 onClick={handleGoogleSignIn}
                 disabled={googleLoading}
-                className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-full bg-white hover:bg-zinc-100 disabled:opacity-70 text-purpleblack font-bold transition-all shadow-lg"
+                className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-full bg-white hover:bg-zinc-100 disabled:opacity-70 text-[#0E0F14] font-bold transition-all shadow-lg"
                 style={{ fontFamily: "var(--font-heading)" }}
               >
                 {googleLoading ? (
@@ -366,7 +366,7 @@ function RegisterModalInner({
                   </>
                 )}
               </button>
-              <div className="mt-4 flex items-center justify-center gap-1.5 text-[10px] text-cream/40">
+              <div className="mt-4 flex items-center justify-center gap-1.5 text-[10px] text-[#0E0F14]/40">
                 <Lock className="h-3 w-3" />
                 Login aman via Google OAuth 2.0
               </div>
@@ -377,7 +377,7 @@ function RegisterModalInner({
                 type="button"
                 variant="outline"
                 onClick={() => setStep("select")}
-                className="flex-1 bg-purpleblack border-magenta/30 text-cream hover:bg-magenta/10"
+                className="flex-1 bg-[#0E0F14] border-[#FC7166]/30 text-[#0E0F14] hover:bg-[#FC7166]/10"
               >
                 <ChevronLeft className="h-4 w-4 mr-1" />
                 Kembali
@@ -389,23 +389,23 @@ function RegisterModalInner({
         {step === "form" && selectedCity && googleUser && (
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Selected city summary */}
-            <div className="rounded-2xl border border-magenta/30 bg-magenta/10 p-4">
+            <div className="rounded-2xl border border-[#FC7166]/30 bg-[#FC7166]/10 p-4">
               <div className="flex items-start gap-3">
-                <div className="h-12 w-12 rounded-xl bg-brand-gradient flex items-center justify-center text-white">
+                <div className="h-12 w-12 rounded-xl bg-gradient-to-r from-[#FC7166] to-[#FD8656] flex items-center justify-center text-white">
                   <MapPin className="h-6 w-6" />
                 </div>
                 <div className="flex-1">
-                  <div className="font-bold text-cream">{selectedCity.city}</div>
-                  <div className="text-xs text-cream/70 mt-0.5 flex items-center gap-2">
+                  <div className="font-bold text-[#0E0F14]">{selectedCity.city}</div>
+                  <div className="text-xs text-[#0E0F14]/70 mt-0.5 flex items-center gap-2">
                     <Calendar className="h-3 w-3" />
                     {selectedCity.dateLabel} 2026 • {selectedCity.dayLabel}
                   </div>
-                  <div className="text-xs text-cream/70 mt-0.5">{selectedCity.venue}</div>
+                  <div className="text-xs text-[#0E0F14]/70 mt-0.5">{selectedCity.venue}</div>
                 </div>
                 <button
                   type="button"
                   onClick={() => setStep("select")}
-                  className="text-xs font-semibold text-magenta-light hover:underline"
+                  className="text-xs font-semibold text-[#FC7166] hover:underline"
                 >
                   Ubah
                 </button>
@@ -418,12 +418,12 @@ function RegisterModalInner({
                 <img
                   src={googleUser.avatar}
                   alt={googleUser.name}
-                  className="h-10 w-10 rounded-full bg-purpleblack flex-shrink-0"
+                  className="h-10 w-10 rounded-full bg-[#0E0F14] flex-shrink-0"
                 />
                 <div className="flex-1 min-w-0">
                   <div className="text-xs text-green-400 font-bold uppercase">✓ Login Google</div>
-                  <div className="text-sm text-cream font-bold truncate">{googleUser.name}</div>
-                  <div className="text-[10px] text-cream/60 truncate">{googleUser.email}</div>
+                  <div className="text-sm text-[#0E0F14] font-bold truncate">{googleUser.name}</div>
+                  <div className="text-[10px] text-[#0E0F14]/60 truncate">{googleUser.email}</div>
                 </div>
               </div>
             )}
@@ -431,55 +431,55 @@ function RegisterModalInner({
             {/* Form fields */}
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
-                <Label htmlFor="name" className="text-cream">Nama Lengkap *</Label>
+                <Label htmlFor="name" className="text-[#0E0F14]">Nama Lengkap *</Label>
                 <Input
                   id="name"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="Dari Google"
                   required
-                  className="bg-purpleblack border-magenta/25 text-cream"
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-cream">Email Google *</Label>
+                <Label htmlFor="email" className="text-[#0E0F14]">Email Google *</Label>
                 <Input
                   id="email"
                   type="email"
                   value={form.email}
                   disabled
-                  className="bg-purpleblack/50 border-magenta/25 text-cream/70 font-mono text-xs"
+                  className="bg-[#0E0F14]/50 border-[#FC7166]/25 text-[#0E0F14]/70 font-mono text-xs"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="phone" className="text-cream">WhatsApp *</Label>
+                <Label htmlFor="phone" className="text-[#0E0F14]">WhatsApp *</Label>
                 <Input
                   id="phone"
                   value={form.phone}
                   onChange={(e) => setForm({ ...form, phone: e.target.value })}
                   placeholder="0813-xxxx-xxxx"
                   required
-                  className="bg-purpleblack border-magenta/25 text-cream font-mono"
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14] font-mono"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="birthDate" className="text-cream">Tanggal Lahir *</Label>
+                <Label htmlFor="birthDate" className="text-[#0E0F14]">Tanggal Lahir *</Label>
                 <Input
                   id="birthDate"
                   type="date"
                   value={form.birthDate}
                   onChange={(e) => setForm({ ...form, birthDate: e.target.value })}
                   required
-                  className="bg-purpleblack border-magenta/25 text-cream"
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="gender" className="text-cream">Gender</Label>
+                <Label htmlFor="gender" className="text-[#0E0F14]">Gender</Label>
                 <select
                   id="gender"
                   value={form.gender}
                   onChange={(e) => setForm({ ...form, gender: e.target.value as "L" | "P" | "other" })}
-                  className="w-full h-9 px-3 rounded-md bg-purpleblack border border-magenta/25 text-cream text-sm"
+                  className="w-full h-9 px-3 rounded-md bg-[#0E0F14] border border-[#FC7166]/25 text-[#0E0F14] text-sm"
                 >
                   <option value="P">Perempuan</option>
                   <option value="L">Laki-laki</option>
@@ -487,43 +487,43 @@ function RegisterModalInner({
                 </select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="postalCode" className="text-cream">Kode Pos</Label>
+                <Label htmlFor="postalCode" className="text-[#0E0F14]">Kode Pos</Label>
                 <Input
                   id="postalCode"
                   value={form.postalCode}
                   onChange={(e) => setForm({ ...form, postalCode: e.target.value })}
                   placeholder="40123"
-                  className="bg-purpleblack border-magenta/25 text-cream font-mono"
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14] font-mono"
                 />
               </div>
               <div className="col-span-2 space-y-2">
-                <Label htmlFor="address" className="text-cream">Alamat Lengkap *</Label>
+                <Label htmlFor="address" className="text-[#0E0F14]">Alamat Lengkap *</Label>
                 <Input
                   id="address"
                   value={form.address}
                   onChange={(e) => setForm({ ...form, address: e.target.value })}
                   placeholder="Jl. Contoh No. 123, Kelurahan, Kecamatan"
                   required
-                  className="bg-purpleblack border-magenta/25 text-cream"
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="cityDomicile" className="text-cream">Kota Domisili</Label>
+                <Label htmlFor="cityDomicile" className="text-[#0E0F14]">Kota Domisili</Label>
                 <Input
                   id="cityDomicile"
                   value={form.cityDomicile}
                   onChange={(e) => setForm({ ...form, cityDomicile: e.target.value })}
                   placeholder={selectedCity.city}
-                  className="bg-purpleblack border-magenta/25 text-cream"
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="referralSource" className="text-cream">Sumber Info</Label>
+                <Label htmlFor="referralSource" className="text-[#0E0F14]">Sumber Info</Label>
                 <select
                   id="referralSource"
                   value={form.referralSource}
                   onChange={(e) => setForm({ ...form, referralSource: e.target.value as Registration["referralSource"] })}
-                  className="w-full h-9 px-3 rounded-md bg-purpleblack border border-magenta/25 text-cream text-sm"
+                  className="w-full h-9 px-3 rounded-md bg-[#0E0F14] border border-[#FC7166]/25 text-[#0E0F14] text-sm"
                 >
                   <option value="instagram">Instagram</option>
                   <option value="tiktok">TikTok</option>
@@ -534,23 +534,23 @@ function RegisterModalInner({
                 </select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="emergencyName" className="text-cream">Emergency Contact (opsional)</Label>
+                <Label htmlFor="emergencyName" className="text-[#0E0F14]">Emergency Contact (opsional)</Label>
                 <Input
                   id="emergencyName"
                   value={form.emergencyName}
                   onChange={(e) => setForm({ ...form, emergencyName: e.target.value })}
                   placeholder="Nama keluarga"
-                  className="bg-purpleblack border-magenta/25 text-cream"
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14]"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="emergencyPhone" className="text-cream">Emergency Phone (opsional)</Label>
+                <Label htmlFor="emergencyPhone" className="text-[#0E0F14]">Emergency Phone (opsional)</Label>
                 <Input
                   id="emergencyPhone"
                   value={form.emergencyPhone}
                   onChange={(e) => setForm({ ...form, emergencyPhone: e.target.value })}
                   placeholder="08xx-xxxx-xxxx"
-                  className="bg-purpleblack border-magenta/25 text-cream font-mono"
+                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14] font-mono"
                 />
               </div>
               <div className="col-span-2 flex items-center gap-2 pt-1">
@@ -561,7 +561,7 @@ function RegisterModalInner({
                   onChange={(e) => setForm({ ...form, marketingConsent: e.target.checked })}
                   className="h-4 w-4"
                 />
-                <Label htmlFor="marketingConsent" className="text-cream text-xs cursor-pointer">
+                <Label htmlFor="marketingConsent" className="text-[#0E0F14] text-xs cursor-pointer">
                   Saya setuju menerima info promo & update event via WhatsApp/Email
                 </Label>
               </div>
@@ -569,47 +569,47 @@ function RegisterModalInner({
 
             {/* Ticket type selection with pricing */}
             <div className="space-y-2">
-              <Label className="text-cream">Jenis Tiket</Label>
+              <Label className="text-[#0E0F14]">Jenis Tiket</Label>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => setForm({ ...form, ticketType: "regular" })}
                   className={`p-3 rounded-xl border text-left transition-all ${
                     form.ticketType === "regular"
-                      ? "border-magenta bg-magenta/15"
-                      : "border-magenta/20 hover:border-magenta/40"
+                      ? "border-[#FC7166] bg-[#FC7166]/15"
+                      : "border-[#FC7166]/20 hover:border-[#FC7166]/40"
                   }`}
                 >
                   <div className="flex items-center gap-1.5">
-                    <Ticket className="h-4 w-4 text-magenta-light" />
-                    <span className="font-bold text-sm text-cream">Regular</span>
+                    <Ticket className="h-4 w-4 text-[#FC7166]" />
+                    <span className="font-bold text-sm text-[#0E0F14]">Regular</span>
                   </div>
-                  <div className="text-xs text-cream font-bold mt-1">{formatRupiah(pricing?.regular.price ?? 0)}</div>
-                  <div className="text-[10px] text-cream/60">e-Cert + akses sesi</div>
+                  <div className="text-xs text-[#0E0F14] font-bold mt-1">{formatRupiah(pricing?.regular.price ?? 0)}</div>
+                  <div className="text-[10px] text-[#0E0F14]/60">e-Cert + akses sesi</div>
                 </button>
                 <button
                   type="button"
                   onClick={() => setForm({ ...form, ticketType: "vip" })}
                   className={`p-3 rounded-xl border text-left transition-all ${
                     form.ticketType === "vip"
-                      ? "border-gold bg-gold/15"
-                      : "border-gold/30 hover:border-gold/50"
+                      ? "border-[#F39F23] bg-[#F39F23]/15"
+                      : "border-[#F39F23]/30 hover:border-[#F39F23]/50"
                   }`}
                 >
                   <div className="flex items-center gap-1.5">
-                    <Sparkles className="h-4 w-4 text-gold-light" />
-                    <span className="font-bold text-sm text-cream">VIP</span>
+                    <Sparkles className="h-4 w-4 text-[#C97D0E]" />
+                    <span className="font-bold text-sm text-[#0E0F14]">VIP</span>
                   </div>
-                  <div className="text-xs text-gold-light font-bold mt-1">
+                  <div className="text-xs text-[#C97D0E] font-bold mt-1">
                     {earlyBirdActive && pricing ? pricing.vip.earlyBirdLabel : pricing?.vip.label}
                   </div>
-                  <div className="text-[10px] text-cream/60">
+                  <div className="text-[10px] text-[#0E0F14]/60">
                     {earlyBirdActive ? "🎁 Early Bird!" : "Merch + Front Row"}
                   </div>
                 </button>
               </div>
               {form.ticketType === "vip" && earlyBirdActive && pricing && (
-                <div className="text-[10px] text-gold-light mt-1 flex items-center gap-1">
+                <div className="text-[10px] text-[#C97D0E] mt-1 flex items-center gap-1">
                   <Sparkles className="h-3 w-3" />
                   Hemat {formatRupiah(pricing.vip.price - pricing.vip.earlyBirdPrice)} dengan Early Bird!
                 </div>
@@ -628,7 +628,7 @@ function RegisterModalInner({
               </Button>
               <Button
                 type="submit"
-                className="flex-[2] bg-brand-gradient text-white font-bold shadow-glow-pink"
+                className="flex-[2] bg-gradient-to-r from-[#FC7166] to-[#FD8656] text-white font-bold shadow-lg"
               >
                 Konfirmasi Pendaftaran
               </Button>
@@ -644,28 +644,28 @@ function RegisterModalInner({
             <h3 className="text-xl font-extrabold mb-2" style={{ fontFamily: "var(--font-display)" }}>
               Anda Resmi Terdaftar!
             </h3>
-            <p className="text-sm text-cream/70 mb-4 max-w-sm mx-auto">
+            <p className="text-sm text-[#0E0F14]/70 mb-4 max-w-sm mx-auto">
               Terima kasih <span className="font-bold">{form.name}</span>! E-ticket dan QR code
               akan dikirim ke <span className="font-bold">{form.email}</span> dan WhatsApp Anda
               dalam 1×24 jam.
             </p>
-            <div className="rounded-2xl bg-magenta/10 border border-magenta/25 p-4 text-left text-sm space-y-1.5 mb-4">
+            <div className="rounded-2xl bg-[#FC7166]/10 border border-[#FC7166]/25 p-4 text-left text-sm space-y-1.5 mb-4">
               <div className="flex justify-between">
-                <span className="text-cream/60">Kota</span>
+                <span className="text-[#0E0F14]/60">Kota</span>
                 <span className="font-bold">{selectedCity.city}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-cream/60">Tanggal</span>
+                <span className="text-[#0E0F14]/60">Tanggal</span>
                 <span className="font-bold">{selectedCity.dateLabel} 2026</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-cream/60">Tiket</span>
+                <span className="text-[#0E0F14]/60">Tiket</span>
                 <span className="font-bold uppercase">{form.ticketType}</span>
               </div>
             </div>
             <Button
               onClick={() => onOpenChange(false)}
-              className="w-full bg-brand-gradient text-white font-bold shadow-glow-pink"
+              className="w-full bg-gradient-to-r from-[#FC7166] to-[#FD8656] text-white font-bold shadow-lg"
             >
               Selesai
             </Button>

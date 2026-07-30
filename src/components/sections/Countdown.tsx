@@ -40,7 +40,7 @@ export function Countdown() {
   }, [nextCity.date, finale.date]);
 
   return (
-    <section className="relative py-4 lg:py-6 bg-brand-dark overflow-hidden">
+    <section className="relative py-4 lg:py-6 bg-[#0E0F14] overflow-hidden">
       {/* Crowd blur background */}
       <div
         className="absolute inset-0 opacity-15"
@@ -55,8 +55,8 @@ export function Countdown() {
       <div className="absolute inset-0 opacity-30" style={{
         backgroundImage: "radial-gradient(circle at 20% 30%, rgba(223,38,121,0.5) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(241,114,56,0.4) 0%, transparent 40%)",
       }} />
-      <div className="absolute top-10 left-10 h-32 w-32 rounded-full bg-magenta/30 blur-3xl animate-float-slow" />
-      <div className="absolute bottom-10 right-10 h-40 w-40 rounded-full bg-orange-brand/30 blur-3xl animate-float-slow" style={{ animationDelay: "1s" }} />
+      <div className="absolute top-10 left-10 h-32 w-32 rounded-full bg-[#FC7166]/30 blur-3xl animate-float-slow" />
+      <div className="absolute bottom-10 right-10 h-40 w-40 rounded-full bg-[#FD8656]/30 blur-3xl animate-float-slow" style={{ animationDelay: "1s" }} />
 
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative">
         <motion.div
@@ -66,10 +66,10 @@ export function Countdown() {
           transition={{ duration: 0.5 }}
           className="text-center mb-4"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold/15 backdrop-blur-md border border-gold/30 mb-4">
-            <Trophy className="h-4 w-4 text-gold-light" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#F39F23]/15 backdrop-blur-md border border-[#F39F23]/30 mb-4">
+            <Trophy className="h-4 w-4 text-[#C97D0E]" />
             <span
-              className="text-xs font-bold text-gold-light tracking-widest uppercase"
+              className="text-xs font-bold text-[#C97D0E] tracking-widest uppercase"
               style={{ fontFamily: "var(--font-heading)" }}
             >
               Live Countdown
@@ -160,12 +160,12 @@ function CountdownCard({
       className={`relative rounded-3xl p-6 lg:p-8 bg-gradient-to-br ${gradient} ring-1 ${ringColor} backdrop-blur-md overflow-hidden`}
     >
       {isFinale && (
-        <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-gold/20 blur-2xl" />
+        <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-[#F39F23]/20 blur-2xl" />
       )}
       <div className="flex items-start justify-between mb-3 relative">
         <div className="flex items-center gap-3">
           <div className={`h-12 w-12 rounded-2xl ${iconBg} flex items-center justify-center shadow-lg`}>
-            <Icon className={`h-6 w-6 ${isFinale ? "text-purpleblack" : "text-white"}`} />
+            <Icon className={`h-6 w-6 ${isFinale ? "text-white" : "text-white"}`} />
           </div>
           <div>
             <div
@@ -195,7 +195,7 @@ function CountdownCard({
         {units.map((u) => (
           <div
             key={u.label}
-            className="rounded-2xl bg-purple-dark/40 backdrop-blur-md border border-magenta/15 p-3 sm:p-4 text-center"
+            className="rounded-2xl bg-[#181A22]/40 backdrop-blur-md border border-[#FC7166]/15 p-3 sm:p-4 text-center"
           >
             <div className="text-2xl sm:text-4xl font-black text-white tabular-nums leading-none">
               {String(u.value).padStart(2, "0")}

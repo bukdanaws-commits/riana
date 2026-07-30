@@ -54,7 +54,7 @@ export function MuriProgress() {
   }, {});
 
   return (
-    <section className="relative py-4 lg:py-6 bg-brand-dark overflow-hidden">
+    <section className="relative py-4 lg:py-6 bg-[#0E0F14] overflow-hidden">
       <div className="absolute inset-0 opacity-30" style={{
         backgroundImage:
           "radial-gradient(circle at 20% 30%, rgba(236,10,139,0.5) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba(255,106,44,0.4) 0%, transparent 40%)",
@@ -68,9 +68,9 @@ export function MuriProgress() {
           transition={{ duration: 0.5 }}
           className="text-center mb-4"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-400/20 backdrop-blur-md border border-magenta/30/30 mb-4">
-            <Sparkles className="h-3.5 w-3.5 text-magenta-light/80" />
-            <span className="text-xs font-bold text-magenta-light/70 tracking-wide uppercase">Live Progress</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-400/20 backdrop-blur-md border border-[#FC7166]/30/30 mb-4">
+            <Sparkles className="h-3.5 w-3.5 text-[#FC7166]/80" />
+            <span className="text-xs font-bold text-[#FC7166]/70 tracking-wide uppercase">Live Progress</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Menuju Rekor <span className="text-gradient-brand">MURI</span>
@@ -97,7 +97,7 @@ export function MuriProgress() {
             {/* Numbers row */}
             <div className="flex flex-col sm:flex-row items-center justify-center sm:justify-between gap-4 mb-3">
               <div className="text-center sm:text-left">
-                <div className="flex items-center gap-2 text-magenta-light/80 text-xs font-bold uppercase tracking-widest mb-1">
+                <div className="flex items-center gap-2 text-[#FC7166]/80 text-xs font-bold uppercase tracking-widest mb-1">
                   <Users className="h-4 w-4" />
                   Peserta Terdaftar
                 </div>
@@ -109,7 +109,7 @@ export function MuriProgress() {
               <div className="text-4xl lg:text-5xl text-white/30 font-black">/</div>
 
               <div className="text-center sm:text-right">
-                <div className="flex items-center gap-2 text-magenta-light/80 text-xs font-bold uppercase tracking-widest mb-1 justify-center sm:justify-end">
+                <div className="flex items-center gap-2 text-[#FC7166]/80 text-xs font-bold uppercase tracking-widest mb-1 justify-center sm:justify-end">
                   <Trophy className="h-4 w-4" />
                   Target MURI
                 </div>
@@ -127,7 +127,7 @@ export function MuriProgress() {
                   whileInView={{ width: `${pct}%` }}
                   viewport={{ once: true }}
                   transition={{ duration: 1.5, ease: "easeOut", delay: 0.3 }}
-                  className="relative h-full bg-brand-energetic rounded-full overflow-hidden"
+                  className="relative h-full bg-gradient-to-r from-[#FC7166] via-[#FD8656] to-[#F39F23] rounded-full overflow-hidden"
                 >
                   {/* Shimmer effect */}
                   <div
@@ -170,7 +170,7 @@ export function MuriProgress() {
                       <div className="text-[9px] text-white/40">/{stats.total}</div>
                       <div className="mt-1 h-0.5 rounded-full bg-white/10 overflow-hidden">
                         <div
-                          className="h-full bg-brand-warm"
+                          className="h-full bg-gradient-to-r from-[#FD8656] to-[#FC7166]"
                           style={{ width: `${rpct}%` }}
                         />
                       </div>
@@ -187,7 +187,7 @@ export function MuriProgress() {
                   Timeline Kota Terbaru
                 </div>
                 <div className="flex items-center gap-2 text-[10px] font-mono">
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gold/20 text-gold-light">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#F39F23]/20 text-[#C97D0E]">
                     <CheckCircle2 className="h-3 w-3" />
                     {completedCities} selesai
                   </span>
@@ -207,16 +207,16 @@ export function MuriProgress() {
                     transition={{ duration: 0.3, delay: i * 0.08 }}
                     className={`p-2 rounded-lg border ${
                       m.status === "completed"
-                        ? "bg-gold/10 border-gold/30"
-                        : "bg-magenta/5 border-magenta/20"
+                        ? "bg-[#F39F23]/10 border-[#F39F23]/30"
+                        : "bg-[#FC7166]/5 border-[#FC7166]/20"
                     }`}
                   >
                     <div className="flex items-center gap-1 text-[10px]">
-                      <MapPin className={`h-2.5 w-2.5 ${m.status === "completed" ? "text-gold-light" : "text-magenta-light"}`} />
+                      <MapPin className={`h-2.5 w-2.5 ${m.status === "completed" ? "text-[#C97D0E]" : "text-[#FC7166]"}`} />
                       <span className="font-bold text-white">{m.city}</span>
                     </div>
                     <div className="text-[9px] text-white/50 mt-0.5 font-mono">{m.date}</div>
-                    <div className={`text-sm font-black mt-1 ${m.status === "completed" ? "text-gold-light" : "text-magenta-light"}`}>
+                    <div className={`text-sm font-black mt-1 ${m.status === "completed" ? "text-[#C97D0E]" : "text-[#FC7166]"}`}>
                       {m.registered.toLocaleString("id-ID")}
                     </div>
                     <div className="text-[8px] text-white/40">peserta</div>

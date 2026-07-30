@@ -10,7 +10,7 @@ interface FinalCTAProps {
 
 export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
   return (
-    <section className="relative py-4 lg:py-6 overflow-hidden bg-brand-dark">
+    <section className="relative py-4 lg:py-6 overflow-hidden bg-[#0E0F14]">
       {/* Crowd blur background */}
       <div
         className="absolute inset-0 opacity-15"
@@ -23,14 +23,14 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
       />
       {/* Animated magenta-orange-gold gradient overlay */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-brand-energetic opacity-40 animate-gradient-shift" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FC7166] via-[#FD8656] to-[#F39F23] opacity-40 animate-gradient-shift" />
         <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-magenta/40 to-transparent" />
       </div>
 
       {/* Floating decorations */}
-      <div className="absolute top-10 left-10 h-24 w-24 rounded-full bg-gold/20 blur-2xl animate-float-slow" />
-      <div className="absolute bottom-10 right-10 h-32 w-32 rounded-full bg-magenta/30 blur-3xl animate-float-slow" style={{ animationDelay: "1s" }} />
-      <div className="absolute top-1/2 right-1/4 h-20 w-20 rounded-full bg-orange-brand/20 blur-2xl animate-float-slow" style={{ animationDelay: "2s" }} />
+      <div className="absolute top-10 left-10 h-24 w-24 rounded-full bg-[#F39F23]/20 blur-2xl animate-float-slow" />
+      <div className="absolute bottom-10 right-10 h-32 w-32 rounded-full bg-[#FC7166]/30 blur-3xl animate-float-slow" style={{ animationDelay: "1s" }} />
+      <div className="absolute top-1/2 right-1/4 h-20 w-20 rounded-full bg-[#FD8656]/20 blur-2xl animate-float-slow" style={{ animationDelay: "2s" }} />
 
       <div className="container mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative">
         <motion.div
@@ -40,10 +40,10 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
           transition={{ duration: 0.6 }}
           className="text-center"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/15 backdrop-blur-md border border-gold/30 mb-3">
-            <Sparkles className="h-4 w-4 text-gold-light" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#F39F23]/15 backdrop-blur-md border border-[#F39F23]/30 mb-3">
+            <Sparkles className="h-4 w-4 text-[#C97D0E]" />
             <span
-              className="text-xs font-bold text-gold-light tracking-widest uppercase"
+              className="text-xs font-bold text-[#C97D0E] tracking-widest uppercase"
               style={{ fontFamily: "var(--font-heading)" }}
             >
               Join The Movement
@@ -51,7 +51,7 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
           </div>
 
           <div
-            className="font-script text-3xl sm:text-4xl text-gold-light mb-4"
+            className="font-script text-3xl sm:text-4xl text-[#C97D0E] mb-4"
             style={{ fontFamily: "var(--font-script)" }}
           >
             Move Together, Make History!
@@ -77,21 +77,21 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
           {/* Mini stats row */}
           <div className="flex flex-wrap items-center justify-center gap-3 mb-3">
             <div className="flex items-center gap-2 text-white">
-              <Trophy className="h-5 w-5 text-gold-light" />
+              <Trophy className="h-5 w-5 text-[#C97D0E]" />
               <span className="font-bold" style={{ fontFamily: "var(--font-heading)" }}>
                 Rekor MURI
               </span>
             </div>
-            <div className="h-4 w-px bg-purpleblack/40" />
+            <div className="h-4 w-px bg-[#0E0F14]/40" />
             <div className="flex items-center gap-2 text-white">
-              <Users className="h-5 w-5 text-gold-light" />
+              <Users className="h-5 w-5 text-[#C97D0E]" />
               <span className="font-bold" style={{ fontFamily: "var(--font-heading)" }}>
                 10.000+ Peserta
               </span>
             </div>
-            <div className="h-4 w-px bg-purpleblack/40" />
+            <div className="h-4 w-px bg-[#0E0F14]/40" />
             <div className="flex items-center gap-2 text-white">
-              <Sparkles className="h-5 w-5 text-gold-light" />
+              <Sparkles className="h-5 w-5 text-[#C97D0E]" />
               <span className="font-bold" style={{ fontFamily: "var(--font-heading)" }}>
                 E-Certificate Resmi
               </span>
@@ -103,7 +103,7 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
             <Button
               size="lg"
               onClick={onRegisterClick}
-              className="bg-white text-magenta-light hover:bg-white/90 font-bold text-base h-14 px-8 shadow-2xl rounded-full group"
+              className="bg-[#181A22] text-[#FC7166] hover:bg-white/90 font-bold text-base h-14 px-8 shadow-2xl rounded-full group"
             >
               Daftar Sekarang — Gratis
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
@@ -112,7 +112,7 @@ export function FinalCTA({ onRegisterClick }: FinalCTAProps) {
               size="lg"
               asChild
               variant="outline"
-              className="glass-card border-tech text-cream hover:bg-white/10 hover:text-white font-bold text-base h-14 px-8 rounded-full"
+              className="glass-card border-[#FC7166]/20 text-white hover:bg-white/10 hover:text-white font-bold text-base h-14 px-8 rounded-full"
             >
               <a href="#jadwal">Lihat Jadwal Lengkap</a>
             </Button>
