@@ -1,22 +1,37 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+// ============================================================
+// Middleware: refresh Supabase auth session on every request.
+//
+// If env vars are missing (e.g. local dev without .env.local),
+// we skip Supabase entirely and just pass the request through.
+// This avoids crashing the whole app during development.
+// ============================================================
+
 export async function middleware(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() { return request.cookies.getAll(); },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
-          supabaseResponse = NextResponse.next({ request });
-          cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options));
-        },
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // Skip if Supabase not configured (local dev / preview without env)
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return supabaseResponse;
+  }
+
+  const supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
+    cookies: {
+      getAll() { return request.cookies.getAll(); },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+        supabaseResponse = NextResponse.next({ request });
+        cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options));
       },
-    }
-  );
+    },
+  });
+
+  // Refresh session — this also sets cookies on the response
   await supabase.auth.getUser();
   return supabaseResponse;
 }

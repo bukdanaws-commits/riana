@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { Settings } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { RegisterModal } from "@/components/RegisterModal";
 import { Hero } from "@/components/sections/Hero";
@@ -17,7 +19,6 @@ import { Partners } from "@/components/sections/Partners";
 import { FAQ } from "@/components/sections/FAQ";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Footer } from "@/components/sections/Footer";
-import { AdminTrigger } from "@/components/admin/AdminTrigger";
 
 export default function Home() {
   const [registerOpen, setRegisterOpen] = useState(false);
@@ -63,8 +64,17 @@ export default function Home() {
         preselectedCity={preselectedCity}
       />
 
-      {/* Admin Dashboard — trigger via floating button (bottom-right) or Ctrl+Shift+A */}
-      <AdminTrigger />
+      {/* Admin access — link to /admin route (Google OAuth protected).
+          Legacy AdminTrigger (modal-based, password "admin123") was removed
+          because /admin/* routes are the canonical admin now. */}
+      <Link
+        href="/admin"
+        className="fixed bottom-6 right-6 z-40 h-12 w-12 rounded-full bg-[#0E0F14]/80 hover:bg-[#0E0F14] text-[#FC7166] shadow-lg flex items-center justify-center transition-all hover:scale-110 border border-[#FC7166]/30 backdrop-blur-sm group"
+        aria-label="Admin Panel"
+        title="Admin Panel (Google OAuth)"
+      >
+        <Settings className="h-5 w-5 group-hover:rotate-90 transition-transform duration-300" />
+      </Link>
     </main>
   );
 }

@@ -25,9 +25,12 @@ import {
   Sparkles,
   Loader2,
   Lock,
+  AlertCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
+
+type Step = "select" | "google" | "form" | "success";
 
 interface RegisterModalProps {
   open: boolean;
@@ -55,8 +58,6 @@ export function RegisterModal({
   );
 }
 
-type Step = "select" | "google" | "form" | "success";
-
 function RegisterModalInner({
   preselectedCity,
   onOpenChange,
@@ -74,6 +75,9 @@ function RegisterModalInner({
   const [step, setStep] = useState<Step>(preselected ? "form" : "select");
   const [selectedCity, setSelectedCity] = useState<CityEvent | null>(preselected);
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [registeredId, setRegisteredId] = useState<string | null>(null);
   const [googleUser, setGoogleUser] = useState<{
     email: string;
     name: string;
@@ -127,79 +131,130 @@ function RegisterModalInner({
     }, 1500);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
+
     if (!form.name || !form.email || !form.phone || !form.birthDate || !form.address) {
-      toast.error("Lengkapi semua field wajib (nama, email, phone, tanggal lahir, alamat).");
+      const msg = "Lengkapi semua field wajib (nama, email, phone, tanggal lahir, alamat).";
+      setSubmitError(msg);
+      toast.error(msg);
       return;
     }
     if (!selectedCity || !googleUser) {
-      toast.error("Sesi tidak valid. Silakan mulai ulang.");
+      const msg = "Sesi tidak valid. Silakan mulai ulang.";
+      setSubmitError(msg);
+      toast.error(msg);
       return;
     }
 
-    // Generate registration
-    const regCount = useAdminStore.getState().registrations.length + 1;
-    const regId = `REG-2026-${String(regCount).padStart(5, "0")}`;
-    const now = new Date().toISOString();
+    // Compute ticket price client-side (server will validate)
     const ticketPrice = form.ticketType === "vip"
       ? (earlyBirdActive && pricing ? pricing.vip.earlyBirdPrice : pricing?.vip.price ?? 0)
       : 0;
 
-    const newReg: Registration = {
-      id: regId,
-      registrationDate: now,
-      lastUpdate: now,
-
-      userId: googleUser.userId,
-      googleEmail: googleUser.email,
-      googleName: googleUser.name,
-      googleAvatarUrl: googleUser.avatar,
-
-      fullName: form.name,
+    // Build API payload (snake_case to match Supabase schema)
+    const payload = {
+      google_email: googleUser.email,
+      google_name: googleUser.name,
+      google_avatar_url: googleUser.avatar,
+      full_name: form.name,
       phone: form.phone,
-      birthDate: form.birthDate,
-      age: new Date().getFullYear() - new Date(form.birthDate).getFullYear(),
+      birth_date: form.birthDate,
       gender: form.gender,
       address: form.address,
-      cityDomicile: form.cityDomicile || selectedCity.city,
-      province: "",
-      postalCode: form.postalCode,
-      emergencyContactName: form.emergencyName || undefined,
-      emergencyContactPhone: form.emergencyPhone || undefined,
-
-      eventCityId: selectedCity.id,
-      eventCityName: selectedCity.city,
-      eventDate: selectedCity.date,
-      ticketType: form.ticketType,
-      ticketPrice,
-
-      paymentStatus: form.ticketType === "vip" ? "pending" : "free",
-      paymentAmount: ticketPrice,
-      invoiceNumber: form.ticketType === "vip" ? `INV-2026-${String(regCount).padStart(5, "0")}` : undefined,
-
-      status: "registered",
-
-      eTicketSent: form.ticketType === "regular",
-      eTicketSentAt: form.ticketType === "regular" ? now : undefined,
-      eCertificateSent: false,
-      whatsappReminderSent: false,
-
-      referralSource: form.referralSource,
-      referralCode: `${form.name.split(" ")[0].toUpperCase()}-${String(regCount).padStart(5, "0")}`,
-      marketingConsent: form.marketingConsent,
-
-      isMuriRecord: true,
-      muriVerified: false,
-
-      tags: [],
-      createdAt: now,
-      updatedAt: now,
+      city_domicile: form.cityDomicile || selectedCity.city,
+      postal_code: form.postalCode,
+      emergency_contact_name: form.emergencyName || null,
+      emergency_contact_phone: form.emergencyPhone || null,
+      event_city_id: selectedCity.id,
+      event_city_name: selectedCity.city,
+      event_date: selectedCity.date,
+      ticket_type: form.ticketType,
+      ticket_price: ticketPrice,
+      referral_source: form.referralSource,
+      marketing_consent: form.marketingConsent,
+      notes: null,
     };
 
-    addRegistration(newReg);
-    setStep("success");
-    toast.success(`Pendaftaran berhasil! ID: ${regId}`);
+    setSubmitting(true);
+
+    try {
+      const res = await fetch("/api/registrations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json();
+
+      if (!res.ok || json.error) {
+        const msg = json.error || `HTTP ${res.status}: Gagal mendaftar`;
+        setSubmitError(msg);
+        toast.error(msg);
+        setSubmitting(false);
+        return;
+      }
+
+      // Success — registration is now in Supabase
+      const regNum = json.data?.registration_number || json.data?.id || "REG-2026";
+      setRegisteredId(regNum);
+
+      // Also push to local Zustand store for instant UI feedback
+      // (dashboard cache; the source of truth is now Supabase)
+      const now = new Date().toISOString();
+      const optimisticReg: Registration = {
+        id: json.data?.id ?? regNum,
+        registrationDate: now,
+        lastUpdate: now,
+        userId: googleUser.userId,
+        googleEmail: googleUser.email,
+        googleName: googleUser.name,
+        googleAvatarUrl: googleUser.avatar,
+        fullName: form.name,
+        phone: form.phone,
+        birthDate: form.birthDate,
+        age: new Date().getFullYear() - new Date(form.birthDate).getFullYear(),
+        gender: form.gender,
+        address: form.address,
+        cityDomicile: form.cityDomicile || selectedCity.city,
+        province: "",
+        postalCode: form.postalCode,
+        emergencyContactName: form.emergencyName || undefined,
+        emergencyContactPhone: form.emergencyPhone || undefined,
+        eventCityId: selectedCity.id,
+        eventCityName: selectedCity.city,
+        eventDate: selectedCity.date,
+        ticketType: form.ticketType,
+        ticketPrice,
+        paymentStatus: form.ticketType === "vip" ? "pending" : "free",
+        paymentAmount: ticketPrice,
+        invoiceNumber: form.ticketType === "vip" ? `INV-${regNum}` : undefined,
+        status: "registered",
+        eTicketSent: form.ticketType === "regular",
+        eTicketSentAt: form.ticketType === "regular" ? now : undefined,
+        eCertificateSent: false,
+        whatsappReminderSent: false,
+        referralSource: form.referralSource,
+        referralCode: `${form.name.split(" ")[0].toUpperCase()}-${regNum}`,
+        marketingConsent: form.marketingConsent,
+        isMuriRecord: true,
+        muriVerified: false,
+        tags: [],
+        createdAt: now,
+        updatedAt: now,
+      };
+      addRegistration(optimisticReg);
+
+      setStep("success");
+      toast.success(`Pendaftaran berhasil! ID: ${regNum}`);
+    } catch (err) {
+      console.error("[RegisterModal] submit error:", err);
+      const msg = "Gagal terhubung ke server. Cek koneksi internet lalu coba lagi.";
+      setSubmitError(msg);
+      toast.error(msg);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -616,11 +671,30 @@ function RegisterModalInner({
               )}
             </div>
 
+            {/* Error banner (if API failed) */}
+            {submitError && (
+              <div className="flex items-start gap-2 p-3 rounded-xl bg-red-500/10 border border-red-500/30">
+                <AlertCircle className="h-4 w-4 text-red-500 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <div className="text-xs font-bold text-red-600 uppercase mb-0.5">Gagal Mendaftar</div>
+                  <div className="text-xs text-red-700">{submitError}</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSubmitError(null)}
+                  className="text-red-400 hover:text-red-600 text-xs"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
             <div className="flex items-center gap-2 pt-2">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => setStep("select")}
+                disabled={submitting}
                 className="flex-1"
               >
                 <ChevronLeft className="h-4 w-4 mr-1" />
@@ -628,9 +702,17 @@ function RegisterModalInner({
               </Button>
               <Button
                 type="submit"
-                className="flex-[2] bg-gradient-to-r from-[#FC7166] to-[#FD8656] text-white font-bold shadow-lg"
+                disabled={submitting}
+                className="flex-[2] bg-gradient-to-r from-[#FC7166] to-[#FD8656] text-white font-bold shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Konfirmasi Pendaftaran
+                {submitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Menyimpan...
+                  </>
+                ) : (
+                  "Konfirmasi Pendaftaran"
+                )}
               </Button>
             </div>
           </form>
@@ -645,11 +727,15 @@ function RegisterModalInner({
               Anda Resmi Terdaftar!
             </h3>
             <p className="text-sm text-[#0E0F14]/70 mb-4 max-w-sm mx-auto">
-              Terima kasih <span className="font-bold">{form.name}</span>! E-ticket dan QR code
-              akan dikirim ke <span className="font-bold">{form.email}</span> dan WhatsApp Anda
-              dalam 1×24 jam.
+              Terima kasih <span className="font-bold">{form.name}</span>! Pendaftaran Anda telah
+              tersimpan di database. E-ticket dan QR code akan dikirim ke{" "}
+              <span className="font-bold">{form.email}</span> dan WhatsApp Anda dalam 1×24 jam.
             </p>
             <div className="rounded-2xl bg-[#FC7166]/10 border border-[#FC7166]/25 p-4 text-left text-sm space-y-1.5 mb-4">
+              <div className="flex justify-between items-center">
+                <span className="text-[#0E0F14]/60">Registration ID</span>
+                <span className="font-bold font-mono text-[#FC7166]">{registeredId ?? "-"}</span>
+              </div>
               <div className="flex justify-between">
                 <span className="text-[#0E0F14]/60">Kota</span>
                 <span className="font-bold">{selectedCity.city}</span>
@@ -661,6 +747,12 @@ function RegisterModalInner({
               <div className="flex justify-between">
                 <span className="text-[#0E0F14]/60">Tiket</span>
                 <span className="font-bold uppercase">{form.ticketType}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[#0E0F14]/60">Status</span>
+                <span className="font-bold text-green-600">
+                  {form.ticketType === "vip" ? "Menunggu Pembayaran" : "Terkonfirmasi"}
+                </span>
               </div>
             </div>
             <Button
