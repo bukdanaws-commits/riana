@@ -1,0 +1,678 @@
+     1→"use client";
+     2→
+     3→import {
+     4→  Dialog,
+     5→  DialogContent,
+     6→  DialogHeader,
+     7→  DialogTitle,
+     8→  DialogDescription,
+     9→} from "@/components/ui/dialog";
+    10→import { Button } from "@/components/ui/button";
+    11→import { Input } from "@/components/ui/input";
+    12→import { Label } from "@/components/ui/label";
+    13→import { Badge } from "@/components/ui/badge";
+    14→import { type CityEvent } from "@/data/event";
+    15→import { useCities, useAdminStore } from "@/lib/admin-store";
+    16→import { getCityPricing, formatRupiah, isEarlyBirdActive } from "@/data/pricing";
+    17→import type { Registration } from "@/data/mock-registrations";
+    18→import {
+    19→  CheckCircle2,
+    20→  ChevronLeft,
+    21→  ChevronRight,
+    22→  MapPin,
+    23→  Calendar,
+    24→  Ticket,
+    25→  Sparkles,
+    26→  Loader2,
+    27→  Lock,
+    28→} from "lucide-react";
+    29→import { toast } from "sonner";
+    30→import { useState } from "react";
+    31→
+    32→interface RegisterModalProps {
+    33→  open: boolean;
+    34→  onOpenChange: (open: boolean) => void;
+    35→  preselectedCity?: string | null;
+    36→}
+    37→
+    38→export function RegisterModal({
+    39→  open,
+    40→  onOpenChange,
+    41→  preselectedCity,
+    42→}: RegisterModalProps) {
+    43→  // Use a key to remount the inner component each time the modal opens.
+    44→  // This guarantees fresh state without calling setState inside effects.
+    45→  return (
+    46→    <Dialog open={open} onOpenChange={onOpenChange}>
+    47→      <DialogContent className="max-w-lg sm:max-w-xl p-0 overflow-hidden max-h-[90vh] overflow-y-auto custom-scroll bg-[#0E0F14] border border-[#FC7166]/30">
+    48→        <RegisterModalInner
+    49→          key={`${open}-${preselectedCity ?? "none"}`}
+    50→          preselectedCity={preselectedCity}
+    51→          onOpenChange={onOpenChange}
+    52→        />
+    53→      </DialogContent>
+    54→    </Dialog>
+    55→  );
+    56→}
+    57→
+    58→type Step = "select" | "google" | "form" | "success";
+    59→
+    60→function RegisterModalInner({
+    61→  preselectedCity,
+    62→  onOpenChange,
+    63→}: {
+    64→  preselectedCity?: string | null;
+    65→  onOpenChange: (open: boolean) => void;
+    66→}) {
+    67→  // Compute initial state from props once per mount.
+    68→  const CITIES = useCities();
+    69→  const addRegistration = useAdminStore((s) => s.addRegistration);
+    70→  const preselected = preselectedCity
+    71→    ? CITIES.find((c) => c.id === preselectedCity) ?? null
+    72→    : null;
+    73→
+    74→  const [step, setStep] = useState<Step>(preselected ? "form" : "select");
+    75→  const [selectedCity, setSelectedCity] = useState<CityEvent | null>(preselected);
+    76→  const [googleLoading, setGoogleLoading] = useState(false);
+    77→  const [googleUser, setGoogleUser] = useState<{
+    78→    email: string;
+    79→    name: string;
+    80→    avatar: string;
+    81→    userId: string;
+    82→  } | null>(null);
+    83→  const [form, setForm] = useState({
+    84→    name: "",
+    85→    email: "",
+    86→    phone: "",
+    87→    birthDate: "",
+    88→    gender: "P" as "L" | "P" | "other",
+    89→    address: "",
+    90→    cityDomicile: "",
+    91→    postalCode: "",
+    92→    emergencyName: "",
+    93→    emergencyPhone: "",
+    94→    ticketType: "regular" as "regular" | "vip",
+    95→    referralSource: "instagram" as Registration["referralSource"],
+    96→    marketingConsent: false,
+    97→  });
+    98→
+    99→  // Get pricing for selected city
+   100→  const pricing = selectedCity ? getCityPricing(selectedCity.id, selectedCity.date) : null;
+   101→  const earlyBirdActive = selectedCity ? isEarlyBirdActive(selectedCity.date) : false;
+   102→
+   103→  const handleSelect = (city: CityEvent) => {
+   104→    setSelectedCity(city);
+   105→    setStep("google"); // Now requires Google sign-in first
+   106→  };
+   107→
+   108→  // === Mock Google OAuth ===
+   109→  const handleGoogleSignIn = () => {
+   110→    setGoogleLoading(true);
+   111→    // Simulate Google OAuth flow (1.5s loading)
+   112→    setTimeout(() => {
+   113→      // Generate mock Google user
+   114→      const firstNames = ["Dewi", "Sinta", "Michael", "Ratna", "Budi", "Lia", "Andi", "Maya"];
+   115→      const lastNames = ["Anggraini", "Prakoso", "Santoso", "Wibowo", "Kusumawardani", "Maharani"];
+   116→      const fn = firstNames[Math.floor(Math.random() * firstNames.length)];
+   117→      const ln = lastNames[Math.floor(Math.random() * lastNames.length)];
+   118→      const name = `${fn} ${ln}`;
+   119→      const email = `${fn.toLowerCase()}.${ln.toLowerCase()}${Math.floor(Math.random() * 99)}@gmail.com`;
+   120→      const avatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}&backgroundColor=ff6b35,df2679,d4af37`;
+   121→
+   122→      setGoogleUser({ email, name, avatar, userId: `mock-${Date.now()}` });
+   123→      setForm((f) => ({ ...f, name, email }));
+   124→      setGoogleLoading(false);
+   125→      setStep("form");
+   126→      toast.success(`Berhasil login sebagai ${name}`);
+   127→    }, 1500);
+   128→  };
+   129→
+   130→  const handleSubmit = (e: React.FormEvent) => {
+   131→    e.preventDefault();
+   132→    if (!form.name || !form.email || !form.phone || !form.birthDate || !form.address) {
+   133→      toast.error("Lengkapi semua field wajib (nama, email, phone, tanggal lahir, alamat).");
+   134→      return;
+   135→    }
+   136→    if (!selectedCity || !googleUser) {
+   137→      toast.error("Sesi tidak valid. Silakan mulai ulang.");
+   138→      return;
+   139→    }
+   140→
+   141→    // Generate registration
+   142→    const regCount = useAdminStore.getState().registrations.length + 1;
+   143→    const regId = `REG-2026-${String(regCount).padStart(5, "0")}`;
+   144→    const now = new Date().toISOString();
+   145→    const ticketPrice = form.ticketType === "vip"
+   146→      ? (earlyBirdActive && pricing ? pricing.vip.earlyBirdPrice : pricing?.vip.price ?? 0)
+   147→      : 0;
+   148→
+   149→    const newReg: Registration = {
+   150→      id: regId,
+   151→      registrationDate: now,
+   152→      lastUpdate: now,
+   153→
+   154→      userId: googleUser.userId,
+   155→      googleEmail: googleUser.email,
+   156→      googleName: googleUser.name,
+   157→      googleAvatarUrl: googleUser.avatar,
+   158→
+   159→      fullName: form.name,
+   160→      phone: form.phone,
+   161→      birthDate: form.birthDate,
+   162→      age: new Date().getFullYear() - new Date(form.birthDate).getFullYear(),
+   163→      gender: form.gender,
+   164→      address: form.address,
+   165→      cityDomicile: form.cityDomicile || selectedCity.city,
+   166→      province: "",
+   167→      postalCode: form.postalCode,
+   168→      emergencyContactName: form.emergencyName || undefined,
+   169→      emergencyContactPhone: form.emergencyPhone || undefined,
+   170→
+   171→      eventCityId: selectedCity.id,
+   172→      eventCityName: selectedCity.city,
+   173→      eventDate: selectedCity.date,
+   174→      ticketType: form.ticketType,
+   175→      ticketPrice,
+   176→
+   177→      paymentStatus: form.ticketType === "vip" ? "pending" : "free",
+   178→      paymentAmount: ticketPrice,
+   179→      invoiceNumber: form.ticketType === "vip" ? `INV-2026-${String(regCount).padStart(5, "0")}` : undefined,
+   180→
+   181→      status: "registered",
+   182→
+   183→      eTicketSent: form.ticketType === "regular",
+   184→      eTicketSentAt: form.ticketType === "regular" ? now : undefined,
+   185→      eCertificateSent: false,
+   186→      whatsappReminderSent: false,
+   187→
+   188→      referralSource: form.referralSource,
+   189→      referralCode: `${form.name.split(" ")[0].toUpperCase()}-${String(regCount).padStart(5, "0")}`,
+   190→      marketingConsent: form.marketingConsent,
+   191→
+   192→      isMuriRecord: true,
+   193→      muriVerified: false,
+   194→
+   195→      tags: [],
+   196→      createdAt: now,
+   197→      updatedAt: now,
+   198→    };
+   199→
+   200→    addRegistration(newReg);
+   201→    setStep("success");
+   202→    toast.success(`Pendaftaran berhasil! ID: ${regId}`);
+   203→  };
+   204→
+   205→  return (
+   206→    <>
+   207→      {/* Header band */}
+   208→      <div className="bg-gradient-to-r from-[#FC7166] to-[#FD8656] px-6 py-5 text-white relative overflow-hidden">
+   209→        <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/15" />
+   210→        <div className="absolute -right-4 bottom-0 h-20 w-20 rounded-full bg-white/10" />
+   211→        <DialogHeader className="relative">
+   212→          <div className="flex items-center gap-2 text-xs font-bold tracking-widest uppercase opacity-90 mb-1">
+   213→            <Sparkles className="h-3.5 w-3.5" />
+   214→            Pendaftaran Peserta
+   215→          </div>
+   216→          <DialogTitle className="text-2xl font-extrabold" style={{ fontFamily: "var(--font-display)" }}>
+   217→            {step === "select" && "Pilih Kota Anda"}
+   218→            {step === "google" && "Sign in dengan Google"}
+   219→            {step === "form" && "Lengkapi Data Diri"}
+   220→            {step === "success" && "Pendaftaran Berhasil!"}
+   221→          </DialogTitle>
+   222→          <DialogDescription className="text-white/90">
+   223→            {step === "select" && "20 kota • 10.000+ peserta • 1 rekor sejarah"}
+   224→            {step === "google" && selectedCity ? `Event di ${selectedCity.city} — ${selectedCity.dateLabel} 2026` : ""}
+   225→            {step === "form" && googleUser ? `Login sebagai ${googleUser.name}` : ""}
+   226→            {step === "success" && "Selamat! Anda resmi menjadi bagian dari sejarah MURI."}
+   227→          </DialogDescription>
+   228→        </DialogHeader>
+   229→      </div>
+   230→
+   231→      {/* Step body */}
+   232→      <div className="p-6">
+   233→        {step === "select" && (
+   234→          <div className="space-y-3 max-h-[55vh] overflow-y-auto custom-scroll pr-1">
+   235→            {CITIES.map((city) => {
+   236→              const isFinale = city.id === "jakarta";
+   237→              const seatsPct = Math.round(
+   238→                (city.registered / city.capacity) * 100,
+   239→              );
+   240→              return (
+   241→                <button
+   242→                  key={city.id}
+   243→                  onClick={() => handleSelect(city)}
+   244→                  className="group w-full text-left flex items-center gap-4 p-4 rounded-2xl border border-[#FC7166]/20 hover:border-[#FC7166] hover:bg-[#FC7166]/10 transition-all"
+   245→                >
+   246→                  <div
+   247→                    className={`flex-shrink-0 h-14 w-14 rounded-2xl flex flex-col items-center justify-center text-white font-bold ${
+   248→                      isFinale
+   249→                        ? "bg-gradient-to-r from-[#FD8656] to-[#FC7166]"
+   250→                        : "bg-gradient-to-br from-magenta to-magenta-deep"
+   251→                    }`}
+   252→                  >
+   253→                    <span className="text-[10px] uppercase tracking-wider opacity-90">
+   254→                      {city.dayLabel.slice(0, 3)}
+   255→                    </span>
+   256→                    <span className="text-sm leading-tight">{city.dateLabel.split(" ")[0]}</span>
+   257→                  </div>
+   258→                  <div className="flex-1 min-w-0">
+   259→                    <div className="flex items-center gap-2">
+   260→                      <span className="font-bold text-[#0E0F14]">{city.city}</span>
+   261→                      {isFinale && (
+   262→                        <Badge className="bg-[#F39F23] text-[#0E0F14] text-[10px] hover:bg-[#F39F23]">
+   263→                          GRAND FINALE
+   264→                        </Badge>
+   265→                      )}
+   266→                    </div>
+   267→                    <div className="text-xs text-[#0E0F14]/60 truncate mt-0.5">
+   268→                      {city.venue}
+   269→                    </div>
+   270→                    {city.registered > 0 && (
+   271→                      <div className="mt-1.5">
+   272→                        <div className="h-1 w-full rounded-full bg-[#0E0F14] overflow-hidden">
+   273→                          <div
+   274→                            className="h-full bg-gradient-to-r from-[#FD8656] to-[#FC7166]"
+   275→                            style={{ width: `${seatsPct}%` }}
+   276→                          />
+   277→                        </div>
+   278→                        <div className="text-[10px] text-[#0E0F14]/60 mt-0.5">
+   279→                          {city.registered}/{city.capacity} terdaftar
+   280→                        </div>
+   281→                      </div>
+   282→                    )}
+   283→                  </div>
+   284→                  <ChevronRight className="h-5 w-5 text-[#0E0F14]/40 group-hover:text-[#FC7166] transition-colors flex-shrink-0" />
+   285→                </button>
+   286→              );
+   287→            })}
+   288→          </div>
+   289→        )}
+   290→
+   291→        {step === "google" && selectedCity && (
+   292→          <div className="space-y-5">
+   293→            {/* Selected city summary */}
+   294→            <div className="rounded-2xl border border-[#FC7166]/30 bg-[#FC7166]/10 p-4">
+   295→              <div className="flex items-start gap-3">
+   296→                <div className="h-12 w-12 rounded-xl bg-gradient-to-r from-[#FC7166] to-[#FD8656] flex items-center justify-center text-white">
+   297→                  <MapPin className="h-6 w-6" />
+   298→                </div>
+   299→                <div className="flex-1">
+   300→                  <div className="font-bold text-[#0E0F14]">{selectedCity.city}</div>
+   301→                  <div className="text-xs text-[#0E0F14]/60 mt-0.5 flex items-center gap-2">
+   302→                    <Calendar className="h-3 w-3" />
+   303→                    {selectedCity.dateLabel} 2026 • {selectedCity.dayLabel}
+   304→                  </div>
+   305→                  <div className="text-xs text-[#0E0F14]/60 mt-0.5">{selectedCity.venue}</div>
+   306→                </div>
+   307→                <button
+   308→                  type="button"
+   309→                  onClick={() => setStep("select")}
+   310→                  className="text-xs font-semibold text-[#FC7166] hover:underline"
+   311→                >
+   312→                  Ubah
+   313→                </button>
+   314→              </div>
+   315→
+   316→              {/* Pricing preview */}
+   317→              {pricing && (
+   318→                <div className="grid grid-cols-2 gap-2 mt-3 pt-3 border-t border-[#FC7166]/20">
+   319→                  <div className="p-2 rounded-lg bg-[#0E0F14]/40 border border-[#FC7166]/15">
+   320→                    <div className="text-[10px] text-[#0E0F14]/60 uppercase font-bold">Regular</div>
+   321→                    <div className="text-[#0E0F14] font-black text-sm">{formatRupiah(pricing.regular.price)}</div>
+   322→                    <div className="text-[9px] text-[#0E0F14]/50 mt-0.5">e-Cert + akses sesi</div>
+   323→                  </div>
+   324→                  <div className="p-2 rounded-lg bg-[#F39F23]/10 border border-[#F39F23]/30">
+   325→                    <div className="text-[10px] text-[#C97D0E] uppercase font-bold">VIP</div>
+   326→                    <div className="text-[#0E0F14] font-black text-sm">
+   327→                      {earlyBirdActive ? pricing.vip.earlyBirdLabel : pricing.vip.label}
+   328→                    </div>
+   329→                    <div className="text-[9px] text-[#C97D0E] mt-0.5">
+   330→                      {earlyBirdActive ? "🎁 Early Bird aktif!" : "Merch + front row"}
+   331→                    </div>
+   332→                  </div>
+   333→                </div>
+   334→              )}
+   335→            </div>
+   336→
+   337→            {/* Google Sign-In button */}
+   338→            <div className="text-center py-2">
+   339→              <p className="text-xs text-[#0E0F14]/60 mb-4">
+   340→                Untuk mendaftar, silakan login dengan akun Google Anda.
+   341→                <br />
+   342→                <span className="text-[10px] text-[#0E0F14]/40">
+   343→                  Data email & nama akan diambil dari Google untuk mempermudah pendaftaran.
+   344→                </span>
+   345→              </p>
+   346→              <button
+   347→                onClick={handleGoogleSignIn}
+   348→                disabled={googleLoading}
+   349→                className="w-full flex items-center justify-center gap-3 px-6 py-3.5 rounded-full bg-white hover:bg-zinc-100 disabled:opacity-70 text-[#0E0F14] font-bold transition-all shadow-lg"
+   350→                style={{ fontFamily: "var(--font-heading)" }}
+   351→              >
+   352→                {googleLoading ? (
+   353→                  <>
+   354→                    <Loader2 className="h-5 w-5 animate-spin" />
+   355→                    Menghubungkan ke Google...
+   356→                  </>
+   357→                ) : (
+   358→                  <>
+   359→                    <svg className="h-5 w-5" viewBox="0 0 24 24">
+   360→                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+   361→                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+   362→                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+   363→                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+   364→                    </svg>
+   365→                    Sign in dengan Google
+   366→                  </>
+   367→                )}
+   368→              </button>
+   369→              <div className="mt-4 flex items-center justify-center gap-1.5 text-[10px] text-[#0E0F14]/40">
+   370→                <Lock className="h-3 w-3" />
+   371→                Login aman via Google OAuth 2.0
+   372→              </div>
+   373→            </div>
+   374→
+   375→            <div className="flex items-center gap-2 pt-2">
+   376→              <Button
+   377→                type="button"
+   378→                variant="outline"
+   379→                onClick={() => setStep("select")}
+   380→                className="flex-1 bg-[#0E0F14] border-[#FC7166]/30 text-[#0E0F14] hover:bg-[#FC7166]/10"
+   381→              >
+   382→                <ChevronLeft className="h-4 w-4 mr-1" />
+   383→                Kembali
+   384→              </Button>
+   385→            </div>
+   386→          </div>
+   387→        )}
+   388→
+   389→        {step === "form" && selectedCity && googleUser && (
+   390→          <form onSubmit={handleSubmit} className="space-y-4">
+   391→            {/* Selected city summary */}
+   392→            <div className="rounded-2xl border border-[#FC7166]/30 bg-[#FC7166]/10 p-4">
+   393→              <div className="flex items-start gap-3">
+   394→                <div className="h-12 w-12 rounded-xl bg-gradient-to-r from-[#FC7166] to-[#FD8656] flex items-center justify-center text-white">
+   395→                  <MapPin className="h-6 w-6" />
+   396→                </div>
+   397→                <div className="flex-1">
+   398→                  <div className="font-bold text-[#0E0F14]">{selectedCity.city}</div>
+   399→                  <div className="text-xs text-[#0E0F14]/70 mt-0.5 flex items-center gap-2">
+   400→                    <Calendar className="h-3 w-3" />
+   401→                    {selectedCity.dateLabel} 2026 • {selectedCity.dayLabel}
+   402→                  </div>
+   403→                  <div className="text-xs text-[#0E0F14]/70 mt-0.5">{selectedCity.venue}</div>
+   404→                </div>
+   405→                <button
+   406→                  type="button"
+   407→                  onClick={() => setStep("select")}
+   408→                  className="text-xs font-semibold text-[#FC7166] hover:underline"
+   409→                >
+   410→                  Ubah
+   411→                </button>
+   412→              </div>
+   413→            </div>
+   414→
+   415→            {/* Google user info banner */}
+   416→            {googleUser && (
+   417→              <div className="flex items-center gap-3 p-3 rounded-xl bg-green-500/10 border border-green-500/30">
+   418→                <img
+   419→                  src={googleUser.avatar}
+   420→                  alt={googleUser.name}
+   421→                  className="h-10 w-10 rounded-full bg-[#0E0F14] flex-shrink-0"
+   422→                />
+   423→                <div className="flex-1 min-w-0">
+   424→                  <div className="text-xs text-green-400 font-bold uppercase">✓ Login Google</div>
+   425→                  <div className="text-sm text-[#0E0F14] font-bold truncate">{googleUser.name}</div>
+   426→                  <div className="text-[10px] text-[#0E0F14]/60 truncate">{googleUser.email}</div>
+   427→                </div>
+   428→              </div>
+   429→            )}
+   430→
+   431→            {/* Form fields */}
+   432→            <div className="grid grid-cols-2 gap-3">
+   433→              <div className="space-y-2">
+   434→                <Label htmlFor="name" className="text-[#0E0F14]">Nama Lengkap *</Label>
+   435→                <Input
+   436→                  id="name"
+   437→                  value={form.name}
+   438→                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+   439→                  placeholder="Dari Google"
+   440→                  required
+   441→                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14]"
+   442→                />
+   443→              </div>
+   444→              <div className="space-y-2">
+   445→                <Label htmlFor="email" className="text-[#0E0F14]">Email Google *</Label>
+   446→                <Input
+   447→                  id="email"
+   448→                  type="email"
+   449→                  value={form.email}
+   450→                  disabled
+   451→                  className="bg-[#0E0F14]/50 border-[#FC7166]/25 text-[#0E0F14]/70 font-mono text-xs"
+   452→                />
+   453→              </div>
+   454→              <div className="space-y-2">
+   455→                <Label htmlFor="phone" className="text-[#0E0F14]">WhatsApp *</Label>
+   456→                <Input
+   457→                  id="phone"
+   458→                  value={form.phone}
+   459→                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+   460→                  placeholder="0813-xxxx-xxxx"
+   461→                  required
+   462→                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14] font-mono"
+   463→                />
+   464→              </div>
+   465→              <div className="space-y-2">
+   466→                <Label htmlFor="birthDate" className="text-[#0E0F14]">Tanggal Lahir *</Label>
+   467→                <Input
+   468→                  id="birthDate"
+   469→                  type="date"
+   470→                  value={form.birthDate}
+   471→                  onChange={(e) => setForm({ ...form, birthDate: e.target.value })}
+   472→                  required
+   473→                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14]"
+   474→                />
+   475→              </div>
+   476→              <div className="space-y-2">
+   477→                <Label htmlFor="gender" className="text-[#0E0F14]">Gender</Label>
+   478→                <select
+   479→                  id="gender"
+   480→                  value={form.gender}
+   481→                  onChange={(e) => setForm({ ...form, gender: e.target.value as "L" | "P" | "other" })}
+   482→                  className="w-full h-9 px-3 rounded-md bg-[#0E0F14] border border-[#FC7166]/25 text-[#0E0F14] text-sm"
+   483→                >
+   484→                  <option value="P">Perempuan</option>
+   485→                  <option value="L">Laki-laki</option>
+   486→                  <option value="other">Other</option>
+   487→                </select>
+   488→              </div>
+   489→              <div className="space-y-2">
+   490→                <Label htmlFor="postalCode" className="text-[#0E0F14]">Kode Pos</Label>
+   491→                <Input
+   492→                  id="postalCode"
+   493→                  value={form.postalCode}
+   494→                  onChange={(e) => setForm({ ...form, postalCode: e.target.value })}
+   495→                  placeholder="40123"
+   496→                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14] font-mono"
+   497→                />
+   498→              </div>
+   499→              <div className="col-span-2 space-y-2">
+   500→                <Label htmlFor="address" className="text-[#0E0F14]">Alamat Lengkap *</Label>
+   501→                <Input
+   502→                  id="address"
+   503→                  value={form.address}
+   504→                  onChange={(e) => setForm({ ...form, address: e.target.value })}
+   505→                  placeholder="Jl. Contoh No. 123, Kelurahan, Kecamatan"
+   506→                  required
+   507→                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14]"
+   508→                />
+   509→              </div>
+   510→              <div className="space-y-2">
+   511→                <Label htmlFor="cityDomicile" className="text-[#0E0F14]">Kota Domisili</Label>
+   512→                <Input
+   513→                  id="cityDomicile"
+   514→                  value={form.cityDomicile}
+   515→                  onChange={(e) => setForm({ ...form, cityDomicile: e.target.value })}
+   516→                  placeholder={selectedCity.city}
+   517→                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14]"
+   518→                />
+   519→              </div>
+   520→              <div className="space-y-2">
+   521→                <Label htmlFor="referralSource" className="text-[#0E0F14]">Sumber Info</Label>
+   522→                <select
+   523→                  id="referralSource"
+   524→                  value={form.referralSource}
+   525→                  onChange={(e) => setForm({ ...form, referralSource: e.target.value as Registration["referralSource"] })}
+   526→                  className="w-full h-9 px-3 rounded-md bg-[#0E0F14] border border-[#FC7166]/25 text-[#0E0F14] text-sm"
+   527→                >
+   528→                  <option value="instagram">Instagram</option>
+   529→                  <option value="tiktok">TikTok</option>
+   530→                  <option value="friend">Teman</option>
+   531→                  <option value="google">Google Search</option>
+   532→                  <option value="youtube">YouTube</option>
+   533→                  <option value="other">Lainnya</option>
+   534→                </select>
+   535→              </div>
+   536→              <div className="space-y-2">
+   537→                <Label htmlFor="emergencyName" className="text-[#0E0F14]">Emergency Contact (opsional)</Label>
+   538→                <Input
+   539→                  id="emergencyName"
+   540→                  value={form.emergencyName}
+   541→                  onChange={(e) => setForm({ ...form, emergencyName: e.target.value })}
+   542→                  placeholder="Nama keluarga"
+   543→                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14]"
+   544→                />
+   545→              </div>
+   546→              <div className="space-y-2">
+   547→                <Label htmlFor="emergencyPhone" className="text-[#0E0F14]">Emergency Phone (opsional)</Label>
+   548→                <Input
+   549→                  id="emergencyPhone"
+   550→                  value={form.emergencyPhone}
+   551→                  onChange={(e) => setForm({ ...form, emergencyPhone: e.target.value })}
+   552→                  placeholder="08xx-xxxx-xxxx"
+   553→                  className="bg-[#0E0F14] border-[#FC7166]/25 text-[#0E0F14] font-mono"
+   554→                />
+   555→              </div>
+   556→              <div className="col-span-2 flex items-center gap-2 pt-1">
+   557→                <input
+   558→                  type="checkbox"
+   559→                  id="marketingConsent"
+   560→                  checked={form.marketingConsent}
+   561→                  onChange={(e) => setForm({ ...form, marketingConsent: e.target.checked })}
+   562→                  className="h-4 w-4"
+   563→                />
+   564→                <Label htmlFor="marketingConsent" className="text-[#0E0F14] text-xs cursor-pointer">
+   565→                  Saya setuju menerima info promo & update event via WhatsApp/Email
+   566→                </Label>
+   567→              </div>
+   568→            </div>
+   569→
+   570→            {/* Ticket type selection with pricing */}
+   571→            <div className="space-y-2">
+   572→              <Label className="text-[#0E0F14]">Jenis Tiket</Label>
+   573→              <div className="grid grid-cols-2 gap-2">
+   574→                <button
+   575→                  type="button"
+   576→                  onClick={() => setForm({ ...form, ticketType: "regular" })}
+   577→                  className={`p-3 rounded-xl border text-left transition-all ${
+   578→                    form.ticketType === "regular"
+   579→                      ? "border-[#FC7166] bg-[#FC7166]/15"
+   580→                      : "border-[#FC7166]/20 hover:border-[#FC7166]/40"
+   581→                  }`}
+   582→                >
+   583→                  <div className="flex items-center gap-1.5">
+   584→                    <Ticket className="h-4 w-4 text-[#FC7166]" />
+   585→                    <span className="font-bold text-sm text-[#0E0F14]">Regular</span>
+   586→                  </div>
+   587→                  <div className="text-xs text-[#0E0F14] font-bold mt-1">{formatRupiah(pricing?.regular.price ?? 0)}</div>
+   588→                  <div className="text-[10px] text-[#0E0F14]/60">e-Cert + akses sesi</div>
+   589→                </button>
+   590→                <button
+   591→                  type="button"
+   592→                  onClick={() => setForm({ ...form, ticketType: "vip" })}
+   593→                  className={`p-3 rounded-xl border text-left transition-all ${
+   594→                    form.ticketType === "vip"
+   595→                      ? "border-[#F39F23] bg-[#F39F23]/15"
+   596→                      : "border-[#F39F23]/30 hover:border-[#F39F23]/50"
+   597→                  }`}
+   598→                >
+   599→                  <div className="flex items-center gap-1.5">
+   600→                    <Sparkles className="h-4 w-4 text-[#C97D0E]" />
+   601→                    <span className="font-bold text-sm text-[#0E0F14]">VIP</span>
+   602→                  </div>
+   603→                  <div className="text-xs text-[#C97D0E] font-bold mt-1">
+   604→                    {earlyBirdActive && pricing ? pricing.vip.earlyBirdLabel : pricing?.vip.label}
+   605→                  </div>
+   606→                  <div className="text-[10px] text-[#0E0F14]/60">
+   607→                    {earlyBirdActive ? "🎁 Early Bird!" : "Merch + Front Row"}
+   608→                  </div>
+   609→                </button>
+   610→              </div>
+   611→              {form.ticketType === "vip" && earlyBirdActive && pricing && (
+   612→                <div className="text-[10px] text-[#C97D0E] mt-1 flex items-center gap-1">
+   613→                  <Sparkles className="h-3 w-3" />
+   614→                  Hemat {formatRupiah(pricing.vip.price - pricing.vip.earlyBirdPrice)} dengan Early Bird!
+   615→                </div>
+   616→              )}
+   617→            </div>
+   618→
+   619→            <div className="flex items-center gap-2 pt-2">
+   620→              <Button
+   621→                type="button"
+   622→                variant="outline"
+   623→                onClick={() => setStep("select")}
+   624→                className="flex-1"
+   625→              >
+   626→                <ChevronLeft className="h-4 w-4 mr-1" />
+   627→                Kembali
+   628→              </Button>
+   629→              <Button
+   630→                type="submit"
+   631→                className="flex-[2] bg-gradient-to-r from-[#FC7166] to-[#FD8656] text-white font-bold shadow-lg"
+   632→              >
+   633→                Konfirmasi Pendaftaran
+   634→              </Button>
+   635→            </div>
+   636→          </form>
+   637→        )}
+   638→
+   639→        {step === "success" && selectedCity && (
+   640→          <div className="text-center py-6">
+   641→            <div className="mx-auto h-20 w-20 rounded-full bg-green-100 flex items-center justify-center mb-4">
+   642→              <CheckCircle2 className="h-12 w-12 text-green-600" />
+   643→            </div>
+   644→            <h3 className="text-xl font-extrabold mb-2" style={{ fontFamily: "var(--font-display)" }}>
+   645→              Anda Resmi Terdaftar!
+   646→            </h3>
+   647→            <p className="text-sm text-[#0E0F14]/70 mb-4 max-w-sm mx-auto">
+   648→              Terima kasih <span className="font-bold">{form.name}</span>! E-ticket dan QR code
+   649→              akan dikirim ke <span className="font-bold">{form.email}</span> dan WhatsApp Anda
+   650→              dalam 1×24 jam.
+   651→            </p>
+   652→            <div className="rounded-2xl bg-[#FC7166]/10 border border-[#FC7166]/25 p-4 text-left text-sm space-y-1.5 mb-4">
+   653→              <div className="flex justify-between">
+   654→                <span className="text-[#0E0F14]/60">Kota</span>
+   655→                <span className="font-bold">{selectedCity.city}</span>
+   656→              </div>
+   657→              <div className="flex justify-between">
+   658→                <span className="text-[#0E0F14]/60">Tanggal</span>
+   659→                <span className="font-bold">{selectedCity.dateLabel} 2026</span>
+   660→              </div>
+   661→              <div className="flex justify-between">
+   662→                <span className="text-[#0E0F14]/60">Tiket</span>
+   663→                <span className="font-bold uppercase">{form.ticketType}</span>
+   664→              </div>
+   665→            </div>
+   666→            <Button
+   667→              onClick={() => onOpenChange(false)}
+   668→              className="w-full bg-gradient-to-r from-[#FC7166] to-[#FD8656] text-white font-bold shadow-lg"
+   669→            >
+   670→              Selesai
+   671→            </Button>
+   672→          </div>
+   673→        )}
+   674→      </div>
+   675→    </>
+   676→  );
+   677→}
+   678→
