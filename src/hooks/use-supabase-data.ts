@@ -173,3 +173,57 @@ export function useMuriProgress() {
     source,
   };
 }
+
+// ============================================================
+// useMerchandise — fetch merchandise from Supabase (/api/merchandise)
+// Returns only active items (status='active'), ordered by display_order.
+// ============================================================
+
+export interface MerchItem {
+  id: string;
+  name: string;
+  description: string | null;
+  category: "apparel" | "accessories" | "equipment" | "bundle";
+  price: number;
+  original_price: number | null;
+  image_url: string | null;
+  stock: number;
+  sold: number;
+  status: "active" | "soldout" | "hidden";
+  is_exclusive: boolean;
+  is_bundle: boolean;
+  bundle_items: string | null;
+  display_order: number;
+}
+
+export function useMerchandise() {
+  const [items, setItems] = useState<MerchItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [source, setSource] = useState<"supabase" | "store">("store");
+
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await fetch("/api/merchandise");
+      const json = await res.json();
+      if (json.error || !json.data) {
+        setItems([]);
+        setSource("store");
+        return;
+      }
+      setItems(json.data as MerchItem[]);
+      setSource("supabase");
+    } catch {
+      setItems([]);
+      setSource("store");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  return { items, loading, refetch: fetchData, source };
+}
+

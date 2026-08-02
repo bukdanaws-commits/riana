@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useAdminAuth } from "@/lib/admin-auth";
-import { LayoutDashboard, Users, MapPin, TrendingUp, LogOut, Loader2 } from "lucide-react";
+import { LayoutDashboard, Users, MapPin, TrendingUp, ShoppingBag, LogOut, Loader2 } from "lucide-react";
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/peserta", label: "Data Peserta", icon: Users },
   { href: "/admin/kota", label: "Kota & Harga", icon: MapPin },
+  { href: "/admin/merchandise", label: "Merchandise", icon: ShoppingBag },
   { href: "/admin/revenue", label: "Revenue", icon: TrendingUp },
 ];
 

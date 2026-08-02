@@ -16,6 +16,7 @@ import { MuriProgress } from "@/components/sections/MuriProgress";
 import { Gallery } from "@/components/sections/Gallery";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Partners } from "@/components/sections/Partners";
+import { Merchandise } from "@/components/sections/Merchandise";
 import { FAQ } from "@/components/sections/FAQ";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Footer } from "@/components/sections/Footer";
@@ -61,6 +62,7 @@ export default function Home() {
       <Gallery />
       <Testimonials />
       <Partners />
+      <Merchandise />
       <FAQ />
 
       <FinalCTA onRegisterClick={() => openRegister()} />

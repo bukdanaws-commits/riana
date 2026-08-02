@@ -20,10 +20,12 @@ BEGIN; -- Atomic transaction — kalau ada error, semua rollback
 -- ============================================================
 DROP TRIGGER IF EXISTS registrations_updated_at ON registrations;
 DROP TRIGGER IF EXISTS cities_updated_at ON cities;
+DROP TRIGGER IF EXISTS merchandise_updated_at ON merchandise;
 DROP FUNCTION IF EXISTS update_updated_at_column() CASCADE;
 
 DROP TABLE IF EXISTS registrations CASCADE;
 DROP TABLE IF EXISTS cities CASCADE;
+DROP TABLE IF EXISTS merchandise CASCADE;
 
 -- ============================================================
 -- STEP 2: CREATE registrations table
@@ -118,6 +120,40 @@ CREATE POLICY "Admin write cities" ON cities
   WITH CHECK (auth.role() = 'authenticated');
 
 -- ============================================================
+-- STEP 5C: CREATE merchandise table
+-- ============================================================
+CREATE TABLE merchandise (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  description TEXT,
+  category TEXT DEFAULT 'apparel', -- apparel | accessories | equipment | bundle
+  price INTEGER NOT NULL DEFAULT 0,
+  original_price INTEGER,
+  image_url TEXT,
+  stock INTEGER DEFAULT 0,
+  sold INTEGER DEFAULT 0,
+  status TEXT DEFAULT 'active', -- active | soldout | hidden
+  is_exclusive BOOLEAN DEFAULT false, -- true untuk VIP-exclusive merch
+  is_bundle BOOLEAN DEFAULT false,    -- true untuk paket bundle
+  bundle_items TEXT,                  -- JSON string untuk bundle contents
+  display_order INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE merchandise ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Public read merchandise" ON merchandise;
+DROP POLICY IF EXISTS "Admin write merchandise" ON merchandise;
+
+CREATE POLICY "Public read merchandise" ON merchandise
+  FOR SELECT USING (true);
+CREATE POLICY "Admin write merchandise" ON merchandise
+  FOR ALL
+  USING (auth.role() = 'authenticated')
+  WITH CHECK (auth.role() = 'authenticated');
+
+-- ============================================================
 -- STEP 6: CREATE INDEXES (untuk performance)
 -- ============================================================
 CREATE INDEX idx_registrations_event_city ON registrations(event_city_id);
@@ -128,6 +164,9 @@ CREATE INDEX idx_registrations_registration_number ON registrations(registration
 CREATE INDEX idx_cities_date ON cities(date);
 CREATE INDEX idx_cities_status ON cities(status);
 CREATE INDEX idx_cities_tier ON cities(tier);
+CREATE INDEX idx_merchandise_category ON merchandise(category);
+CREATE INDEX idx_merchandise_status ON merchandise(status);
+CREATE INDEX idx_merchandise_display_order ON merchandise(display_order);
 
 -- ============================================================
 -- STEP 7: CREATE updated_at trigger function
@@ -148,6 +187,11 @@ CREATE TRIGGER registrations_updated_at
 
 CREATE TRIGGER cities_updated_at
   BEFORE UPDATE ON cities
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();
+
+CREATE TRIGGER merchandise_updated_at
+  BEFORE UPDATE ON merchandise
   FOR EACH ROW
   EXECUTE FUNCTION update_updated_at_column();
 
@@ -180,6 +224,20 @@ ON CONFLICT (id) DO NOTHING;
 -- registrations dimulai kosong (data lama sudah di-drop)
 -- Peserta baru akan masuk via form pendaftaran landing page
 
+-- ============================================================
+-- STEP 9: SEED merchandise dengan produk awal
+-- ============================================================
+INSERT INTO merchandise (id, name, description, category, price, original_price, image_url, stock, sold, status, is_exclusive, is_bundle, display_order) VALUES
+  ('kaos-official',     'Kaos Official Riana On The Move',   'Kaos eksklusif edition 2026, bahan cotton combed 30s, desain khusus roadshow 20 kota.', 'apparel',    125000, 150000, '/brand/merch-kaos.jpg',     500, 87,  'active',  false, false, 1),
+  ('step-board',        'Step Board Zumba',                  'Step board khusus Zumba Step, anti-slip, ringan dan portable untuk latihan di rumah.',  'equipment',  175000, NULL,   '/brand/merch-stepboard.jpg', 200, 45,  'active',  false, false, 2),
+  ('tote-bag',          'Tote Bag Riana On The Move',        'Tote bag canvas premium dengan logo Riana, kapasitas besar untuk gym & sehari-hari.',  'accessories', 65000,  85000, '/brand/merch-tote.jpg',      300, 112, 'active',  false, false, 3),
+  ('bottle-zumba',      'Tumbler Zumba 600ml',               'Tumbler stainless steel 600ml, double wall vacuum, keep cold 24h / hot 12h.',          'accessories', 95000, NULL,   '/brand/merch-bottle.jpg',    250, 38,  'active',  false, false, 4),
+  ('vip-bundle',        'VIP Merchandise Bundle',            'Bundle eksklusif VIP: kaos + step board + tote bag + sesi foto bersama Riana.',         'bundle',     350000, 425000, '/brand/merch-vip-bundle.jpg', 50,  0,   'active',  true,  true,  5),
+  ('headband',          'Headband Sport Riana',              'Headband dry-fit dengan logo embroidery, cocok untuk workout & zumba.',                'accessories', 45000, NULL,   '/brand/merch-headband.jpg',  400, 64,  'active',  false, false, 6),
+  ('jacket-premium',    'Jaket Premium Road to MURI',        'Jaket windbreaker premium edition MURI 2026, bahan waterproof, limited edition.',       'apparel',    285000, 350000, '/brand/merch-jacket.jpg',    100, 12,  'active',  false, false, 7),
+  ('wristband-set',     'Wristband Set (pair)',              'Sepasang wristband cotton terry, absorbent, dengan logo Riana On The Move.',            'accessories', 35000, NULL,   '/brand/merch-wristband.jpg', 500, 91,  'active',  false, false, 8)
+ON CONFLICT (id) DO NOTHING;
+
 COMMIT;
 
 -- ============================================================
@@ -189,17 +247,22 @@ COMMIT;
 --
 -- 1. Cek jumlah tabel:
 --    SELECT tablename FROM pg_tables WHERE schemaname = 'public';
+--    -- harus: registrations, cities, merchandise
 --
 -- 2. Cek 20 kota:
 --    SELECT id, city, tier, vip_price, status FROM cities ORDER BY date;
 --
--- 3. Cek policies:
+-- 3. Cek merchandise:
+--    SELECT id, name, category, price, stock, sold, status FROM merchandise ORDER BY display_order;
+--
+-- 4. Cek policies:
 --    SELECT tablename, policyname FROM pg_policies WHERE schemaname = 'public';
 --
--- 4. Cek registrations (harus 0):
+-- 5. Cek registrations (harus 0):
 --    SELECT count(*) FROM registrations;
 --
--- 5. Test API endpoint (buka di browser):
+-- 6. Test API endpoint (buka di browser):
 --    https://riana-dnkf.vercel.app/api/setup
 --    https://riana-dnkf.vercel.app/api/cities
+--    https://riana-dnkf.vercel.app/api/merchandise
 -- ============================================================
