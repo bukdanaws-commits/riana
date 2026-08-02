@@ -2,15 +2,29 @@ import { NextResponse } from "next/server";
 import { getSupabasePublic, getSupabaseAdmin } from "@/lib/supabase-server";
 
 // ============================================================
-// GET /api/setup — diagnose Supabase configuration.
-// Returns:
-//   - Whether env vars are set
-//   - Whether tables exist
-//   - Whether RLS policies are applied
-//   - Whether service_role key is valid (admin-only check)
+// GET /api/setup — diagnose Supabase configuration
 //
-// Safe to call publicly — does not leak secrets.
+// Returns comprehensive report:
+//   - env vars status
+//   - public/admin client connectivity
+//   - table existence + row counts
+//   - cities schema validation (pricing columns)
+//   - sample data preview
+//   - actionable diagnoses
 // ============================================================
+
+interface CheckResult {
+  ok: boolean;
+  error: string | null;
+}
+
+interface TableInfo {
+  exists: boolean;
+  rowCount: number;
+  hasAllColumns: boolean;
+  missingColumns: string[];
+  error?: string;
+}
 
 export async function GET() {
   const report: Record<string, unknown> = {
@@ -21,14 +35,17 @@ export async function GET() {
       SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY ? "✓ set" : "✗ missing",
       service_role_format: "unknown",
     },
-    publicClient: { ok: false, error: null as string | null },
-    adminClient: { ok: false, error: null as string | null },
-    tables: { registrations: "unknown", cities: "unknown" },
-    policies: { registrations: [] as string[], cities: [] as string[] },
-    testInsert: { ok: false, error: null as string | null },
+    publicClient: { ok: false, error: null } as CheckResult,
+    adminClient: { ok: false, error: null } as CheckResult,
+    tables: {
+      registrations: { exists: false, rowCount: 0 } as TableInfo,
+      cities: { exists: false, rowCount: 0, hasAllColumns: false, missingColumns: [] } as TableInfo,
+    },
+    citiesPreview: [] as Array<{ id: string; city: string; tier: string; vip_price: number; status: string }>,
+    diagnoses: [] as string[],
   };
 
-  // Check service_role key format
+  // ---------- Check service_role key format ----------
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (serviceKey) {
     if (serviceKey.startsWith("sb_publishable_")) {
@@ -42,56 +59,65 @@ export async function GET() {
     }
   }
 
-  // Test public client
+  // ---------- Test public client ----------
   try {
     const supabase = getSupabasePublic();
     report.publicClient.ok = true;
 
-    // Check if registrations table exists & count rows
-    const { count, error } = await supabase
+    // Check registrations
+    const { count: regCount, error: regErr } = await supabase
       .from("registrations")
       .select("*", { count: "exact", head: true });
 
-    if (error) {
-      report.tables.registrations = `✗ error: ${error.message}`;
-      report.testInsert.error = error.message;
+    if (regErr) {
+      (report.tables.registrations as TableInfo).exists = false;
+      (report.tables.registrations as TableInfo).error = regErr.message;
     } else {
-      report.tables.registrations = `✓ exists (${count ?? 0} rows)`;
+      (report.tables.registrations as TableInfo).exists = true;
+      (report.tables.registrations as TableInfo).rowCount = regCount ?? 0;
     }
 
-    // Check cities table
-    const { count: cityCount, error: cityErr } = await supabase
+    // Check cities — full row fetch (to verify pricing columns)
+    const { data: citiesData, error: citiesErr } = await supabase
       .from("cities")
-      .select("*", { count: "exact", head: true });
+      .select("*")
+      .order("date", { ascending: true })
+      .limit(50);
 
-    if (cityErr) {
-      report.tables.cities = `✗ error: ${cityErr.message}`;
+    if (citiesErr) {
+      (report.tables.cities as TableInfo).exists = false;
+      (report.tables.cities as TableInfo).error = citiesErr.message;
     } else {
-      report.tables.cities = `✓ exists (${cityCount ?? 0} rows)`;
-    }
+      const cities = citiesData ?? [];
+      (report.tables.cities as TableInfo).exists = true;
+      (report.tables.cities as TableInfo).rowCount = cities.length;
 
-    // Try to fetch policies (may not be available without RPC function)
-    try {
-      const { data: policies } = await supabase.rpc("get_policies_list");
-      if (policies && Array.isArray(policies)) {
-        report.policies.registrations = policies
-          .filter((p: { tablename?: string }) => p.tablename === "registrations")
-          .map((p: { policyname?: string }) => p.policyname);
-        report.policies.cities = policies
-          .filter((p: { tablename?: string }) => p.tablename === "cities")
-          .map((p: { policyname?: string }) => p.policyname);
+      // Verify pricing columns exist (sample first row)
+      const requiredCols = ["tier", "vip_price", "vip_early_bird_price", "early_bird_active", "checked_in"];
+      if (cities.length > 0) {
+        const sample = cities[0] as Record<string, unknown>;
+        const missing = requiredCols.filter(c => !(c in sample));
+        (report.tables.cities as TableInfo).missingColumns = missing;
+        (report.tables.cities as TableInfo).hasAllColumns = missing.length === 0;
       }
-    } catch {
-      // RPC not available — that's OK, policies section stays empty
+
+      // Preview first 5 cities
+      report.citiesPreview = cities.slice(0, 5).map((c: Record<string, unknown>) => ({
+        id: String(c.id ?? ""),
+        city: String(c.city ?? ""),
+        tier: String(c.tier ?? ""),
+        vip_price: Number(c.vip_price ?? 0),
+        status: String(c.status ?? ""),
+      }));
     }
   } catch (e) {
     report.publicClient.error = e instanceof Error ? e.message : "Unknown error";
   }
 
-  // Test admin client (only if user is authenticated as admin)
+  // ---------- Test admin client ----------
   try {
     const admin = getSupabaseAdmin();
-    const { error } = await admin.from("registrations").select("id").limit(1);
+    const { error } = await admin.from("cities").select("id").limit(1);
     if (error) {
       report.adminClient.error = error.message;
     } else {
@@ -101,26 +127,58 @@ export async function GET() {
     report.adminClient.error = e instanceof Error ? e.message : "Unknown error";
   }
 
-  // Summary diagnosis
+  // ---------- Build diagnoses ----------
   const diagnoses: string[] = [];
+
   if (report.env.NEXT_PUBLIC_SUPABASE_URL.includes("missing")) {
-    diagnoses.push("❌ NEXT_PUBLIC_SUPABASE_URL not set in .env.local");
+    diagnoses.push("❌ NEXT_PUBLIC_SUPABASE_URL not set");
   }
   if (report.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.includes("missing")) {
-    diagnoses.push("❌ NEXT_PUBLIC_SUPABASE_ANON_KEY not set in .env.local");
+    diagnoses.push("❌ NEXT_PUBLIC_SUPABASE_ANON_KEY not set");
   }
   if (report.env.SUPABASE_SERVICE_ROLE_KEY.includes("missing")) {
     diagnoses.push("⚠️ SUPABASE_SERVICE_ROLE_KEY not set — admin endpoints will fail");
   } else if (report.env.service_role_format.toString().includes("WRONG")) {
-    diagnoses.push("❌ SUPABASE_SERVICE_ROLE_KEY is a publishable key, not a service_role secret");
+    diagnoses.push("❌ SUPABASE_SERVICE_ROLE_KEY is publishable key, not service_role secret");
   }
-  if (report.tables.registrations.toString().includes("error")) {
-    diagnoses.push("❌ registrations table missing or RLS blocks access — run supabase/schema.sql");
+
+  if (!report.publicClient.ok) {
+    diagnoses.push(`❌ Public client error: ${report.publicClient.error}`);
+  }
+
+  if (!(report.tables.registrations as TableInfo).exists) {
+    diagnoses.push("❌ registrations table missing — run schema.sql in Supabase SQL Editor");
+  } else {
+    const rc = (report.tables.registrations as TableInfo).rowCount;
+    diagnoses.push(`✅ registrations: ${rc} rows`);
+  }
+
+  if (!(report.tables.cities as TableInfo).exists) {
+    diagnoses.push("❌ cities table missing — run schema.sql");
+  } else {
+    const ct = report.tables.cities as TableInfo;
+    if (ct.rowCount === 0) {
+      diagnoses.push("⚠️ cities table empty — seed data missing, run full schema.sql");
+    } else if (ct.rowCount < 20) {
+      diagnoses.push(`⚠️ cities: only ${ct.rowCount}/20 rows — re-run schema.sql to seed all 20`);
+    } else {
+      diagnoses.push(`✅ cities: ${ct.rowCount} rows`);
+    }
+    if (!ct.hasAllColumns) {
+      diagnoses.push(`❌ cities missing pricing columns: ${ct.missingColumns.join(", ")} — run full schema.sql (DROP + CREATE)`);
+    }
+  }
+
+  if (report.adminClient.ok) {
+    diagnoses.push("✅ Admin client (service_role) working");
+  } else if (report.adminClient.error) {
+    diagnoses.push(`❌ Admin client error: ${report.adminClient.error}`);
   }
 
   if (diagnoses.length === 0) {
     diagnoses.push("✅ All checks passed — ready to go!");
   }
 
-  return NextResponse.json({ report, diagnoses });
+  report.diagnoses = diagnoses;
+  return NextResponse.json(report);
 }

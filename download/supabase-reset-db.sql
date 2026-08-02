@@ -1,33 +1,19 @@
 -- ============================================================
--- RIANA ON THE MOVE — FULL DATABASE RESET
+-- RIANA ON THE MOVE — DATABASE RESET (Quick Version)
 -- ============================================================
--- ⚠️  PERINGATAN: Script ini akan MENGHAPUS SEMUA DATA!
---     - registrations (100+ peserta akan hilang)
---     - cities (semua kota akan di-recreate dengan data awal)
---     - Semua policy, trigger, index akan di-recreate
---
--- CARA PAKAI:
--- 1. Buka https://supabase.com/dashboard/project/utzwxupemjrwdsemuuib/sql/new
--- 2. Copy-paste SELURUH script ini
--- 3. Klik "Run" — tunggu sampai "✅ RESET COMPLETE" muncul
--- 4. Verify dengan query di bagian bawah
+-- Jalankan di: https://supabase.com/dashboard/project/utzwxupemjrwdsemuuib/sql/new
+-- ⚠️  Semua data lama akan hilang!
 -- ============================================================
 
-BEGIN; -- Atomic transaction — kalau ada error, semua rollback
+BEGIN;
 
--- ============================================================
--- STEP 1: DROP semua tabel & function yang ada (idempotent)
--- ============================================================
 DROP TRIGGER IF EXISTS registrations_updated_at ON registrations;
 DROP TRIGGER IF EXISTS cities_updated_at ON cities;
 DROP FUNCTION IF EXISTS update_updated_at_column() CASCADE;
-
 DROP TABLE IF EXISTS registrations CASCADE;
 DROP TABLE IF EXISTS cities CASCADE;
 
--- ============================================================
--- STEP 2: CREATE registrations table
--- ============================================================
+-- registrations table
 CREATE TABLE registrations (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   registration_number TEXT UNIQUE NOT NULL,
@@ -62,9 +48,7 @@ CREATE TABLE registrations (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ============================================================
--- STEP 3: CREATE cities table (lengkap dengan pricing fields)
--- ============================================================
+-- cities table
 CREATE TABLE cities (
   id TEXT PRIMARY KEY,
   date DATE NOT NULL,
@@ -78,48 +62,30 @@ CREATE TABLE cities (
   checked_in INTEGER DEFAULT 0,
   status TEXT DEFAULT 'soon',
   price TEXT DEFAULT 'Gratis',
-  -- Pricing tier & prices
   tier TEXT DEFAULT 'tier2',
   vip_price INTEGER DEFAULT 175000,
   vip_early_bird_price INTEGER DEFAULT 122500,
   early_bird_active BOOLEAN DEFAULT false,
-  -- Map position
   map_x INTEGER,
   map_y INTEGER,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- ============================================================
--- STEP 4: ENABLE Row Level Security
--- ============================================================
 ALTER TABLE registrations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cities ENABLE ROW LEVEL SECURITY;
 
--- ============================================================
--- STEP 5: CREATE POLICIES
--- ============================================================
--- registrations policies
-CREATE POLICY "Public can insert registrations" ON registrations
-  FOR INSERT WITH CHECK (true);
-CREATE POLICY "Public read count registrations" ON registrations
-  FOR SELECT USING (true);
-CREATE POLICY "Users read own registrations" ON registrations
-  FOR SELECT USING (auth.uid() = user_id);
-CREATE POLICY "Users update own registrations" ON registrations
-  FOR UPDATE USING (auth.uid() = user_id AND status = 'registered');
+-- Policies: registrations
+CREATE POLICY "Public can insert registrations" ON registrations FOR INSERT WITH CHECK (true);
+CREATE POLICY "Public read count registrations" ON registrations FOR SELECT USING (true);
+CREATE POLICY "Users read own registrations" ON registrations FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users update own registrations" ON registrations FOR UPDATE USING (auth.uid() = user_id AND status = 'registered');
 
--- cities policies
-CREATE POLICY "Public read cities" ON cities
-  FOR SELECT USING (true);
-CREATE POLICY "Admin write cities" ON cities
-  FOR ALL
-  USING (auth.role() = 'authenticated')
-  WITH CHECK (auth.role() = 'authenticated');
+-- Policies: cities
+CREATE POLICY "Public read cities" ON cities FOR SELECT USING (true);
+CREATE POLICY "Admin write cities" ON cities FOR ALL USING (auth.role() = 'authenticated') WITH CHECK (auth.role() = 'authenticated');
 
--- ============================================================
--- STEP 6: CREATE INDEXES (untuk performance)
--- ============================================================
+-- Indexes
 CREATE INDEX idx_registrations_event_city ON registrations(event_city_id);
 CREATE INDEX idx_registrations_status ON registrations(status);
 CREATE INDEX idx_registrations_created_at ON registrations(created_at DESC);
@@ -129,9 +95,7 @@ CREATE INDEX idx_cities_date ON cities(date);
 CREATE INDEX idx_cities_status ON cities(status);
 CREATE INDEX idx_cities_tier ON cities(tier);
 
--- ============================================================
--- STEP 7: CREATE updated_at trigger function
--- ============================================================
+-- Trigger function
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -140,20 +104,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- Apply trigger ke kedua tabel
-CREATE TRIGGER registrations_updated_at
-  BEFORE UPDATE ON registrations
-  FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER registrations_updated_at BEFORE UPDATE ON registrations FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER cities_updated_at BEFORE UPDATE ON cities FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER cities_updated_at
-  BEFORE UPDATE ON cities
-  FOR EACH ROW
-  EXECUTE FUNCTION update_updated_at_column();
-
--- ============================================================
--- STEP 8: SEED cities dengan 20 kota tour
--- ============================================================
+-- Seed 20 kota
 INSERT INTO cities (id, date, date_label, day_label, city, venue, region, capacity, registered, checked_in, status, price, tier, vip_price, vip_early_bird_price, early_bird_active, map_x, map_y) VALUES
   ('bandung',     '2026-07-12', '12 Juli',      'Minggu', 'Bandung',     'Saparua Sport Center',                'Jawa Barat',    500, 487, 487, 'completed', 'Gratis', 'tier1', 250000, 175000, false, 47, 60),
   ('purwokerto',  '2026-07-19', '19 Juli',      'Minggu', 'Purwokerto',  'GOR Soemardip',                       'Jawa Tengah',   400, 412, 412, 'completed', 'Gratis', 'tier2', 175000, 122500, false, 49, 62),
@@ -177,29 +131,8 @@ INSERT INTO cities (id, date, date_label, day_label, city, venue, region, capaci
   ('jakarta',     '2026-12-05', '5 Desember',   'Sabtu',  'Jakarta',     'JIS (Jakarta International Stadium)',  'Jawa Barat',   3000, 256, 0,   'open',      'Gratis', 'finale', 350000, 245000, true,  48, 60)
 ON CONFLICT (id) DO NOTHING;
 
--- registrations dimulai kosong (data lama sudah di-drop)
--- Peserta baru akan masuk via form pendaftaran landing page
-
 COMMIT;
 
--- ============================================================
--- ✅ RESET COMPLETE
--- ============================================================
--- Verify dengan query di bawah (paste satu per satu di SQL Editor):
---
--- 1. Cek jumlah tabel:
---    SELECT tablename FROM pg_tables WHERE schemaname = 'public';
---
--- 2. Cek 20 kota:
---    SELECT id, city, tier, vip_price, status FROM cities ORDER BY date;
---
--- 3. Cek policies:
---    SELECT tablename, policyname FROM pg_policies WHERE schemaname = 'public';
---
--- 4. Cek registrations (harus 0):
---    SELECT count(*) FROM registrations;
---
--- 5. Test API endpoint (buka di browser):
---    https://riana-dnkf.vercel.app/api/setup
---    https://riana-dnkf.vercel.app/api/cities
--- ============================================================
+-- ✅ DONE — verify:
+-- SELECT count(*) FROM cities;        -- should be 20
+-- SELECT count(*) FROM registrations; -- should be 0
