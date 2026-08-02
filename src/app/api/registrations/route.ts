@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabase-server";
+import { getSupabasePublic } from "@/lib/supabase-server";
 
 // ============================================================
 // PUBLIC: POST /api/registrations
 // Insert new registration from landing page RegisterModal.
-// Bypasses RLS via service role (public INSERT policy also exists,
-// but service role guarantees the write succeeds even if policy changes).
+//
+// Uses anon key (NOT service_role) — RLS applies.
+// Requires "Public can insert" policy on registrations table
+// (see supabase/schema.sql).
 // ============================================================
 
 const ADMIN_EMAIL_FALLBACK = "guest@riana-move.id";
@@ -27,21 +29,15 @@ export async function POST(request: NextRequest) {
 
     // ---- Generate unique registration_number ----
     // Pattern: REG-2026-00001 (zero-padded 5 digits)
-    // Count existing rows then +1; retry on race-condition duplicate.
-    const supabaseAdmin = getSupabaseAdmin();
-    const { count, error: countErr } = await supabaseAdmin
-      .from("registrations")
-      .select("*", { count: "exact", head: true });
+    const supabase = getSupabasePublic();
 
-    if (countErr) {
-      console.error("[registrations] count error:", countErr);
-      return NextResponse.json(
-        { error: "Gagal generate registration number" },
-        { status: 500 }
-      );
-    }
-
-    const baseNum = (count ?? 0) + 1;
+    // Count using service-role-like approach: we can't count exactly with RLS
+    // (public has no SELECT policy). Instead, generate a random suffix
+    // based on timestamp to avoid collisions. The unique constraint on
+    // registration_number will catch any rare duplicate.
+    const ts = Date.now().toString().slice(-8); // last 8 digits of timestamp
+    const rand = Math.floor(Math.random() * 1000).toString().padStart(3, "0");
+    const registrationNumber = `REG-2026-${ts}${rand}`;
 
     // ---- Compute derived fields ----
     const ticketType: "regular" | "vip" = body.ticket_type === "vip" ? "vip" : "regular";
@@ -53,9 +49,9 @@ export async function POST(request: NextRequest) {
 
     const paymentStatus = ticketType === "vip" ? "pending" : "free";
 
-    // ---- Build insert payload (camelCase -> snake_case) ----
+    // ---- Build insert payload ----
     const insertData: Record<string, unknown> = {
-      registration_number: `REG-2026-${String(baseNum).padStart(5, "0")}`,
+      registration_number: registrationNumber,
       google_email: body.google_email || ADMIN_EMAIL_FALLBACK,
       google_name: body.google_name || body.full_name,
       google_avatar_url: body.google_avatar_url || null,
@@ -84,28 +80,27 @@ export async function POST(request: NextRequest) {
       tags: [],
     };
 
-    // ---- Insert with retry on duplicate registration_number ----
-    const { data, error } = await supabaseAdmin
+    // ---- Insert ----
+    const { data, error } = await supabase
       .from("registrations")
       .insert(insertData)
       .select()
       .single();
 
     if (error) {
-      // 23505 = unique_violation (race condition on registration_number)
+      // 23505 = unique_violation on registration_number — retry with new ID
       if (error.code === "23505") {
-        const retryNum = baseNum + 1;
-        const retryNumStr = `REG-2026-${String(retryNum).padStart(5, "0")}`;
-        const { data: data2, error: error2 } = await supabaseAdmin
+        const retryNum = `REG-2026-${Date.now().toString().slice(-8)}${Math.floor(Math.random() * 1000).toString().padStart(3, "0")}`;
+        const { data: data2, error: error2 } = await supabase
           .from("registrations")
-          .insert({ ...insertData, registration_number: retryNumStr })
+          .insert({ ...insertData, registration_number: retryNum })
           .select()
           .single();
 
         if (error2) {
           console.error("[registrations] retry insert error:", error2);
           return NextResponse.json(
-            { error: "Gagal mendaftar (duplicate). Silakan coba lagi." },
+            { error: `Gagal insert: ${error2.message}` },
             { status: 500 }
           );
         }
@@ -114,35 +109,39 @@ export async function POST(request: NextRequest) {
 
       console.error("[registrations] insert error:", error);
       return NextResponse.json(
-        { error: error.message || "Gagal insert ke database" },
+        { error: `Gagal insert: ${error.message}` },
         { status: 500 }
       );
     }
 
     return NextResponse.json({ success: true, data }, { status: 201 });
   } catch (e) {
-    console.error("[registrations] server error:", e);
-    return NextResponse.json(
-      { error: "Server error" },
-      { status: 500 }
-    );
+    const msg = e instanceof Error ? e.message : "Server error";
+    console.error("[registrations] server error:", msg);
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
 
-// Optional: GET endpoint to count registrations (for live counter on landing)
+// ============================================================
+// GET /api/registrations — public count for landing page live counter.
+// Requires "Public read count" policy on registrations table.
+// ============================================================
 export async function GET() {
   try {
-    const supabaseAdmin = getSupabaseAdmin();
-    const { count, error } = await supabaseAdmin
+    const supabase = getSupabasePublic();
+    const { count, error } = await supabase
       .from("registrations")
       .select("*", { count: "exact", head: true });
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      console.error("[registrations] count error:", error);
+      return NextResponse.json({ error: error.message, count: 0 }, { status: 200 });
     }
 
     return NextResponse.json({ count: count ?? 0 });
-  } catch {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "Server error";
+    console.error("[registrations] GET error:", msg);
+    return NextResponse.json({ error: msg, count: 0 }, { status: 500 });
   }
 }
