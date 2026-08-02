@@ -77,11 +77,17 @@ function RegisterModalInner({
   // Check if user already signed in via Supabase (returning from OAuth redirect)
   const [oauthPending, setOauthPending] = useState(false);
 
-  // Restore selectedCity from sessionStorage if returning from OAuth redirect
+  // Restore selectedCity from sessionStorage if returning from OAuth redirect.
+  // Supabase OAuth callback kirim URL dengan ?code=... atau #access_token=...
   useEffect(() => {
     const savedCity = sessionStorage.getItem("riana-register-city");
     const urlParams = new URLSearchParams(window.location.search);
-    const isReturningFromOAuth = urlParams.has("register") || savedCity;
+    const hash = window.location.hash;
+    const isReturningFromOAuth =
+      urlParams.has("code") ||
+      urlParams.has("register") ||
+      hash.includes("access_token") ||
+      Boolean(savedCity);
 
     if (isReturningFromOAuth && savedCity && !selectedCity) {
       try {
@@ -95,38 +101,36 @@ function RegisterModalInner({
   }, []);
 
   useEffect(() => {
-    // After OAuth redirect, Supabase sets the session in URL hash/?code=
-    // We detect by checking auth state
+    // After OAuth redirect, Supabase exchanges ?code=... for a session.
+    // We detect by checking auth state via getSession() + onAuthStateChange.
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session && oauthPending) {
-        // User just signed in via Google OAuth
         const user = session.user;
         const email = user.email ?? "";
         const name = user.user_metadata?.full_name ?? user.user_metadata?.name ?? email.split("@")[0];
         const avatar = user.user_metadata?.avatar_url ?? user.user_metadata?.picture ?? "";
-        setGoogleUser({
-          email,
-          name,
-          avatar,
-          userId: user.id,
-        });
+        setGoogleUser({ email, name, avatar, userId: user.id });
         setForm((f) => ({ ...f, name, email }));
         setOauthPending(false);
         setGoogleLoading(false);
         setStep("form");
         toast.success(`Berhasil login sebagai ${name}`);
 
-        // Cleanup sessionStorage
+        // Cleanup sessionStorage + URL params
         sessionStorage.removeItem("riana-register-city");
-        // Cleanup URL query param
-        if (window.location.search.includes("register")) {
-          window.history.replaceState({}, document.title, window.location.pathname);
-        }
+        const url = new URL(window.location.href);
+        url.searchParams.delete("code");
+        url.searchParams.delete("register");
+        url.searchParams.delete("refresh_token");
+        url.searchParams.delete("type");
+        url.searchParams.delete("next");
+        window.history.replaceState({}, document.title, url.pathname + url.search);
       }
     };
     checkSession();
-    // Listen for auth state changes
+
+    // Listen for auth state changes (fires after code exchange completes)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session && oauthPending) {
         const user = session.user;

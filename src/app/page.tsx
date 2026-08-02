@@ -25,10 +25,19 @@ export default function Home() {
   const [registerOpen, setRegisterOpen] = useState(false);
   const [preselectedCity, setPreselectedCity] = useState<string | null>(null);
 
-  // Auto-open modal if returning from OAuth redirect (?register=1 in URL)
+  // Auto-open modal if returning from OAuth redirect.
+  // Supabase OAuth callback kirim beberapa format URL:
+  //   - ?code=xxx        (authorization code, akan di-exchange jadi session)
+  //   - ?register=1      (custom flag kita)
+  //   - #access_token=xxx (implicit flow, jarang dipakai)
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has("register")) {
+    const hash = window.location.hash;
+    const hasOAuthCode = urlParams.has("code");
+    const hasRegister = urlParams.has("register");
+    const hasHashToken = hash.includes("access_token");
+
+    if (hasOAuthCode || hasRegister || hasHashToken) {
       // Modal akan auto-restore selectedCity dari sessionStorage
       setRegisterOpen(true);
     }
