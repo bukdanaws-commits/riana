@@ -4,10 +4,7 @@ import { getSupabasePublic } from "@/lib/supabase-server";
 // ============================================================
 // PUBLIC: POST /api/registrations
 // Insert new registration from landing page RegisterModal.
-//
 // Uses anon key (NOT service_role) — RLS applies.
-// Requires "Public can insert" policy on registrations table
-// (see supabase/schema.sql).
 // ============================================================
 
 const ADMIN_EMAIL_FALLBACK = "guest@riana-move.id";
@@ -28,14 +25,7 @@ export async function POST(request: NextRequest) {
     }
 
     // ---- Generate unique registration_number ----
-    // Pattern: REG-2026-00001 (zero-padded 5 digits)
-    const supabase = getSupabasePublic();
-
-    // Count using service-role-like approach: we can't count exactly with RLS
-    // (public has no SELECT policy). Instead, generate a random suffix
-    // based on timestamp to avoid collisions. The unique constraint on
-    // registration_number will catch any rare duplicate.
-    const ts = Date.now().toString().slice(-8); // last 8 digits of timestamp
+    const ts = Date.now().toString().slice(-8);
     const rand = Math.floor(Math.random() * 1000).toString().padStart(3, "0");
     const registrationNumber = `REG-2026-${ts}${rand}`;
 
@@ -49,7 +39,6 @@ export async function POST(request: NextRequest) {
 
     const paymentStatus = ticketType === "vip" ? "pending" : "free";
 
-    // ---- Build insert payload ----
     const insertData: Record<string, unknown> = {
       registration_number: registrationNumber,
       google_email: body.google_email || ADMIN_EMAIL_FALLBACK,
@@ -80,7 +69,8 @@ export async function POST(request: NextRequest) {
       tags: [],
     };
 
-    // ---- Insert ----
+    const supabase = getSupabasePublic();
+
     const { data, error } = await supabase
       .from("registrations")
       .insert(insertData)
@@ -88,7 +78,15 @@ export async function POST(request: NextRequest) {
       .single();
 
     if (error) {
-      // 23505 = unique_violation on registration_number — retry with new ID
+      // Debug logging
+      console.error("[registrations] insert error:", JSON.stringify({
+        code: error.code,
+        message: error.message,
+        details: error.details,
+        hint: error.hint,
+      }, null, 2));
+
+      // 23505 = unique_violation — retry with new ID
       if (error.code === "23505") {
         const retryNum = `REG-2026-${Date.now().toString().slice(-8)}${Math.floor(Math.random() * 1000).toString().padStart(3, "0")}`;
         const { data: data2, error: error2 } = await supabase
@@ -98,7 +96,6 @@ export async function POST(request: NextRequest) {
           .single();
 
         if (error2) {
-          console.error("[registrations] retry insert error:", error2);
           return NextResponse.json(
             { error: `Gagal insert: ${error2.message}` },
             { status: 500 }
@@ -107,7 +104,6 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ success: true, data: data2 }, { status: 201 });
       }
 
-      console.error("[registrations] insert error:", error);
       return NextResponse.json(
         { error: `Gagal insert: ${error.message}` },
         { status: 500 }
@@ -123,8 +119,7 @@ export async function POST(request: NextRequest) {
 }
 
 // ============================================================
-// GET /api/registrations — public count for landing page live counter.
-// Requires "Public read count" policy on registrations table.
+// GET /api/registrations — public count for landing page.
 // ============================================================
 export async function GET() {
   try {
@@ -134,14 +129,16 @@ export async function GET() {
       .select("*", { count: "exact", head: true });
 
     if (error) {
-      console.error("[registrations] count error:", error);
+      console.error("[registrations] count error:", JSON.stringify({
+        code: error.code,
+        message: error.message,
+      }));
       return NextResponse.json({ error: error.message, count: 0 }, { status: 200 });
     }
 
     return NextResponse.json({ count: count ?? 0 });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Server error";
-    console.error("[registrations] GET error:", msg);
     return NextResponse.json({ error: msg, count: 0 }, { status: 500 });
   }
 }

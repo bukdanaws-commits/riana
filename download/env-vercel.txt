@@ -1,0 +1,50 @@
+# ============================================================
+# Riana On The Move — VERCEL ENVIRONMENT VARIABLES (TEMPLATE)
+# ============================================================
+# INSTRUKSI:
+# 1. Buka: Vercel Project → Settings → Environment Variables
+# 2. Untuk SETIAP blok di bawah, klik "Add New":
+#    - Name: baris setelah "Name:"
+#    - Value: isi manual dengan nilai asli dari Supabase dashboard
+#    - Environments: centang Production + Preview (Development optional)
+# 3. Setelah semua diinput, Redeploy agar env vars ter-load
+#
+# ⚠️  JANGAN commit nilai asli ke git!
+#     File ini hanya template — isi nilai asli langsung di Vercel dashboard.
+# ============================================================
+
+# --- 1. Supabase URL ---
+# Name: NEXT_PUBLIC_SUPABASE_URL
+# Value: (isi dari Supabase dashboard → Settings → API → Project URL)
+# Format: https://<project-ref>.supabase.co
+https://YOUR_PROJECT_REF.supabase.co
+
+# --- 2. Anon key (public, format baru sb_publishable_) ---
+# Name: NEXT_PUBLIC_SUPABASE_ANON_KEY
+# Value: (isi dari Supabase dashboard → Settings → API → Project API keys → anon public)
+sb_publishable__YOUR_ANON_KEY_HERE
+
+# --- 3. Service role key (SECRET, format baru sb_secret_) ---
+# Name: SUPABASE_SERVICE_ROLE_KEY
+# Value: (isi dari Supabase dashboard → Settings → API → Project API keys → service_role)
+# ⚠️  JANGAN pernah expose ke client-side! Hanya untuk server.
+sb_secret_YOUR_SERVICE_ROLE_KEY_HERE
+
+# --- 4. Admin email ---
+# Name: NEXT_PUBLIC_ADMIN_EMAIL
+# Value: email Google yang diizinkan login ke /admin
+your-admin@gmail.com
+
+# ============================================================
+# Opsional — TIDAK dipakai kode saat ini
+# Google OAuth di-handle Supabase Auth (dashboard → Authentication → Providers → Google)
+# Hanya isi kalau mau pakai NextAuth di masa depan.
+# ============================================================
+
+# Name: NEXT_PUBLIC_GOOGLE_CLIENT_ID
+# Value:
+# YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com
+
+# Name: GOOGLE_CLIENT_SECRET
+# Value:
+# YOUR_GOOGLE_CLIENT_SECRET
