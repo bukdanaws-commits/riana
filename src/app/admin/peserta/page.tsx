@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useMemo } from "react";
-import { Search, ChevronLeft, ChevronRight, Users, CheckCircle2, Star, DollarSign, Edit2, Trash2, Save, X, FileText, FileSpreadsheet } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, Users, CheckCircle2, Star, DollarSign, Edit2, Trash2, Save, X, FileText, FileSpreadsheet, Sparkles } from "lucide-react";
 import { formatRupiah } from "@/data/pricing";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,6 +23,7 @@ export default function PesertaPage() {
   const [page, setPage] = useState(1);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [editing, setEditing] = useState<Record<string, unknown> | null>(null);
+  const [seeding, setSeeding] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
@@ -126,6 +127,35 @@ export default function PesertaPage() {
     else setSelectedIds(new Set(paged.map((r) => String(r.id))));
   };
 
+  const handleSeedMock = async () => {
+    const count = prompt("Berapa mock peserta yang mau di-generate? (1-500)", "100");
+    if (!count) return;
+    const n = parseInt(count, 10);
+    if (isNaN(n) || n < 1 || n > 500) {
+      toast.error("Jumlah harus angka 1-500");
+      return;
+    }
+    const clear = confirm(`Hapus semua peserta existing dulu sebelum seed ${n} mock?\n\nOK = Hapus dulu lalu seed\nCancel = Tambahkan ke existing (tanpa hapus)`);
+    setSeeding(true);
+    try {
+      const res = await fetch("/api/admin/seed-peserta", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ count: n, clear }),
+      });
+      const json = await res.json();
+      if (json.error) {
+        toast.error("Gagal seed: " + json.error);
+      } else {
+        toast.success(`✓ ${json.inserted} mock peserta ditambahkan!`);
+        fetchData();
+      }
+    } catch {
+      toast.error("Gagal connect ke server");
+    }
+    setSeeding(false);
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -143,6 +173,24 @@ export default function PesertaPage() {
           <p className="text-sm text-white/50">{allData.length} peserta di database</p>
         </div>
         <div className="flex gap-2">
+          <Button
+            onClick={handleSeedMock}
+            disabled={seeding}
+            variant="outline"
+            className="bg-[#2A2D38] border-[#F39F23]/40 text-[#F39F23] hover:bg-[#F39F23]/10 disabled:opacity-50"
+            title="Generate mock peserta untuk testing"
+          >
+            {seeding ? (
+              <>
+                <div className="h-4 w-4 mr-1 animate-spin border-2 border-[#F39F23] border-t-transparent rounded-full" />
+                Seeding...
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4 mr-1" /> Seed Mock
+              </>
+            )}
+          </Button>
           <Button onClick={handleExportExcel} variant="outline" className="bg-[#2A2D38] border-green-500/30 text-green-400 hover:bg-green-500/10">
             <FileSpreadsheet className="h-4 w-4 mr-1" /> Excel
           </Button>
@@ -215,13 +263,13 @@ export default function PesertaPage() {
         </select>
       </div>
 
-      {/* Table — 1rem padding (p-4) */}
+      {/* Table — 10px padding (p-2.5) */}
       <div className="bg-[#2A2D38] rounded-2xl border border-[#FC7166]/15 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-[#FC7166]/15 bg-[#0E0F14]">
-                <th className="p-4 w-10">
+                <th className="p-2.5 w-10">
                   <input
                     type="checkbox"
                     checked={selectedIds.size === paged.length && paged.length > 0}
@@ -229,14 +277,14 @@ export default function PesertaPage() {
                     className="h-4 w-4 accent-[#FC7166]"
                   />
                 </th>
-                <th className="text-left p-4 text-white/40 font-bold uppercase text-[10px]">ID</th>
-                <th className="text-left p-4 text-white/60 font-bold uppercase text-[10px]">Nama</th>
-                <th className="text-left p-4 text-white/60 font-bold uppercase text-[10px] hidden lg:table-cell">Email</th>
-                <th className="text-left p-4 text-white/60 font-bold uppercase text-[10px] hidden md:table-cell">Phone</th>
-                <th className="text-left p-4 text-white/60 font-bold uppercase text-[10px]">Kota</th>
-                <th className="text-center p-4 text-white/60 font-bold uppercase text-[10px]">Tiket</th>
-                <th className="text-center p-4 text-white/60 font-bold uppercase text-[10px]">Status</th>
-                <th className="text-right p-4 text-white/60 font-bold uppercase text-[10px]">Aksi</th>
+                <th className="text-left p-2.5 text-white/40 font-bold uppercase text-[10px]">ID</th>
+                <th className="text-left p-2.5 text-white/60 font-bold uppercase text-[10px]">Nama</th>
+                <th className="text-left p-2.5 text-white/60 font-bold uppercase text-[10px] hidden lg:table-cell">Email</th>
+                <th className="text-left p-2.5 text-white/60 font-bold uppercase text-[10px] hidden md:table-cell">Phone</th>
+                <th className="text-left p-2.5 text-white/60 font-bold uppercase text-[10px]">Kota</th>
+                <th className="text-center p-2.5 text-white/60 font-bold uppercase text-[10px]">Tiket</th>
+                <th className="text-center p-2.5 text-white/60 font-bold uppercase text-[10px]">Status</th>
+                <th className="text-right p-2.5 text-white/60 font-bold uppercase text-[10px]">Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -245,7 +293,7 @@ export default function PesertaPage() {
                   key={String(r.id)}
                   className={`border-b border-white/5 hover:bg-[#FC7166]/5 transition-colors ${selectedIds.has(String(r.id)) ? "bg-[#FC7166]/10" : ""}`}
                 >
-                  <td className="p-4">
+                  <td className="p-2.5">
                     <input
                       type="checkbox"
                       checked={selectedIds.has(String(r.id))}
@@ -253,12 +301,12 @@ export default function PesertaPage() {
                       className="h-4 w-4 accent-[#FC7166]"
                     />
                   </td>
-                  <td className="p-4 font-mono text-[10px] text-white/40">{String(r.registration_number ?? "")}</td>
-                  <td className="p-4 font-bold text-white">{String(r.full_name ?? "")}</td>
-                  <td className="p-4 text-white/60 text-xs hidden lg:table-cell">{String(r.google_email ?? "")}</td>
-                  <td className="p-4 text-white/60 text-xs hidden md:table-cell font-mono">{String(r.phone ?? "")}</td>
-                  <td className="p-4 text-white/80">{String(r.event_city_name ?? "")}</td>
-                  <td className="p-4 text-center">
+                  <td className="p-2.5 font-mono text-[10px] text-white/40">{String(r.registration_number ?? "")}</td>
+                  <td className="p-2.5 font-bold text-white">{String(r.full_name ?? "")}</td>
+                  <td className="p-2.5 text-white/60 text-xs hidden lg:table-cell">{String(r.google_email ?? "")}</td>
+                  <td className="p-2.5 text-white/60 text-xs hidden md:table-cell font-mono">{String(r.phone ?? "")}</td>
+                  <td className="p-2.5 text-white/80">{String(r.event_city_name ?? "")}</td>
+                  <td className="p-2.5 text-center">
                     <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
                       r.ticket_type === "vip"
                         ? "bg-[#F39F23]/20 text-[#FFB938]"
@@ -267,7 +315,7 @@ export default function PesertaPage() {
                       {r.ticket_type === "vip" ? "VIP" : "REG"}
                     </span>
                   </td>
-                  <td className="p-4 text-center">
+                  <td className="p-2.5 text-center">
                     <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
                       r.status === "checked_in" ? "bg-green-500/20 text-green-400" :
                       r.status === "registered" ? "bg-blue-500/20 text-blue-400" :
@@ -276,7 +324,7 @@ export default function PesertaPage() {
                       {String(r.status ?? "")}
                     </span>
                   </td>
-                  <td className="p-4 text-right">
+                  <td className="p-2.5 text-right">
                     <div className="flex justify-end gap-1">
                       <button
                         onClick={() => setEditing({ ...r })}

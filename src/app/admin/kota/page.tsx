@@ -269,50 +269,50 @@ export default function KotaPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-[#FC7166]/15 bg-[#0E0F14]">
-                <th className="text-left p-4 text-white/40 font-bold uppercase text-[10px]">#</th>
-                <th className="text-left p-4 text-white/60 font-bold uppercase text-[10px]">Kota</th>
-                <th className="text-left p-4 text-white/60 font-bold uppercase text-[10px] hidden md:table-cell">Tanggal</th>
-                <th className="text-left p-4 text-white/60 font-bold uppercase text-[10px] hidden lg:table-cell">Venue</th>
-                <th className="text-center p-4 text-white/60 font-bold uppercase text-[10px]">Cap</th>
-                <th className="text-center p-4 text-white/60 font-bold uppercase text-[10px]">Reg</th>
-                <th className="text-center p-4 text-white/60 font-bold uppercase text-[10px]">VIP Price</th>
-                <th className="text-center p-4 text-white/60 font-bold uppercase text-[10px]">Early Bird</th>
-                <th className="text-center p-4 text-white/60 font-bold uppercase text-[10px]">Tier</th>
-                <th className="text-center p-4 text-white/60 font-bold uppercase text-[10px]">Status</th>
-                <th className="text-right p-4 text-white/60 font-bold uppercase text-[10px]">Aksi</th>
+                <th className="text-left p-2.5 text-white/40 font-bold uppercase text-[10px]">#</th>
+                <th className="text-left p-2.5 text-white/60 font-bold uppercase text-[10px]">Kota</th>
+                <th className="text-left p-2.5 text-white/60 font-bold uppercase text-[10px] hidden md:table-cell">Tanggal</th>
+                <th className="text-left p-2.5 text-white/60 font-bold uppercase text-[10px] hidden lg:table-cell">Venue</th>
+                <th className="text-center p-2.5 text-white/60 font-bold uppercase text-[10px]">Cap</th>
+                <th className="text-center p-2.5 text-white/60 font-bold uppercase text-[10px]">Reg</th>
+                <th className="text-center p-2.5 text-white/60 font-bold uppercase text-[10px]">VIP Price</th>
+                <th className="text-center p-2.5 text-white/60 font-bold uppercase text-[10px]">Early Bird</th>
+                <th className="text-center p-2.5 text-white/60 font-bold uppercase text-[10px]">Tier</th>
+                <th className="text-center p-2.5 text-white/60 font-bold uppercase text-[10px]">Status</th>
+                <th className="text-right p-2.5 text-white/60 font-bold uppercase text-[10px]">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {cities.map((city, idx) => (
                 <tr key={city.id} className="border-b border-white/5 hover:bg-[#FC7166]/5 transition-colors">
-                  <td className="p-4 text-white/30 font-mono">{String(idx + 1).padStart(2, "0")}</td>
-                  <td className="p-4">
+                  <td className="p-2.5 text-white/30 font-mono">{String(idx + 1).padStart(2, "0")}</td>
+                  <td className="p-2.5">
                     <div className="font-bold text-white">{city.city}</div>
                     <div className="text-[10px] text-white/40 font-mono">{city.id}</div>
                   </td>
-                  <td className="p-4 text-white/70 text-xs hidden md:table-cell">
+                  <td className="p-2.5 text-white/70 text-xs hidden md:table-cell">
                     <div>{city.date_label || city.date}</div>
                     <div className="text-[10px] text-white/40">{city.day_label}</div>
                   </td>
-                  <td className="p-4 text-white/60 text-xs hidden lg:table-cell">
+                  <td className="p-2.5 text-white/60 text-xs hidden lg:table-cell">
                     <div className="truncate max-w-[180px]">{city.venue}</div>
                     <div className="text-[10px] text-white/40">{city.region}</div>
                   </td>
-                  <td className="p-4 text-center text-white/70">{city.capacity}</td>
-                  <td className="p-4 text-center">
+                  <td className="p-2.5 text-center text-white/70">{city.capacity}</td>
+                  <td className="p-2.5 text-center">
                     <div className="font-bold text-white">{city.registered}</div>
                     <div className="text-[9px] text-white/40">{Math.round((city.registered / city.capacity) * 100)}%</div>
                   </td>
-                  <td className="p-4 text-center font-bold text-[#F39F23]">
+                  <td className="p-2.5 text-center font-bold text-[#F39F23]">
                     {formatRupiah(city.vip_price)}
                   </td>
-                  <td className="p-4 text-center">
+                  <td className="p-2.5 text-center">
                     <div className="text-[#FC7166] font-bold">{formatRupiah(city.vip_early_bird_price)}</div>
                     {city.early_bird_active && (
                       <span className="inline-block mt-0.5 px-1.5 py-0.5 rounded-full bg-green-500/20 text-green-400 text-[8px] font-bold uppercase">Active</span>
                     )}
                   </td>
-                  <td className="p-4 text-center">
+                  <td className="p-2.5 text-center">
                     <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
                       city.tier === "finale" ? "bg-[#FC7166]/20 text-[#FC7166]" :
                       city.tier === "tier1" ? "bg-[#FD8656]/20 text-[#FD8656]" :
@@ -321,7 +321,7 @@ export default function KotaPage() {
                       {city.tier}
                     </span>
                   </td>
-                  <td className="p-4 text-center">
+                  <td className="p-2.5 text-center">
                     <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${
                       city.status === "completed" ? "bg-[#F39F23]/20 text-[#FFB938]" :
                       city.status === "open" ? "bg-green-500/20 text-green-400" :
@@ -331,7 +331,7 @@ export default function KotaPage() {
                       {STATUSES.find(s => s.value === city.status)?.label || city.status}
                     </span>
                   </td>
-                  <td className="p-4 text-right">
+                  <td className="p-2.5 text-right">
                     <div className="flex justify-end gap-1">
                       <button
                         onClick={() => handleEdit(city)}
