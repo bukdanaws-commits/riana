@@ -20,7 +20,7 @@ import {
   type Region,
   type CityEvent,
 } from "@/data/event";
-import { useCities } from "@/lib/admin-store";
+import { useCitiesData } from "@/hooks/use-supabase-data";
 
 interface CityScheduleProps {
   onRegisterClick: (cityId?: string) => void;
@@ -31,7 +31,7 @@ type Filter = "all" | Region;
 export function CitySchedule({ onRegisterClick }: CityScheduleProps) {
   const [filter, setFilter] = useState<Filter>("all");
   const [hoveredCity, setHoveredCity] = useState<string | null>(null);
-  const CITIES = useCities();
+  const { cities: CITIES, source } = useCitiesData();
 
   const filtered = useMemo(() => {
     if (filter === "all") return CITIES;
@@ -336,7 +336,7 @@ function IndonesiaMap({
   onCityClick: (id: string) => void;
   filter: Filter;
 }) {
-  const CITIES = useCities();
+  const { cities: CITIES } = useCitiesData();
   return (
     <div className="relative aspect-[4/3] rounded-3xl bg-gradient-to-br from-purple-50 via-pink-50 to-pink-50 border-2 border-[#FC7166]/20 overflow-hidden p-4">
       <div className="absolute inset-0 pattern-dots opacity-50" />

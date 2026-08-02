@@ -1,20 +1,23 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Trophy, Users, TrendingUp, Sparkles, CheckCircle2, MapPin } from "lucide-react";
-import {
-  MILESTONES,
-} from "@/data/event";
-import { useCities, useMuriTarget } from "@/lib/admin-store";
+import { MILESTONES } from "@/data/event";
+import { useMuriProgress } from "@/hooks/use-supabase-data";
 
 export function MuriProgress() {
-  const CITIES = useCities();
-  const MURI_TARGET = useMuriTarget();
-  const baseTotal = useMemo(() => CITIES.reduce((s, c) => s + c.registered, 0), [CITIES]);
-  const checkedIn = useMemo(() => CITIES.reduce((s, c) => s + (c.checkedIn ?? 0), 0), [CITIES]);
-  const completedCities = CITIES.filter((c) => c.status === "completed").length;
-  const openCities = CITIES.filter((c) => c.status === "open").length;
+  const {
+    totalRegistered: baseTotal,
+    checkedIn,
+    completedCities,
+    openCities,
+    pct,
+    regionStats,
+    MURI_TARGET,
+    source,
+  } = useMuriProgress();
+
   const [count, setCount] = useState(0);
 
   // Animate count from 0 -> baseTotal on mount, then keep ticking slowly
@@ -43,16 +46,6 @@ export function MuriProgress() {
     return () => clearInterval(id);
   }, [baseTotal]);
 
-  const pct = Math.min((count / MURI_TARGET) * 100, 100);
-
-  // Stats per region
-  const regionStats = CITIES.reduce<Record<string, { total: number; reg: number }>>((acc, c) => {
-    if (!acc[c.region]) acc[c.region] = { total: 0, reg: 0 };
-    acc[c.region].total += c.capacity;
-    acc[c.region].reg += c.registered;
-    return acc;
-  }, {});
-
   return (
     <section className="relative py-4 lg:py-6 bg-[#0E0F14] overflow-hidden">
       <div className="absolute inset-0 opacity-30" style={{
@@ -70,7 +63,9 @@ export function MuriProgress() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-400/20 backdrop-blur-md border border-[#FC7166]/30/30 mb-4">
             <Sparkles className="h-3.5 w-3.5 text-[#FC7166]/80" />
-            <span className="text-xs font-bold text-[#FC7166]/70 tracking-wide uppercase">Live Progress</span>
+            <span className="text-xs font-bold text-[#FC7166]/70 tracking-wide uppercase">
+              Live Progress {source === "supabase" ? "· Supabase" : "· Demo"}
+            </span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-3" style={{ fontFamily: "var(--font-display)" }}>
             Menuju Rekor <span className="text-gradient-brand">MURI</span>
@@ -157,7 +152,7 @@ export function MuriProgress() {
             <div className="mt-2 pt-3 border-t border-white/10">
               <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
                 {Object.entries(regionStats).map(([region, stats]) => {
-                  const rpct = Math.round((stats.reg / stats.total) * 100);
+                  const rpct = stats.total > 0 ? Math.round((stats.reg / stats.total) * 100) : 0;
                   return (
                     <div
                       key={region}

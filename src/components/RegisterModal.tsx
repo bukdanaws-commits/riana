@@ -12,9 +12,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { type CityEvent } from "@/data/event";
-import { useCities, useAdminStore } from "@/lib/admin-store";
+import { useAdminStore } from "@/lib/admin-store";
 import { getCityPricing, formatRupiah, isEarlyBirdActive } from "@/data/pricing";
 import type { Registration } from "@/data/mock-registrations";
+import { supabase } from "@/lib/supabase-browser";
+import { useCitiesData } from "@/hooks/use-supabase-data";
 import {
   CheckCircle2,
   ChevronLeft,
@@ -28,7 +30,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Step = "select" | "google" | "form" | "success";
 
@@ -66,11 +68,82 @@ function RegisterModalInner({
   onOpenChange: (open: boolean) => void;
 }) {
   // Compute initial state from props once per mount.
-  const CITIES = useCities();
+  const { cities: CITIES } = useCitiesData();
   const addRegistration = useAdminStore((s) => s.addRegistration);
   const preselected = preselectedCity
     ? CITIES.find((c) => c.id === preselectedCity) ?? null
     : null;
+
+  // Check if user already signed in via Supabase (returning from OAuth redirect)
+  const [oauthPending, setOauthPending] = useState(false);
+
+  // Restore selectedCity from sessionStorage if returning from OAuth redirect
+  useEffect(() => {
+    const savedCity = sessionStorage.getItem("riana-register-city");
+    const urlParams = new URLSearchParams(window.location.search);
+    const isReturningFromOAuth = urlParams.has("register") || savedCity;
+
+    if (isReturningFromOAuth && savedCity && !selectedCity) {
+      try {
+        const cityData = JSON.parse(savedCity) as CityEvent;
+        setSelectedCity(cityData);
+        setOauthPending(true);
+      } catch {
+        // ignore parse error
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    // After OAuth redirect, Supabase sets the session in URL hash/?code=
+    // We detect by checking auth state
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session && oauthPending) {
+        // User just signed in via Google OAuth
+        const user = session.user;
+        const email = user.email ?? "";
+        const name = user.user_metadata?.full_name ?? user.user_metadata?.name ?? email.split("@")[0];
+        const avatar = user.user_metadata?.avatar_url ?? user.user_metadata?.picture ?? "";
+        setGoogleUser({
+          email,
+          name,
+          avatar,
+          userId: user.id,
+        });
+        setForm((f) => ({ ...f, name, email }));
+        setOauthPending(false);
+        setGoogleLoading(false);
+        setStep("form");
+        toast.success(`Berhasil login sebagai ${name}`);
+
+        // Cleanup sessionStorage
+        sessionStorage.removeItem("riana-register-city");
+        // Cleanup URL query param
+        if (window.location.search.includes("register")) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+      }
+    };
+    checkSession();
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session && oauthPending) {
+        const user = session.user;
+        const email = user.email ?? "";
+        const name = user.user_metadata?.full_name ?? user.user_metadata?.name ?? email.split("@")[0];
+        const avatar = user.user_metadata?.avatar_url ?? user.user_metadata?.picture ?? "";
+        setGoogleUser({ email, name, avatar, userId: user.id });
+        setForm((f) => ({ ...f, name, email }));
+        setOauthPending(false);
+        setGoogleLoading(false);
+        setStep("form");
+        toast.success(`Berhasil login sebagai ${name}`);
+        sessionStorage.removeItem("riana-register-city");
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [oauthPending]);
 
   const [step, setStep] = useState<Step>(preselected ? "form" : "select");
   const [selectedCity, setSelectedCity] = useState<CityEvent | null>(preselected);
@@ -109,26 +182,55 @@ function RegisterModalInner({
     setStep("google"); // Now requires Google sign-in first
   };
 
-  // === Mock Google OAuth ===
-  const handleGoogleSignIn = () => {
+  // === Real Google OAuth via Supabase ===
+  // Karena modal bisa di-remount saat user balik dari redirect,
+  // kita simpan selectedCity ke sessionStorage sebelum redirect,
+  // lalu restore setelah OAuth success.
+  const handleGoogleSignIn = async () => {
     setGoogleLoading(true);
-    // Simulate Google OAuth flow (1.5s loading)
-    setTimeout(() => {
-      // Generate mock Google user
-      const firstNames = ["Dewi", "Sinta", "Michael", "Ratna", "Budi", "Lia", "Andi", "Maya"];
-      const lastNames = ["Anggraini", "Prakoso", "Santoso", "Wibowo", "Kusumawardani", "Maharani"];
-      const fn = firstNames[Math.floor(Math.random() * firstNames.length)];
-      const ln = lastNames[Math.floor(Math.random() * lastNames.length)];
-      const name = `${fn} ${ln}`;
-      const email = `${fn.toLowerCase()}.${ln.toLowerCase()}${Math.floor(Math.random() * 99)}@gmail.com`;
-      const avatar = `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}&backgroundColor=ff6b35,df2679,d4af37`;
+    setOauthPending(true);
 
-      setGoogleUser({ email, name, avatar, userId: `mock-${Date.now()}` });
-      setForm((f) => ({ ...f, name, email }));
+    // Simpan state penting ke sessionStorage untuk restore after redirect
+    if (selectedCity) {
+      sessionStorage.setItem("riana-register-city", JSON.stringify({
+        id: selectedCity.id,
+        city: selectedCity.city,
+        date: selectedCity.date,
+        dateLabel: selectedCity.dateLabel,
+        dayLabel: selectedCity.dayLabel,
+        venue: selectedCity.venue,
+        region: selectedCity.region,
+        capacity: selectedCity.capacity,
+        registered: selectedCity.registered,
+        status: selectedCity.status,
+        mapX: selectedCity.mapX,
+        mapY: selectedCity.mapY,
+        price: selectedCity.price,
+        earlyBird: selectedCity.earlyBird,
+      }));
+    }
+
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/?register=1`,
+        },
+      });
+
+      if (error) {
+        toast.error("Login Google gagal: " + error.message);
+        setGoogleLoading(false);
+        setOauthPending(false);
+      }
+      // Jika sukses, browser akan redirect ke Google → balik ke app kita
+      // onAuthStateChange akan handle state update
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : "Login gagal";
+      toast.error(msg);
       setGoogleLoading(false);
-      setStep("form");
-      toast.success(`Berhasil login sebagai ${name}`);
-    }, 1500);
+      setOauthPending(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {

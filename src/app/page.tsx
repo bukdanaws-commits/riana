@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Settings } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
@@ -23,6 +23,15 @@ import { Footer } from "@/components/sections/Footer";
 export default function Home() {
   const [registerOpen, setRegisterOpen] = useState(false);
   const [preselectedCity, setPreselectedCity] = useState<string | null>(null);
+
+  // Auto-open modal if returning from OAuth redirect (?register=1 in URL)
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("register")) {
+      // Modal akan auto-restore selectedCity dari sessionStorage
+      setRegisterOpen(true);
+    }
+  }, []);
 
   const openRegister = (cityId?: string) => {
     setPreselectedCity(cityId ?? null);

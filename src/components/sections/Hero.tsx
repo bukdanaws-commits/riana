@@ -12,12 +12,14 @@ import {
   Calendar,
 } from "lucide-react";
 import Link from "next/link";
+import { useRegistrationCount } from "@/hooks/use-supabase-data";
 
 interface HeroProps {
   onRegisterClick: () => void;
 }
 
 export function Hero({ onRegisterClick }: HeroProps) {
+  const { count } = useRegistrationCount();
   return (
     <section className="relative min-h-screen w-full overflow-hidden">
       {/* === FULL-WIDTH BACKGROUND IMAGE — 100% opacity, no overlay === */}
@@ -183,7 +185,7 @@ export function Hero({ onRegisterClick }: HeroProps) {
                   ))}
                 </div>
                 <span>
-                  <span className="font-bold text-white">587+</span> peserta sudah mendaftar
+                  <span className="font-bold text-white">{count.toLocaleString("id-ID")}+</span> peserta sudah mendaftar
                 </span>
                 <span className="font-mono text-[#C97D0E] text-[10px]">[LIVE]</span>
               </motion.div>

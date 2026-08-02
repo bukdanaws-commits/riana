@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Trophy, MapPin, Calendar } from "lucide-react";
-import { useCities } from "@/lib/admin-store";
+import { useCitiesData } from "@/hooks/use-supabase-data";
 
 function getNextCity(cities: { date: string }[]) {
   const now = new Date();
@@ -22,7 +22,7 @@ function computeTimeLeft(target: string) {
 }
 
 export function Countdown() {
-  const CITIES = useCities();
+  const { cities: CITIES } = useCitiesData();
   const nextCity = getNextCity(CITIES) ?? CITIES[0];
   const finale = CITIES.find((c) => c.id === "jakarta") ?? CITIES[CITIES.length - 1];
 
